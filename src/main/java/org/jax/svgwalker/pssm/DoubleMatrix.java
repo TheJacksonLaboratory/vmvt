@@ -33,7 +33,48 @@ public class DoubleMatrix {
         return this.vals[i*nCols + j];
     }
 
+    /**
+     * Convert {@link DoubleMatrix} with nucleotide frequencies into array of information content values.
+     * <p>
+     * Basically, {@link #calculateIC(double)} method is mapped element-wise to given <code>freqMatrix</code>.
+     *
+     * @param freqMatrix {@link DoubleMatrix} containing nucleotide frequencies at positions of splice site
+     * @return {@link DoubleMatrix} containing information content of nucleotides at positions of splice site with the
+     * same shape as <code>freqMatrix</code>
+     */
+     static DoubleMatrix createICMatrix(DoubleMatrix freqMatrix) {
+        DoubleMatrix icm = new DoubleMatrix(freqMatrix.nRows, freqMatrix.nCols);
+        int len = freqMatrix.nRows * freqMatrix.nCols;
+        for (int i = 0; i < len; i++) {
+           // iterate through all nucleotides
+            // we do not need to care about row or column
+            icm.vals[i] = calculateIC(freqMatrix.vals[i]);
+        }
+        return icm;
+    }
+    /**
+     * Calculate information content of the nucleotide from the frequency using formula 1 (Rogan paper from class
+     * description). Correction factor is ignored, I assume that the sample size used to calculate the nucleotide
+     * frequency is large enough. In case of the splice sites it was ~220000 sites.
+     *
+     * @param freq {@link Double} frequency of nucleotide occurence at its position from range <0, 1>
+     * @return {@link Double} with information content value
+     */
+    private static double calculateIC(double freq) {
+        return 2d - (-Math.log(freq) / Math.log(2));
+    }
 
+    /**
+     * As a sanity check, we look to see that the frequencies add up to one.
+     * The frequencies are given with 3 decimal places, so our epsilon needs
+     * to be 0.01
+     * @param vals
+     * @return
+     */
+    static DoubleMatrix mapToDoubleMatrix(List<List<Double>> vals) {
+        double epsilon = 0.01;
+        return mapToDoubleMatrix(vals, epsilon);
+    }
 
     /**
      * Map InputStreamBasedPositionalWeightMatrixParser.PositionWeightMatrix to {@link DoubleMatrix} and perform sanity checks:
