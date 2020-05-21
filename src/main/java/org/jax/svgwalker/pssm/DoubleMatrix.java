@@ -118,4 +118,9 @@ public class DoubleMatrix {
         }
         return dm;
     }
+
+    public static DoubleMatrix donor() {
+        DoubleMatrix dm = DoubleMatrix.mapToDoubleMatrix(SpliceDonorMatrix.get());
+        return DoubleMatrix.createICMatrix(dm);
+    }
 }
