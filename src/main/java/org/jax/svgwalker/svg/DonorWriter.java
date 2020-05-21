@@ -22,13 +22,13 @@ public class DonorWriter extends SvgWriter {
 
 
     public DonorWriter(String reference, String alternate) {
-        super(reference, alternate, DoubleMatrix.donor());
+        super(reference, alternate, 400, 200 ,DoubleMatrix.donor());
     }
 
     @Override
     public String getSvg() {
        try {
-           writeHeader(swriter, WIDTH, HEIGHT);
+           writeHeader(swriter);
            writeDonor(swriter);
            writeFooter(swriter);
            return swriter.toString();

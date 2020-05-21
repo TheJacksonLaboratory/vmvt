@@ -2,6 +2,7 @@ package org.jax.svgwalker.svg;
 
 import org.jax.svgwalker.except.SvgwalkerRuntimeException;
 import org.jax.svgwalker.pssm.DoubleMatrix;
+import org.w3c.dom.css.CSSFontFaceRule;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -35,6 +36,11 @@ public abstract class SvgWriter {
     /** A yellow color for Thymine */
     protected final static String T_COLOR = "#ffdf00";
 
+    protected final static int LETTER_WIDTH = 10;
+    /** Height of a letter before scaling */
+    protected final static int LETTER_BASE_HEIGHT = 12;
+
+    protected final static int MAX_LETTER_HEIGHT = 5 * LETTER_BASE_HEIGHT;
 
     protected final static int A_BASE = 0;
     protected final static int C_BASE = 1;
@@ -54,20 +60,25 @@ public abstract class SvgWriter {
     /** Position where we will start to write things from the top of the SVG */
     private final int YSTART = 10;
     /** Amount of horizontal space to be taken up by one base character. */
-    private final int LOWER_CASE_BASE_INCREMENT = 15;
+    private final int LOWER_CASE_BASE_INCREMENT = LETTER_WIDTH + 5;
     /** Amount to shift down between ref and alt sequence lines */
     private final int Y_LINE_INCREMENT = 20;
 
     protected int currentX;
     protected int currentY;
 
+    private final int width;
+    private final int height;
+
     /** Representation of the Splice donor/acceptor IC matrix. */
     private final DoubleMatrix splicesite;
 
-    public SvgWriter(String reference, String alternate, DoubleMatrix site) {
+    public SvgWriter(String reference, String alternate, int width, int height, DoubleMatrix site) {
         this.swriter = new StringWriter();
         this.ref = reference;
         this.alt = alternate;
+        this.width = width;
+        this.height = height;
         this.splicesite = site;
         if (ref.length() != alt.length()) {
             throw new SvgwalkerRuntimeException(String.format("ref (%s) and alt (%s) have different lengths!", ref, alt));
@@ -123,7 +134,7 @@ public abstract class SvgWriter {
 
     abstract public String getSvg();
 
-    protected void writeHeader(Writer writer, int width, int height) throws IOException {
+    protected void writeHeader(Writer writer) throws IOException {
         writer.write("<svg width=\""+width+"\" height=\""+height+"\" " +
                 "xmlns=\"http://www.w3.org/2000/svg\" " +
                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n");
@@ -226,9 +237,21 @@ public abstract class SvgWriter {
         String color = getBaseColor(base);
         String nt = getBaseCharLC(base);
         double IC = this.splicesite.get(base, pos);
-        String basestring = String.format("<text x=\"%d\" y=\"%d\" fill=\"%s\">%s</text>",x,y,color,nt);
-        String viewbox = String.format("<g viewbox=\"0 0 20 100\" preserveAspectRatio=\"none\">%s</g>", basestring);
-        writer.write(viewbox + "\n");
+        double Tx = x + (double)this.width/2.0;
+        double Ty = y + (double)this.height/2.0;
+        double Typ = (IC-1.0)*Ty;
+        swriter.write(String.format("<g transform=\"matrix(1,0,0,1,%f,%f)\">\n",Tx ,Ty));
+        swriter.write(String.format("<g transform=\"matrix(1,0,0,%f,0,0)\">\n",IC));
+        swriter.write(String.format("<g transform=\"matrix(1,0,0,1,%f,%f)\">\n",-1*Tx ,-1*Typ));
+        String basestring = String.format("<text x=\"%d\" y=\"%d\" fill=\"%s\">%s</text>\n",x,y,color,nt);
+        swriter.write(basestring);
+        swriter.write("</g>\n</g>\n</g>\n");
+        //String viewbox = String.format("<g viewbox=\"0 0 20 100\" preserveAspectRatio=\"none\">%s</g>", basestring);
+       // writer.write(viewbox + "\n");
+        String svgInner = String.format("<svg x=\"%d\" y=\"%d\" width=%d height=%d viewbox=\"0 0 %d %d\" preserveAspectRatio=\"none\">",
+                x,y,LETTER_WIDTH,MAX_LETTER_HEIGHT,LETTER_WIDTH,MAX_LETTER_HEIGHT);
+        svgInner = String.format("%s\n<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n</svg>\n",svgInner,color,nt);
+        //swriter.write(svgInner);
     }
 
     protected void writeRefWalker(Writer writer) throws IOException {
