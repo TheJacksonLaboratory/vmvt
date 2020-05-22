@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import static java.lang.Math.abs;
+
 /**
  * Base class for writing SVGs of Splice Acceptor or Donor sequences
  */
@@ -139,6 +141,9 @@ public abstract class SvgWriter {
                 "xmlns=\"http://www.w3.org/2000/svg\" " +
                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n");
         writer.write("<!-- Created by svgwalker -->\n");
+        writer.write("<style>\n" +
+                "  text { font: italic 14px monospace; }\n" +
+                "  </style>\n");
         writer.write("<g>\n");
     }
 
@@ -237,32 +242,38 @@ public abstract class SvgWriter {
         String color = getBaseColor(base);
         String nt = getBaseCharLC(base);
         double IC = this.splicesite.get(base, pos);
-        double Tx = x + (double)this.width/2.0;
-        double Ty = y + (double)this.height/2.0;
+        double Tx =  (double)this.width/2.0;
+        double Ty =  (double)this.height/2.0;
         double Typ = (IC-1.0)*Ty;
         swriter.write(String.format("<g transform=\"matrix(1,0,0,1,%f,%f)\">\n",Tx ,Ty));
-        swriter.write(String.format("<g transform=\"matrix(1,0,0,%f,0,0)\">\n",IC));
-        swriter.write(String.format("<g transform=\"matrix(1,0,0,1,%f,%f)\">\n",-1*Tx ,-1*Typ));
+        if (IC < 0) {
+            swriter.write(String.format("<g transform=\"matrix(1,0,0,%f,0,0)\">\n",abs(IC)));
+            swriter.write(String.format("<g transform=\"matrix(-1,0,0,-1,0,0)\">\n",IC));
+        } else {
+            swriter.write(String.format("<g transform=\"matrix(1,0,0,%f,0,0)\">\n",IC));
+        }
+        swriter.write(String.format("<g transform=\"matrix(1,0,0,1,%f,%f)\">\n",-1*Tx ,-1*Ty));
         String basestring = String.format("<text x=\"%d\" y=\"%d\" fill=\"%s\">%s</text>\n",x,y,color,nt);
         swriter.write(basestring);
+        if (IC < 0) { // need to add extra
+            swriter.write("</g>");
+        }
         swriter.write("</g>\n</g>\n</g>\n");
-        //String viewbox = String.format("<g viewbox=\"0 0 20 100\" preserveAspectRatio=\"none\">%s</g>", basestring);
-       // writer.write(viewbox + "\n");
-        String svgInner = String.format("<svg x=\"%d\" y=\"%d\" width=%d height=%d viewbox=\"0 0 %d %d\" preserveAspectRatio=\"none\">",
-                x,y,LETTER_WIDTH,MAX_LETTER_HEIGHT,LETTER_WIDTH,MAX_LETTER_HEIGHT);
-        svgInner = String.format("%s\n<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n</svg>\n",svgInner,color,nt);
-        //swriter.write(svgInner);
     }
 
     protected void writeRefWalker(Writer writer) throws IOException {
         int X = currentX;
         int Y = currentY;
+        int startX = X;
         for (int i=0; i<seqlen; i++) {
             writeWalkerBase(writer, X, Y, refidx[i], i);
             X += LOWER_CASE_BASE_INCREMENT;
+            //break;
         }
+
         // Reset (x,y) for next line
         currentX = XSTART;
         currentY = Y + Y_LINE_INCREMENT;
+        writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" style=\"stroke:rgb(255,0,0);stroke-width:2\"/>", startX, currentY, X, currentY));
     }
 }

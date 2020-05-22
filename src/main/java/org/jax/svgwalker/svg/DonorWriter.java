@@ -44,7 +44,7 @@ public class DonorWriter extends SvgWriter {
 
     private void writeDonor(StringWriter swriter) {
         this.currentX = XSTART;
-        this.currentY = YSTART;
+        this.currentY = YSTART+50;
         try {
             writeRefPlain(swriter);
             writeAltPlain(swriter);
