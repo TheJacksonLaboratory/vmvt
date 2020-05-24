@@ -2,13 +2,11 @@ package org.jax.svgwalker.svg;
 
 import org.jax.svgwalker.except.SvgwalkerRuntimeException;
 import org.jax.svgwalker.pssm.DoubleMatrix;
-import org.w3c.dom.css.CSSFontFaceRule;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import static java.lang.Math.abs;
 
 /**
  * Base class for writing SVGs of Splice Acceptor or Donor sequences
@@ -16,8 +14,11 @@ import static java.lang.Math.abs;
 public abstract class SvgWriter {
 
     protected final StringWriter swriter;
+    /** The reference (wildtype) sequence of the donor or acceptor splice site. */
     protected final String ref;
+    /** The alternate (mutant) sequence of the donor or acceptor splice site. */
     protected final String alt;
+    /** The length in nucleotides of the splice site (9 for donor TODO for acceptor). */
     protected final int seqlen;
 
     protected final static String BLUE ="#4dbbd5";
@@ -58,11 +59,13 @@ public abstract class SvgWriter {
     protected final int [] altidx;
 
     /** Position where we will start to write things from the left side of the SVG. */
-    private final int XSTART = 10;
+    protected final int XSTART = 10;
     /** Position where we will start to write things from the top of the SVG */
-    private final int YSTART = 10;
+    protected final int YSTART = 60;
     /** Amount of horizontal space to be taken up by one base character. */
     private final int LOWER_CASE_BASE_INCREMENT = LETTER_WIDTH + 5;
+
+    private final double HALF_A_BASE = (double)LOWER_CASE_BASE_INCREMENT/2.0;
     /** Amount to shift down between ref and alt sequence lines */
     private final int Y_LINE_INCREMENT = 20;
 
@@ -107,7 +110,7 @@ public abstract class SvgWriter {
                     refidx[i] = T_BASE;
                     break;
                 default:
-                    throw new SvgwalkerRuntimeException(String.format("Bad nucleotide in ref (%s): Only ACGT/acgt allowed!"));
+                    throw new SvgwalkerRuntimeException(String.format("Bad nucleotide in ref (%s): Only ACGT/acgt allowed!",ref));
             }
         }
         for (int i=0; i<seqlen; i++) {
@@ -129,7 +132,7 @@ public abstract class SvgWriter {
                     altidx[i] = T_BASE;
                     break;
                 default:
-                    throw new SvgwalkerRuntimeException(String.format("Bad nucleotide in alt (%s): Only ACGT/acgt allowed!"));
+                    throw new SvgwalkerRuntimeException(String.format("Bad nucleotide in alt (%s): Only ACGT/acgt allowed!", alt));
             }
         }
     }
@@ -142,7 +145,7 @@ public abstract class SvgWriter {
                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n");
         writer.write("<!-- Created by svgwalker -->\n");
         writer.write("<style>\n" +
-                "  text { font: italic 14px monospace; }\n" +
+                "  text { font: 14px monospace; }\n" +
                 "  </style>\n");
         writer.write("<g>\n");
     }
@@ -230,50 +233,97 @@ public abstract class SvgWriter {
         currentY = Y + Y_LINE_INCREMENT;
     }
 
+
+    protected void writeBoxAroundMutation(Writer writer) throws IOException {
+        // get location of first and last index with mutated bases
+        int b = Integer.MAX_VALUE;
+        int e = Integer.MIN_VALUE;
+        for (int i=0; i<refidx.length; i++) {
+            if (refidx[i] != altidx[i]) {
+                if (i<b) b = i;
+                if (i>e) e = i;
+            }
+        }
+        double startX = b*LOWER_CASE_BASE_INCREMENT + HALF_A_BASE;
+        double endX = (1+e)*LOWER_CASE_BASE_INCREMENT - HALF_A_BASE;
+        int startY = YSTART - LETTER_BASE_HEIGHT;
+        int endY = YSTART + LETTER_BASE_HEIGHT;
+        writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"/>",
+                startX,
+                startY,
+                LOWER_CASE_BASE_INCREMENT,
+                LETTER_BASE_HEIGHT*3));
+
+    }
+
+
     /**
      * Write one lower case nucleotide (a, c, g, t) for the walker.
      * @param writer A string writer
      * @param x x position
      * @param y y position
      * @param base index of the base
-     * @throws IOException if we cannot write
      */
-    protected void writeWalkerBase(Writer writer, int x, int y, int base, int pos) throws IOException {
+    protected void writeWalkerBase(Writer writer, int x, int y, int base, int pos) {
         String color = getBaseColor(base);
         String nt = getBaseCharLC(base);
         double IC = this.splicesite.get(base, pos);
-        double Tx =  (double)this.width/2.0;
-        double Ty =  (double)this.height/2.0;
-        double Typ = (IC-1.0)*Ty;
-        swriter.write(String.format("<g transform=\"matrix(1,0,0,1,%f,%f)\">\n",Tx ,Ty));
-        if (IC < 0) {
-            swriter.write(String.format("<g transform=\"matrix(1,0,0,%f,0,0)\">\n",abs(IC)));
-            swriter.write(String.format("<g transform=\"matrix(-1,0,0,-1,0,0)\">\n",IC));
-        } else {
-            swriter.write(String.format("<g transform=\"matrix(1,0,0,%f,0,0)\">\n",IC));
-        }
-        swriter.write(String.format("<g transform=\"matrix(1,0,0,1,%f,%f)\">\n",-1*Tx ,-1*Ty));
-        String basestring = String.format("<text x=\"%d\" y=\"%d\" fill=\"%s\">%s</text>\n",x,y,color,nt);
-        swriter.write(basestring);
-        if (IC < 0) { // need to add extra
+
+        if (IC>0) {
+            swriter.write(String.format("<g transform='translate(%d,%d) scale(1,%f)'>\n",x,y,IC)); //scale(1,%f)
+            swriter.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
             swriter.write("</g>");
+        } else {
+            swriter.write(String.format("<g transform='translate(%f,%d)  scale(1,%f)  rotate(180)'>\n",x+HALF_A_BASE,y, Math.abs(IC))); //
+            swriter.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
+            swriter.write("</g>\n");
         }
-        swriter.write("</g>\n</g>\n</g>\n");
     }
 
-    protected void writeRefWalker(Writer writer) throws IOException {
+    protected void writeRefWalker(Writer writer) {
         int X = currentX;
         int Y = currentY;
         int startX = X;
         for (int i=0; i<seqlen; i++) {
             writeWalkerBase(writer, X, Y, refidx[i], i);
             X += LOWER_CASE_BASE_INCREMENT;
-            //break;
         }
-
         // Reset (x,y) for next line
         currentX = XSTART;
-        currentY = Y + Y_LINE_INCREMENT;
-        writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" style=\"stroke:rgb(255,0,0);stroke-width:2\"/>", startX, currentY, X, currentY));
+    }
+
+    protected void writeRefAltSeparation(Writer writer) throws IOException {
+        //currentY += (double)Y_LINE_INCREMENT/5.0;
+        int endX = this.seqlen * LOWER_CASE_BASE_INCREMENT;
+        writer.write("<g fill=\"none\" stroke=\"black\" stroke-width=\"1\">\n");
+        writer.write(String.format("<path stroke-dasharray=\"2,2\" d=\"M%d %d L%d %d\"/>\n", XSTART, currentY, endX, currentY));
+        writer.write("</g>\n");
+    }
+
+    protected void writeAltWalker(Writer writer) {
+        int X = currentX;
+        int Y = currentY;
+        for (int i=0; i<seqlen; i++) {
+            if (refidx[i] != altidx[i]) {
+                writeWalkerBase(writer, X, Y, altidx[i], i);
+            }
+            X += LOWER_CASE_BASE_INCREMENT;
+        }
+        // Reset (x,y) for next line
+        currentX = XSTART;
+    }
+
+    /**
+     * If there is some IO Exception, return an SVG with a text that indicates the error
+     * @param msg The error
+     * @return An SVG element that contains the error
+     */
+    protected String getSvgErrorMessage(String msg) {
+        return String.format("<svg width=\"200\" height=\"100\" " +
+                 "xmlns=\"http://www.w3.org/2000/svg\" " +
+                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n" +
+                 "<!-- Created by svgwalker -->\n" +
+                 "<g><text x=\"10\" y=\"10\">%s</text>\n</g>\n" +
+             "</svg>\n", msg);
     }
 }

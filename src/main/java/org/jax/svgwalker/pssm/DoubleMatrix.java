@@ -14,7 +14,7 @@ public class DoubleMatrix {
         vals = new double[nRows*nCols];
     }
 
-    public DoubleMatrix(double othervals[][]) {
+    public DoubleMatrix(double[][] othervals) {
         this.nRows = othervals.length;
         this.nCols = othervals[0].length;
         vals = new double[nRows*nCols];
@@ -68,8 +68,8 @@ public class DoubleMatrix {
      * As a sanity check, we look to see that the frequencies add up to one.
      * The frequencies are given with 3 decimal places, so our epsilon needs
      * to be 0.01
-     * @param vals
-     * @return
+     * @param vals List of base frequencies
+     * @return A Double matrix of frequencies
      */
     static DoubleMatrix mapToDoubleMatrix(List<List<Double>> vals) {
         double epsilon = 0.01;
