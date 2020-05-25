@@ -5,10 +5,10 @@ import org.jax.svgwalker.pssm.DoubleMatrix;
 import java.io.IOException;
 import java.io.StringWriter;
 
-public class DonorWriter extends SvgWriter {
+public class AcceptorWriter extends SvgWriter {
 
-    public DonorWriter(String ref, String alt) {
-        super(ref, alt, DoubleMatrix.donor());
+    public AcceptorWriter(String ref, String alt) {
+        super(ref, alt, DoubleMatrix.acceptor());
     }
 
     @Override

@@ -12,14 +12,15 @@ import java.io.Writer;
  * Base class for writing SVGs of Splice Acceptor or Donor sequences
  */
 public abstract class SvgWriter {
-
-    protected final StringWriter swriter;
     /** The reference (wildtype) sequence of the donor or acceptor splice site. */
     protected final String ref;
     /** The alternate (mutant) sequence of the donor or acceptor splice site. */
     protected final String alt;
     /** The length in nucleotides of the splice site (9 for donor TODO for acceptor). */
     protected final int seqlen;
+
+    private final int WIDTH = 400;
+    private final int HEIGHT = 200;
 
     protected final static String BLUE ="#4dbbd5";
     protected final static String RED ="#e64b35";
@@ -77,14 +78,15 @@ public abstract class SvgWriter {
 
     /** Representation of the Splice donor/acceptor IC matrix. */
     private final DoubleMatrix splicesite;
+    private final DoubleMatrix acceptorsite;
 
-    public SvgWriter(String reference, String alternate, int width, int height, DoubleMatrix site) {
-        this.swriter = new StringWriter();
-        this.ref = reference;
-        this.alt = alternate;
-        this.width = width;
-        this.height = height;
-        this.splicesite = site;
+    public SvgWriter(String ref, String alt, DoubleMatrix site) {
+        splicesite = site;
+        acceptorsite = DoubleMatrix.acceptor();
+        this.ref = ref;
+        this.alt = alt;
+        this.width = WIDTH;
+        this.height = HEIGHT;
         if (ref.length() != alt.length()) {
             throw new SvgwalkerRuntimeException(String.format("ref (%s) and alt (%s) have different lengths!", ref, alt));
         }
@@ -137,7 +139,14 @@ public abstract class SvgWriter {
         }
     }
 
-    abstract public String getSvg();
+    /**
+     * @return An SVG representation of the sequence walker with variant base or bases.
+     */
+    public abstract String getWalker();
+
+
+
+
 
     protected void writeHeader(Writer writer) throws IOException {
         writer.write("<svg width=\""+width+"\" height=\""+height+"\" " +
@@ -148,6 +157,18 @@ public abstract class SvgWriter {
                 "  text { font: 14px monospace; }\n" +
                 "  </style>\n");
         writer.write("<g>\n");
+    }
+
+    protected void initXYpositions() {
+        this.currentX = XSTART;
+        this.currentY = YSTART;
+    }
+
+    /**
+     * Add some extra vertical space (one {@link #Y_LINE_INCREMENT}).
+     */
+    protected void incrementYposition() {
+        this.currentY += Y_LINE_INCREMENT;
     }
 
     protected void writeFooter(Writer writer) throws IOException {
@@ -264,23 +285,23 @@ public abstract class SvgWriter {
      * @param y y position
      * @param base index of the base
      */
-    protected void writeWalkerBase(Writer writer, int x, int y, int base, int pos) {
+    protected void writeWalkerBase(Writer writer, int x, int y, int base, int pos) throws IOException {
         String color = getBaseColor(base);
         String nt = getBaseCharLC(base);
         double IC = this.splicesite.get(base, pos);
 
         if (IC>0) {
-            swriter.write(String.format("<g transform='translate(%d,%d) scale(1,%f)'>\n",x,y,IC)); //scale(1,%f)
-            swriter.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
-            swriter.write("</g>");
+            writer.write(String.format("<g transform='translate(%d,%d) scale(1,%f)'>\n",x,y,IC)); //scale(1,%f)
+            writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
+            writer.write("</g>");
         } else {
-            swriter.write(String.format("<g transform='translate(%f,%d)  scale(1,%f)  rotate(180)'>\n",x+HALF_A_BASE,y, Math.abs(IC))); //
-            swriter.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
-            swriter.write("</g>\n");
+            writer.write(String.format("<g transform='translate(%f,%d)  scale(1,%f)  rotate(180)'>\n",x+HALF_A_BASE,y, Math.abs(IC))); //
+            writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
+            writer.write("</g>\n");
         }
     }
 
-    protected void writeRefWalker(Writer writer) {
+    protected void writeRefWalker(Writer writer) throws IOException {
         int X = currentX;
         int Y = currentY;
         int startX = X;
@@ -300,7 +321,7 @@ public abstract class SvgWriter {
         writer.write("</g>\n");
     }
 
-    protected void writeAltWalker(Writer writer) {
+    protected void writeAltWalker(Writer writer) throws IOException {
         int X = currentX;
         int Y = currentY;
         for (int i=0; i<seqlen; i++) {

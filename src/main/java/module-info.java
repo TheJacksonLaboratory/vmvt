@@ -1,4 +1,4 @@
 module svgwalker {
-    exports org.jax.svgwalker.svg;
+    exports org.jax.svgwalker;
 }
 

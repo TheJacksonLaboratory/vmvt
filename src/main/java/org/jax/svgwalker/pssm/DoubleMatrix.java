@@ -119,8 +119,18 @@ public class DoubleMatrix {
         return dm;
     }
 
+    /**
+     * @return A matrix representing the information content of the splice donor site
+     */
     public static DoubleMatrix donor() {
         DoubleMatrix dm = DoubleMatrix.mapToDoubleMatrix(SpliceDonorMatrix.get());
+        return DoubleMatrix.createICMatrix(dm);
+    }
+    /**
+     * @return A matrix representing the information content of the splice acceptor site
+     */
+    public static DoubleMatrix acceptor() {
+        DoubleMatrix dm = DoubleMatrix.mapToDoubleMatrix(SpliceAcceptorMatrix.get());
         return DoubleMatrix.createICMatrix(dm);
     }
 }

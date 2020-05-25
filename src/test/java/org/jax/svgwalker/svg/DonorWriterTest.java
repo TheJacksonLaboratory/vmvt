@@ -1,5 +1,6 @@
 package org.jax.svgwalker.svg;
 
+import org.jax.svgwalker.WalkerWriter;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
@@ -15,14 +16,14 @@ public class DonorWriterTest {
 
     @Test
     void testCtor() {
-        SvgWriter donor = new DonorWriter(ref,alt);
+        WalkerWriter donor = new WalkerWriter();
         assertNotNull(donor);
     }
 
     @Test
     void testWriteSvg() {
-        SvgWriter donor = new DonorWriter(ref,alt);
-        String svg = donor.getSvg();
+        WalkerWriter donor = new WalkerWriter();
+        String svg = donor.getDonorSvg(ref,alt);
         assertNotNull(svg);
         System.out.println(svg);
         try {

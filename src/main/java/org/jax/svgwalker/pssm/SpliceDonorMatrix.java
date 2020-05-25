@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * For convenience and speed, this class contains the frequency matrix
- * of the Splice done, from position -3 to +6.
+ * of the Splice donor, from position -3 to +6.
  */
 public class SpliceDonorMatrix {
     private static final List<Double> A = List.of(0.332, 0.638, 0.097, 0.002, 0.001, 0.597, 0.683, 0.091, 0.179);
@@ -18,6 +18,8 @@ public class SpliceDonorMatrix {
   public static List<List<Double>> get() {
       return donor;
   }
+
+
 
 
 }
