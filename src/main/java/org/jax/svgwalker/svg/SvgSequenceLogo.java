@@ -1,17 +1,19 @@
 package org.jax.svgwalker.svg;
 
+
 import org.jax.svgwalker.except.SvgwalkerRuntimeException;
 import org.jax.svgwalker.pssm.DoubleMatrix;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
-
+import java.util.Map;
 
 /**
- * Base class for writing SVGs of Splice Acceptor or Donor sequences
+ * TODO -- FOR NOW DUPLICATE CODE.
+ * LATER -- PROBABLY MAKE COMMON SUPER CLASS FOR THIS AND {@link SvgSequenceWalker} AFTER
+ * WE UNDERSTAND NEEDS/ARCHITECTURE
  */
-public abstract class SvgWriter {
+public abstract class SvgSequenceLogo {
     /** The reference (wildtype) sequence of the donor or acceptor splice site. */
     protected final String ref;
     /** The alternate (mutant) sequence of the donor or acceptor splice site. */
@@ -21,16 +23,11 @@ public abstract class SvgWriter {
 
     private final int WIDTH = 400;
     private final int HEIGHT = 200;
+    /** Maximum height of the letters in the sequence logo. Needs to be adjusted together with {@link #FUDGE_FACTOR}.*/
+    private final double LOGO_COLUMN_HEIGHT = 20.0;
+    /** This is a magic number that places the letters in the correct vertical position. Works with {@link #LOGO_COLUMN_HEIGHT}.*/
+    private final double FUDGE_FACTOR = 1.14;
 
-    protected final static String BLUE ="#4dbbd5";
-    protected final static String RED ="#e64b35";
-    protected final static String BROWN="#7e6148";
-    protected final static String DARKBLUE = "#3c5488";
-    protected final static String VIOLET = "#8491b4";
-    protected final static String ORANGE = "#ff9900";
-    protected final static String BLACK = "#000000";
-    protected final static String GREEN = "#00A087";
-    protected final static String BRIGHT_GREEN = "#00a087";
     /** A blue color for Adenine */
     protected final static String A_COLOR = "#4dbbd5";
     /** A red color for Cytosine */
@@ -40,7 +37,7 @@ public abstract class SvgWriter {
     /** A yellow color for Thymine */
     protected final static String T_COLOR = "#ffdf00";
 
-    protected final static int LETTER_WIDTH = 10;
+    protected final static int LETTER_WIDTH = 8;
     /** Height of a letter before scaling */
     protected final static int LETTER_BASE_HEIGHT = 12;
 
@@ -78,11 +75,10 @@ public abstract class SvgWriter {
 
     /** Representation of the Splice donor/acceptor IC matrix. */
     private final DoubleMatrix splicesite;
-    private final DoubleMatrix acceptorsite;
 
-    public SvgWriter(String ref, String alt, DoubleMatrix site) {
+
+    public SvgSequenceLogo(String ref, String alt, DoubleMatrix site) {
         splicesite = site;
-        acceptorsite = DoubleMatrix.acceptor();
         this.ref = ref;
         this.alt = alt;
         this.width = WIDTH;
@@ -140,11 +136,9 @@ public abstract class SvgWriter {
     }
 
     /**
-     * @return An SVG representation of the sequence walker with variant base or bases.
+     * @return An SVG representation of the sequence logo with variant base or bases.
      */
-    public abstract String getWalker();
-
-
+    public abstract String getLogo();
 
 
 
@@ -154,7 +148,7 @@ public abstract class SvgWriter {
                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n");
         writer.write("<!-- Created by svgwalker -->\n");
         writer.write("<style>\n" +
-                "  text { font: 14px monospace; }\n" +
+                "  text { font: 24px monospace; }\n" +
                 "  </style>\n");
         writer.write("<g>\n");
     }
@@ -162,17 +156,6 @@ public abstract class SvgWriter {
     protected void initXYpositions() {
         this.currentX = XSTART;
         this.currentY = YSTART;
-    }
-
-    /**
-     * Add some extra vertical space (one {@link #Y_LINE_INCREMENT}).
-     */
-    protected void incrementYposition() {
-        this.currentY += Y_LINE_INCREMENT;
-    }
-
-    protected void writeFooter(Writer writer) throws IOException {
-        writer.write("</g>\n</svg>\n");
     }
 
     private String getBaseColor(int b) {
@@ -184,6 +167,22 @@ public abstract class SvgWriter {
             case G_BASE:
                 return G_COLOR;
             case T_BASE:
+                return T_COLOR;
+            default:
+                // should never happen
+                throw new SvgwalkerRuntimeException("Unrecognized color: " + b);
+        }
+    }
+
+    private String getBaseColorFromChar(String b) {
+        switch (b) {
+            case "A":
+                return A_COLOR;
+            case "C":
+                return C_COLOR;
+            case "G":
+                return G_COLOR;
+            case "T":
                 return T_COLOR;
             default:
                 // should never happen
@@ -208,9 +207,57 @@ public abstract class SvgWriter {
                 return "t";
             default:
                 // should never happen
-                throw new SvgwalkerRuntimeException("Unrecognized color: " + b);
+                throw new SvgwalkerRuntimeException("Unrecognized base: " + b);
         }
     }
+
+    /**
+     * Get the lower case character for this base
+     * @param b index (0,1,2,3)
+     * @return corresponding lower case character for the base (a,c,g,t)
+     */
+    private String getBaseCharUC(int b) {
+        switch (b) {
+            case A_BASE:
+                return "A";
+            case C_BASE:
+                return "C";
+            case G_BASE:
+                return "G";
+            case T_BASE:
+                return "T";
+            default:
+                // should never happen
+                throw new SvgwalkerRuntimeException("Unrecognized base: " + b);
+        }
+    }
+
+
+    /**
+     * Write one lower case nucleotide (a, c, g, t) for the walker.
+     * @param writer A string writer
+     * @param x x position
+     * @param y y position
+     */
+    protected void writeLogoBaseColumn(Writer writer, int x, int y, int pos) throws IOException {
+        Map<String, Double> sortedIcMap = this.splicesite.getIcValuesColumn(pos);
+        double ypos = (double)y - LOGO_COLUMN_HEIGHT;
+        for (Map.Entry<String, Double> entry : sortedIcMap.entrySet()) {
+            String nt = entry.getKey();
+            double ic = entry.getValue();
+            String color = getBaseColorFromChar(nt);
+            writer.write(String.format("<g transform='translate(%d,%f) scale(1,%f)'>\n",x,ypos,ic)); //scale(1,%f)
+            writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
+            writer.write("</g>");
+            // The total ic should be 2.0
+            // increment the Y value back up
+            ypos -= (ic/FUDGE_FACTOR) * LOGO_COLUMN_HEIGHT;
+        }
+    }
+
+
+
+
 
     /**
      * Write one lower case nucleotide (a, c, g, t) to show the sequence. This goes above the actual walker logo
@@ -254,7 +301,6 @@ public abstract class SvgWriter {
         currentY = Y + Y_LINE_INCREMENT;
     }
 
-
     protected void writeBoxAroundMutation(Writer writer) throws IOException {
         // get location of first and last index with mutated bases
         int b = Integer.MAX_VALUE;
@@ -265,10 +311,10 @@ public abstract class SvgWriter {
                 if (i>e) e = i;
             }
         }
-        double startX = b*LOWER_CASE_BASE_INCREMENT + HALF_A_BASE;
-        double endX = (1+e)*LOWER_CASE_BASE_INCREMENT - HALF_A_BASE;
-        int startY = YSTART - LETTER_BASE_HEIGHT;
-        int endY = YSTART + LETTER_BASE_HEIGHT;
+        double startX = XSTART + b*LOWER_CASE_BASE_INCREMENT;
+        double endX = startX + LOWER_CASE_BASE_INCREMENT;
+        int startY = YSTART + LETTER_BASE_HEIGHT;
+        int endY = YSTART + 2*LETTER_BASE_HEIGHT;
         writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"/>",
                 startX,
                 startY,
@@ -277,61 +323,21 @@ public abstract class SvgWriter {
 
     }
 
-
     /**
-     * Write one lower case nucleotide (a, c, g, t) for the walker.
-     * @param writer A string writer
-     * @param x x position
-     * @param y y position
-     * @param base index of the base
+     * Add some extra vertical space (one {@link #Y_LINE_INCREMENT}).
      */
-    protected void writeWalkerBase(Writer writer, int x, int y, int base, int pos) throws IOException {
-        String color = getBaseColor(base);
-        String nt = getBaseCharLC(base);
-        double IC = this.splicesite.get(base, pos);
-
-        if (IC>0) {
-            writer.write(String.format("<g transform='translate(%d,%d) scale(1,%f)'>\n",x,y,IC)); //scale(1,%f)
-            writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
-            writer.write("</g>");
-        } else {
-            writer.write(String.format("<g transform='translate(%f,%d)  scale(1,%f)  rotate(180)'>\n",x+HALF_A_BASE,y, Math.abs(IC))); //
-            writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
-            writer.write("</g>\n");
-        }
+    protected void incrementYposition() {
+        this.currentY += Y_LINE_INCREMENT;
+    }
+    /**
+     * Add some extra vertical space (one {@link #Y_LINE_INCREMENT}).
+     */
+    protected void incrementYposition(double factor) {
+        this.currentY += (int)(factor*Y_LINE_INCREMENT);
     }
 
-    protected void writeRefWalker(Writer writer) throws IOException {
-        int X = currentX;
-        int Y = currentY;
-        int startX = X;
-        for (int i=0; i<seqlen; i++) {
-            writeWalkerBase(writer, X, Y, refidx[i], i);
-            X += LOWER_CASE_BASE_INCREMENT;
-        }
-        // Reset (x,y) for next line
-        currentX = XSTART;
-    }
-
-    protected void writeRefAltSeparation(Writer writer) throws IOException {
-        //currentY += (double)Y_LINE_INCREMENT/5.0;
-        int endX = this.seqlen * LOWER_CASE_BASE_INCREMENT;
-        writer.write("<g fill=\"none\" stroke=\"black\" stroke-width=\"1\">\n");
-        writer.write(String.format("<path stroke-dasharray=\"2,2\" d=\"M%d %d L%d %d\"/>\n", XSTART, currentY, endX, currentY));
-        writer.write("</g>\n");
-    }
-
-    protected void writeAltWalker(Writer writer) throws IOException {
-        int X = currentX;
-        int Y = currentY;
-        for (int i=0; i<seqlen; i++) {
-            if (refidx[i] != altidx[i]) {
-                writeWalkerBase(writer, X, Y, altidx[i], i);
-            }
-            X += LOWER_CASE_BASE_INCREMENT;
-        }
-        // Reset (x,y) for next line
-        currentX = XSTART;
+    protected void writeFooter(Writer writer) throws IOException {
+        writer.write("</g>\n</svg>\n");
     }
 
     /**
@@ -341,10 +347,48 @@ public abstract class SvgWriter {
      */
     protected String getSvgErrorMessage(String msg) {
         return String.format("<svg width=\"200\" height=\"100\" " +
-                 "xmlns=\"http://www.w3.org/2000/svg\" " +
-                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n" +
-                 "<!-- Created by svgwalker -->\n" +
-                 "<g><text x=\"10\" y=\"10\">%s</text>\n</g>\n" +
-             "</svg>\n", msg);
+                "xmlns=\"http://www.w3.org/2000/svg\" " +
+                "xmlns:svg=\"http://www.w3.org/2000/svg\">\n" +
+                "<!-- Created by svgwalker -->\n" +
+                "<g><text x=\"10\" y=\"10\">%s</text>\n</g>\n" +
+                "</svg>\n", msg);
     }
+
+
+    protected void writeLogo(Writer writer) throws IOException {
+        int X = currentX;
+        int Y = currentY;
+
+        int Y1 = (int)(Y-LOGO_COLUMN_HEIGHT);
+        int Y2 = (int)(Y-2.7*LOGO_COLUMN_HEIGHT);
+//        writer.write(String.format("<line x1=\"%s\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"red\"/>\n",X,Y1,X+300,Y1));
+//        writer.write(String.format("<line x1=\"%s\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"green\"/>\n",X,Y2,X+300,Y2));
+        for (int i=0; i<seqlen; i++) {
+            writeLogoBaseColumn(writer, X, Y, i);
+            X += LOWER_CASE_BASE_INCREMENT;
+        }
+        // Write position numbers underneath the logo.
+        if (seqlen == 9) {
+            int Xr = (int)(currentX + 0.7 * LOWER_CASE_BASE_INCREMENT);
+            int Yr = (int)(Y-0.5*LOGO_COLUMN_HEIGHT);
+            for (int i=0; i<seqlen; i++) {
+                int j = i-2; // substract 3 for the 3 intronic positions
+                j = j<=0 ? j-1 : j; // we do not have a zeroth position in this display!
+                writer.write(String.format("<g transform='translate(%d,%d) scale(0.25,0.25) rotate(270)'>\n",Xr,Yr)); //scale(1,%f)
+                writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"black\">%d</text>\n",j));
+                writer.write("</g>");
+                Xr += LOWER_CASE_BASE_INCREMENT;
+            }
+        } else if (seqlen == 27) {
+
+        } else {
+            // should never happen
+            throw new SvgwalkerRuntimeException("Unrecognized seqlen: " + seqlen);
+        }
+        // Reset (x,y) for next line
+        currentX = XSTART;
+    }
+
+
+
 }

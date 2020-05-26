@@ -1,12 +1,16 @@
 package org.jax.svgwalker.pssm;
 
-import java.util.List;
+import org.jax.svgwalker.except.SvgwalkerRuntimeException;
+
+import java.util.*;
 
 public class DoubleMatrix {
 
     private final double[] vals;
     private final int nRows;
     private final int nCols;
+
+    private final static double LOG_TWO = Math.log(2);
 
     public DoubleMatrix(int nRows, int nCols) {
         this.nRows = nRows;
@@ -29,6 +33,12 @@ public class DoubleMatrix {
         this.vals[i*nCols + j] = val;
     }
 
+    /**
+     *
+     * @param i Column index (ranges from 0 to seqlen-1)
+     * @param j Row index (ranges from 0=A,1=C,2=G,3=T).
+     * @return value of corresponding table cell (usually frequency or IC)
+     */
     public double get(int i, int j) {
         return this.vals[i*nCols + j];
     }
@@ -49,9 +59,48 @@ public class DoubleMatrix {
            // iterate through all nucleotides
             // we do not need to care about row or column
             icm.vals[i] = calculateIC(freqMatrix.vals[i]);
+            System.out.println(icm.vals[i]);
         }
         return icm;
     }
+
+
+    /**
+     * Calculate the height of each base to be shown in the sequence logo.
+     * See Schneider TD, Stephens RM. Sequence logos: a new way to display
+     * consensus sequences. Nucleic Acids Res. 1990;18(20):6097‐6100.
+     * PMID:2172928
+     * @param freqMatrix A matrix of the frequencies of each base
+     * @return A matrix with the height of each base (wildtype) in the sequence logo.
+     */
+    public static DoubleMatrix heightMatrix(DoubleMatrix freqMatrix) {
+        DoubleMatrix heightMatrix = new DoubleMatrix(freqMatrix.nRows, freqMatrix.nCols);
+        for (int col=0;col<freqMatrix.nCols;col++) {
+            // first get the Rsequence for this column
+            // H(l) = -\sum_{b=A}^{T} f(b,l)log_2 f(b,l)
+            double H = 0.0;
+            for (int base=0;base<4;base++) {
+                double f = freqMatrix.get(base,col);
+                H -= f * Math.log(f) / LOG_TWO;
+            }
+            // R_sequence(l) = 2-(H(l) + e(n))
+            // Note e(n) is a correction factor for small samples
+            // but we will disregard it because we used lots of samples to calculate the frequencies
+            double Rsequence = 2.0 -H;
+            // The height of base b at position l = f(b,l) * Rseqence(l)
+            for (int base=0;base<4;base++) {
+                double f = freqMatrix.get(base,col);
+                double height = f * Rsequence;
+                heightMatrix.put(base, col, height);
+            }
+        }
+        return heightMatrix;
+    }
+
+
+
+
+
     /**
      * Calculate information content of the nucleotide from the frequency using formula 1 (Rogan paper from class
      * description). Correction factor is ignored, I assume that the sample size used to calculate the nucleotide
@@ -119,6 +168,47 @@ public class DoubleMatrix {
         return dm;
     }
 
+    private String getBase(int j) {
+        switch (j) {
+            case 0:
+                return "A";
+            case 1:
+                return "C";
+            case 2:
+                return "G";
+            case 3:
+                return "T";
+            default:
+                // should never happen
+                throw new SvgwalkerRuntimeException("Unrecognized base index");
+        }
+    }
+
+    /**
+     * Get a map with the IC values for all bases in a column.
+     * Order the map by descending value of information content
+     * @param i column index
+     * @return ordered map of IC values for the four bases ("A", "C", "G", "T")
+     */
+    public Map<String, Double> getIcValuesColumn(int i) {
+        Map<String, Double> unSortedMap = new HashMap<>();
+        for (int j = 0; j<4; j++) {
+            String base = getBase(j);
+            double ic = get(j,i);
+            if (ic < 0) {
+                throw new RuntimeException("IC="+ic);
+            }
+            unSortedMap.put(base, ic);
+        }
+        // now sort the bases according to IC
+        LinkedHashMap<String, Double> sortedMap = new LinkedHashMap<>();
+        unSortedMap.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
+        return sortedMap;
+    }
+
     /**
      * @return A matrix representing the information content of the splice donor site
      */
@@ -132,5 +222,20 @@ public class DoubleMatrix {
     public static DoubleMatrix acceptor() {
         DoubleMatrix dm = DoubleMatrix.mapToDoubleMatrix(SpliceAcceptorMatrix.get());
         return DoubleMatrix.createICMatrix(dm);
+    }
+
+    /**
+     * @return A matrix representing the information content of the splice donor site
+     */
+    public static DoubleMatrix donorHeightMatrix() {
+        DoubleMatrix dm = DoubleMatrix.mapToDoubleMatrix(SpliceDonorMatrix.get());
+        return DoubleMatrix.heightMatrix(dm);
+    }
+    /**
+     * @return A matrix representing the information content of the splice acceptor site
+     */
+    public static DoubleMatrix acceptorHeightMatrix() {
+        DoubleMatrix dm = DoubleMatrix.mapToDoubleMatrix(SpliceAcceptorMatrix.get());
+        return DoubleMatrix.heightMatrix(dm);
     }
 }
