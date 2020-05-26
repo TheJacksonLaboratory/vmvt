@@ -181,6 +181,22 @@ public abstract class SvgSequenceLogo {
         }
     }
 
+    private String getBaseColorFromChar(String b) {
+        switch (b) {
+            case "A":
+                return A_COLOR;
+            case "C":
+                return C_COLOR;
+            case "G":
+                return G_COLOR;
+            case "T":
+                return T_COLOR;
+            default:
+                // should never happen
+                throw new SvgwalkerRuntimeException("Unrecognized color: " + b);
+        }
+    }
+
     /**
      * Get the lower case character for this base
      * @param b index (0,1,2,3)
@@ -231,14 +247,13 @@ public abstract class SvgSequenceLogo {
      * @param y y position
      */
     protected void writeLogoBaseColumn(Writer writer, int x, int y, int pos) throws IOException {
-        Map<Character, Double> sortedIcMap = this.splicesite.getIcValuesColumn(pos);
+        Map<String, Double> sortedIcMap = this.splicesite.getIcValuesColumn(pos);
         double ypos = (double)y - LOGO_COLUMN_HEIGHT;
-        for (Map.Entry<Character, Double> entry : sortedIcMap.entrySet()) {
-            char base = entry.getKey();
+        for (Map.Entry<String, Double> entry : sortedIcMap.entrySet()) {
+            String nt = entry.getKey();
             double ic = entry.getValue();
-            String color = getBaseColor(base);
-            String nt = getBaseCharUC(base);
-            writer.write(String.format("<g transform='translate(%d,%d) scale(1,%f)'>\n",x,ypos,ic)); //scale(1,%f)
+            String color = getBaseColorFromChar(nt);
+            writer.write(String.format("<g transform='translate(%d,%f) scale(1,%f)'>\n",x,ypos,ic)); //scale(1,%f)
             writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
             writer.write("</g>");
             // The total ic should be 2.0

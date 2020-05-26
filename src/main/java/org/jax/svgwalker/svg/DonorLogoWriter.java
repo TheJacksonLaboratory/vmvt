@@ -12,7 +12,7 @@ import java.io.StringWriter;
 public class DonorLogoWriter extends SvgSequenceLogo {
 
     public DonorLogoWriter(String ref, String alt) {
-        super(ref, alt, DoubleMatrix.donor());
+        super(ref, alt, DoubleMatrix.donorHeightMatrix());
     }
 
     @Override
@@ -21,12 +21,17 @@ public class DonorLogoWriter extends SvgSequenceLogo {
         try {
             writeHeader(swriter);
             initXYpositions();
+            incrementYposition();
+            incrementYposition();
+            writeLogo(swriter);
+            incrementYposition();
+
+
             writeRefPlain(swriter);
             writeAltPlain(swriter);
             writeBoxAroundMutation(swriter);
-            incrementYposition();
 
-            writeLogo(swriter);
+
 
             writeFooter(swriter);
             return swriter.toString();
