@@ -65,15 +65,27 @@ public class DoubleMatrix {
     }
 
 
+    /**
+     * Calculate the height of each base to be shown in the sequence logo.
+     * See Schneider TD, Stephens RM. Sequence logos: a new way to display
+     * consensus sequences. Nucleic Acids Res. 1990;18(20):6097‐6100.
+     * PMID:2172928
+     * @param freqMatrix A matrix of the frequencies of each base
+     * @return A matrix with the height of each base (wildtype) in the sequence logo.
+     */
     public static DoubleMatrix heightMatrix(DoubleMatrix freqMatrix) {
         DoubleMatrix heightMatrix = new DoubleMatrix(freqMatrix.nRows, freqMatrix.nCols);
         for (int col=0;col<freqMatrix.nCols;col++) {
             // first get the Rsequence for this column
+            // H(l) = -\sum_{b=A}^{T} f(b,l)log_2 f(b,l)
             double H = 0.0;
             for (int base=0;base<4;base++) {
                 double f = freqMatrix.get(base,col);
                 H -= f * Math.log(f) / LOG_TWO;
             }
+            // R_sequence(l) = 2-(H(l) + e(n))
+            // Note e(n) is a correction factor for small samples
+            // but we will disregard it because we used lots of samples to calculate the frequencies
             double Rsequence = 2.0 -H;
             // The height of base b at position l = f(b,l) * Rseqence(l)
             for (int base=0;base<4;base++) {

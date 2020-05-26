@@ -23,18 +23,11 @@ public abstract class SvgSequenceLogo {
 
     private final int WIDTH = 400;
     private final int HEIGHT = 200;
-
+    /** Maximum height of the letters in the sequence logo. Needs to be adjusted together with {@link #FUDGE_FACTOR}.*/
     private final double LOGO_COLUMN_HEIGHT = 20.0;
+    /** This is a magic number that places the letters in the correct vertical position. Works with {@link #LOGO_COLUMN_HEIGHT}.*/
+    private final double FUDGE_FACTOR = 1.14;
 
-    protected final static String BLUE ="#4dbbd5";
-    protected final static String RED ="#e64b35";
-    protected final static String BROWN="#7e6148";
-    protected final static String DARKBLUE = "#3c5488";
-    protected final static String VIOLET = "#8491b4";
-    protected final static String ORANGE = "#ff9900";
-    protected final static String BLACK = "#000000";
-    protected final static String GREEN = "#00A087";
-    protected final static String BRIGHT_GREEN = "#00a087";
     /** A blue color for Adenine */
     protected final static String A_COLOR = "#4dbbd5";
     /** A red color for Cytosine */
@@ -44,7 +37,7 @@ public abstract class SvgSequenceLogo {
     /** A yellow color for Thymine */
     protected final static String T_COLOR = "#ffdf00";
 
-    protected final static int LETTER_WIDTH = 10;
+    protected final static int LETTER_WIDTH = 8;
     /** Height of a letter before scaling */
     protected final static int LETTER_BASE_HEIGHT = 12;
 
@@ -155,7 +148,7 @@ public abstract class SvgSequenceLogo {
                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n");
         writer.write("<!-- Created by svgwalker -->\n");
         writer.write("<style>\n" +
-                "  text { font: 14px monospace; }\n" +
+                "  text { font: 24px monospace; }\n" +
                 "  </style>\n");
         writer.write("<g>\n");
     }
@@ -258,14 +251,8 @@ public abstract class SvgSequenceLogo {
             writer.write("</g>");
             // The total ic should be 2.0
             // increment the Y value back up
-            ypos += (ic/2.0) * LOGO_COLUMN_HEIGHT;
+            ypos -= (ic/FUDGE_FACTOR) * LOGO_COLUMN_HEIGHT;
         }
-
-
-
-
-
-
     }
 
 
@@ -324,10 +311,10 @@ public abstract class SvgSequenceLogo {
                 if (i>e) e = i;
             }
         }
-        double startX = b*LOWER_CASE_BASE_INCREMENT + HALF_A_BASE;
-        double endX = (1+e)*LOWER_CASE_BASE_INCREMENT - HALF_A_BASE;
-        int startY = YSTART - LETTER_BASE_HEIGHT;
-        int endY = YSTART + LETTER_BASE_HEIGHT;
+        double startX = XSTART + b*LOWER_CASE_BASE_INCREMENT;
+        double endX = startX + LOWER_CASE_BASE_INCREMENT;
+        int startY = YSTART + LETTER_BASE_HEIGHT;
+        int endY = YSTART + 2*LETTER_BASE_HEIGHT;
         writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"/>",
                 startX,
                 startY,
@@ -340,7 +327,13 @@ public abstract class SvgSequenceLogo {
      * Add some extra vertical space (one {@link #Y_LINE_INCREMENT}).
      */
     protected void incrementYposition() {
-        this.currentY += 3*Y_LINE_INCREMENT;
+        this.currentY += Y_LINE_INCREMENT;
+    }
+    /**
+     * Add some extra vertical space (one {@link #Y_LINE_INCREMENT}).
+     */
+    protected void incrementYposition(double factor) {
+        this.currentY += (int)(factor*Y_LINE_INCREMENT);
     }
 
     protected void writeFooter(Writer writer) throws IOException {
@@ -365,10 +358,32 @@ public abstract class SvgSequenceLogo {
     protected void writeLogo(Writer writer) throws IOException {
         int X = currentX;
         int Y = currentY;
-        int startX = X;
+
+        int Y1 = (int)(Y-LOGO_COLUMN_HEIGHT);
+        int Y2 = (int)(Y-2.7*LOGO_COLUMN_HEIGHT);
+//        writer.write(String.format("<line x1=\"%s\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"red\"/>\n",X,Y1,X+300,Y1));
+//        writer.write(String.format("<line x1=\"%s\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"green\"/>\n",X,Y2,X+300,Y2));
         for (int i=0; i<seqlen; i++) {
             writeLogoBaseColumn(writer, X, Y, i);
             X += LOWER_CASE_BASE_INCREMENT;
+        }
+        // Write position numbers underneath the logo.
+        if (seqlen == 9) {
+            int Xr = (int)(currentX + 0.7 * LOWER_CASE_BASE_INCREMENT);
+            int Yr = (int)(Y-0.5*LOGO_COLUMN_HEIGHT);
+            for (int i=0; i<seqlen; i++) {
+                int j = i-2; // substract 3 for the 3 intronic positions
+                j = j<=0 ? j-1 : j; // we do not have a zeroth position in this display!
+                writer.write(String.format("<g transform='translate(%d,%d) scale(0.25,0.25) rotate(270)'>\n",Xr,Yr)); //scale(1,%f)
+                writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"black\">%d</text>\n",j));
+                writer.write("</g>");
+                Xr += LOWER_CASE_BASE_INCREMENT;
+            }
+        } else if (seqlen == 27) {
+
+        } else {
+            // should never happen
+            throw new SvgwalkerRuntimeException("Unrecognized seqlen: " + seqlen);
         }
         // Reset (x,y) for next line
         currentX = XSTART;

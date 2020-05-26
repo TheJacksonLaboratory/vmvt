@@ -22,11 +22,8 @@ public class DonorLogoWriter extends SvgSequenceLogo {
             writeHeader(swriter);
             initXYpositions();
             incrementYposition();
-            incrementYposition();
             writeLogo(swriter);
-            incrementYposition();
-
-
+            incrementYposition(0.4);
             writeRefPlain(swriter);
             writeAltPlain(swriter);
             writeBoxAroundMutation(swriter);
