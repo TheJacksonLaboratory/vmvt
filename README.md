@@ -17,3 +17,13 @@ final String alt = "AAGATCAGA";
 WalkerWriter donor = new WalkerWriter();
 String svg = donor.getDonorSvg(ref,alt);
 ```
+
+## Kick the tires
+
+In the class ``org.jax.svgwalker.svg.DonorWriterTest``, two SVGs can be created
+```
+testWriteSvgWalker() 
+testWriteSvgLogo() 
+```
+Running the test will create two local files in this directory, ``walkertest.svg`` and ``logotest.svg``
+that can be viewed in a browser for convenience.
