@@ -23,11 +23,27 @@ public class DonorWriterTest {
     @Test
     void testWriteSvg() {
         WalkerWriter donor = new WalkerWriter();
-        String svg = donor.getDonorSvg(ref,alt);
+        String svg = donor.getDonorWalkerSvg(ref,alt);
         assertNotNull(svg);
         System.out.println(svg);
         try {
             String path = "/home/peter/data/test.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void testWriteSvgLogo() {
+        WalkerWriter donor = new WalkerWriter();
+        String svg = donor.getDonorLogoSvg(ref,alt);
+        assertNotNull(svg);
+        System.out.println(svg);
+        try {
+            String path = "/home/peter/data/testLOGO.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();

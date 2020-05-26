@@ -5,9 +5,9 @@ import org.jax.svgwalker.pssm.DoubleMatrix;
 import java.io.IOException;
 import java.io.StringWriter;
 
-public class AcceptorWriter extends SvgWriter {
+public class AcceptorWalkerWriter extends SvgSequenceWalker {
 
-    public AcceptorWriter(String ref, String alt) {
+    public AcceptorWalkerWriter(String ref, String alt) {
         super(ref, alt, DoubleMatrix.acceptor());
     }
 

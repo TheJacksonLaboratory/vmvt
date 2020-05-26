@@ -11,7 +11,7 @@ import java.io.Writer;
 /**
  * Base class for writing SVGs of Splice Acceptor or Donor sequences
  */
-public abstract class SvgWriter {
+public abstract class SvgSequenceWalker {
     /** The reference (wildtype) sequence of the donor or acceptor splice site. */
     protected final String ref;
     /** The alternate (mutant) sequence of the donor or acceptor splice site. */
@@ -78,11 +78,10 @@ public abstract class SvgWriter {
 
     /** Representation of the Splice donor/acceptor IC matrix. */
     private final DoubleMatrix splicesite;
-    private final DoubleMatrix acceptorsite;
 
-    public SvgWriter(String ref, String alt, DoubleMatrix site) {
+
+    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site) {
         splicesite = site;
-        acceptorsite = DoubleMatrix.acceptor();
         this.ref = ref;
         this.alt = alt;
         this.width = WIDTH;

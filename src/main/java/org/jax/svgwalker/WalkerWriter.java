@@ -1,11 +1,6 @@
 package org.jax.svgwalker;
 
-import org.jax.svgwalker.pssm.DoubleMatrix;
-import org.jax.svgwalker.svg.DonorWriter;
-import org.jax.svgwalker.svg.SvgWriter;
-
-import java.io.IOException;
-import java.io.StringWriter;
+import org.jax.svgwalker.svg.*;
 
 public class WalkerWriter {
     
@@ -19,14 +14,22 @@ public class WalkerWriter {
 
     }
 
-    public String getDonorSvg(String reference, String alternate) {
-        SvgWriter svgwriter = new DonorWriter(reference, alternate);
+    public String getDonorWalkerSvg(String reference, String alternate) {
+        SvgSequenceWalker svgwriter = new DonorWalkerWriter(reference, alternate);
         return svgwriter.getWalker();
     }
 
 
-    public String getAcceptorSvg(String reference, String alternate) {
-        return null;//this.walkerWriter.getDonorSvg(reference, alternate);
+    public String getAcceptorWalkerSvg(String reference, String alternate) {
+        SvgSequenceWalker svgwriter = new AcceptorWalkerWriter(reference, alternate);
+        return svgwriter.getWalker();
     }
+
+
+    public String getDonorLogoSvg(String reference, String alternate) {
+        SvgSequenceLogo svgwriter = new DonorLogoWriter(reference, alternate);
+        return svgwriter.getLogo();
+    }
+
 
 }

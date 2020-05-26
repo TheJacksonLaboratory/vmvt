@@ -1,6 +1,8 @@
 package org.jax.svgwalker.pssm;
 
-import java.util.List;
+import org.jax.svgwalker.except.SvgwalkerRuntimeException;
+
+import java.util.*;
 
 public class DoubleMatrix {
 
@@ -117,6 +119,39 @@ public class DoubleMatrix {
             }
         }
         return dm;
+    }
+
+    private Character getBase(int j) {
+        switch (j) {
+            case 0:
+                return 'A';
+            case 1:
+                return 'C';
+            case 2:
+                return 'G';
+            case 3:
+                return 'T';
+            default:
+                // should never happen
+                throw new SvgwalkerRuntimeException("Unrecognized base index");
+        }
+    }
+
+
+    public Map<Character, Double> getIcValuesColumn(int i) {
+        Map<Character, Double> unSortedMap = new HashMap<>();
+        for (int j = 0; j<4; j++) {
+            Character base = getBase(j);
+            double ic = get(i,j);
+            unSortedMap.put(base, ic);
+        }
+        // now sort the bases according to IC
+        LinkedHashMap<Character, Double> sortedMap = new LinkedHashMap<>();
+        unSortedMap.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
+        return sortedMap;
     }
 
     /**
