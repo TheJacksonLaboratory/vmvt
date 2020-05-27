@@ -1,14 +1,20 @@
-package org.jax.svgwalker.svg;
+package org.jax.svgwalker.svg.walker;
 
 import org.jax.svgwalker.pssm.DoubleMatrix;
 
 import java.io.IOException;
 import java.io.StringWriter;
 
-public class AcceptorWalkerWriter extends SvgSequenceWalker {
+public class DonorWalkerWriter extends SvgSequenceWalker {
 
-    public AcceptorWalkerWriter(String ref, String alt) {
-        super(ref, alt, DoubleMatrix.acceptor());
+    /**
+     * Write a sequence writer for a splice donor site (showing ref/alt sequences)
+     * Note that the size of the SVG is set in the superclass constructor (w,h)
+     * @param ref Reference sequence
+     * @param alt Alternate (mutant) sequence
+     */
+    public DonorWalkerWriter(String ref, String alt) {
+        super(ref, alt, DoubleMatrix.donor(),400,400);
     }
 
     @Override
@@ -30,4 +36,6 @@ public class AcceptorWalkerWriter extends SvgSequenceWalker {
             return getSvgErrorMessage(e.getMessage());
         }
     }
+
+
 }
