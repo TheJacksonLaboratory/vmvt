@@ -1,7 +1,8 @@
-package org.jax.svgwalker.svg;
+package org.jax.svgwalker.svg.walker;
 
 import org.jax.svgwalker.except.SvgwalkerRuntimeException;
 import org.jax.svgwalker.pssm.DoubleMatrix;
+import org.jax.svgwalker.svg.AbstractSvgWriter;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -11,34 +12,7 @@ import java.io.Writer;
 /**
  * Base class for writing SVGs of Splice Acceptor or Donor sequences
  */
-public abstract class SvgSequenceWalker {
-    /** The reference (wildtype) sequence of the donor or acceptor splice site. */
-    protected final String ref;
-    /** The alternate (mutant) sequence of the donor or acceptor splice site. */
-    protected final String alt;
-    /** The length in nucleotides of the splice site (9 for donor TODO for acceptor). */
-    protected final int seqlen;
-
-    private final int WIDTH = 400;
-    private final int HEIGHT = 200;
-
-    protected final static String BLUE ="#4dbbd5";
-    protected final static String RED ="#e64b35";
-    protected final static String BROWN="#7e6148";
-    protected final static String DARKBLUE = "#3c5488";
-    protected final static String VIOLET = "#8491b4";
-    protected final static String ORANGE = "#ff9900";
-    protected final static String BLACK = "#000000";
-    protected final static String GREEN = "#00A087";
-    protected final static String BRIGHT_GREEN = "#00a087";
-    /** A blue color for Adenine */
-    protected final static String A_COLOR = "#4dbbd5";
-    /** A red color for Cytosine */
-    protected final static String C_COLOR = "#e64b35";
-    /** A green color for Guanine */
-    protected final static String G_COLOR = "#00A087";
-    /** A yellow color for Thymine */
-    protected final static String T_COLOR = "#ffdf00";
+public abstract class SvgSequenceWalker extends AbstractSvgWriter {
 
     protected final static int LETTER_WIDTH = 10;
     /** Height of a letter before scaling */
@@ -46,18 +20,6 @@ public abstract class SvgSequenceWalker {
 
     protected final static int MAX_LETTER_HEIGHT = 5 * LETTER_BASE_HEIGHT;
 
-    protected final static int A_BASE = 0;
-    protected final static int C_BASE = 1;
-    protected final static int G_BASE = 2;
-    protected final static int T_BASE = 3;
-    /**
-     * A coding of the String representing the reference sequence {@link #ref} using A=0,C=1,G=2,T=3
-     */
-    protected final int [] refidx;
-    /**
-     * A coding of the String representing the alternate sequence {@link #ref} using A=0,C=1,G=2,T=3
-     */
-    protected final int [] altidx;
 
     /** Position where we will start to write things from the left side of the SVG. */
     protected final int XSTART = 10;
@@ -73,69 +35,17 @@ public abstract class SvgSequenceWalker {
     protected int currentX;
     protected int currentY;
 
-    private final int width;
-    private final int height;
 
-    /** Representation of the Splice donor/acceptor IC matrix. */
-    private final DoubleMatrix splicesite;
-
-
-    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site) {
-        splicesite = site;
-        this.ref = ref;
-        this.alt = alt;
-        this.width = WIDTH;
-        this.height = HEIGHT;
-        if (ref.length() != alt.length()) {
-            throw new SvgwalkerRuntimeException(String.format("ref (%s) and alt (%s) have different lengths!", ref, alt));
-        }
-        this.seqlen = ref.length();
-        this.refidx = new int[seqlen];
-        this.altidx = new int[seqlen];
-        for (int i=0; i<seqlen; i++) {
-            switch (ref.charAt(i)) {
-                case 'a':
-                case 'A':
-                    refidx[i] = A_BASE;
-                    break;
-                case 'c':
-                case 'C':
-                    refidx[i] = C_BASE;
-                    break;
-                case 'g':
-                case 'G':
-                    refidx[i] = G_BASE;
-                    break;
-                case 't':
-                case 'T':
-                    refidx[i] = T_BASE;
-                    break;
-                default:
-                    throw new SvgwalkerRuntimeException(String.format("Bad nucleotide in ref (%s): Only ACGT/acgt allowed!",ref));
-            }
-        }
-        for (int i=0; i<seqlen; i++) {
-            switch (alt.charAt(i)) {
-                case 'a':
-                case 'A':
-                    altidx[i] = A_BASE;
-                    break;
-                case 'c':
-                case 'C':
-                    altidx[i] = C_BASE;
-                    break;
-                case 'g':
-                case 'G':
-                    altidx[i] = G_BASE;
-                    break;
-                case 't':
-                case 'T':
-                    altidx[i] = T_BASE;
-                    break;
-                default:
-                    throw new SvgwalkerRuntimeException(String.format("Bad nucleotide in alt (%s): Only ACGT/acgt allowed!", alt));
-            }
-        }
+    /**
+     * Create an Svg Walker for the donor or acceptor with representation of reference sequence and alt bases
+     * @param ref reference sequence
+     * @param alt alternate (mutant) sequence
+     * @param site Representation of the splice site (weight matrix)
+     * @param w width of the SVG canvas
+     * @param h height of the SVG canvas
+     */
+    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h) {
+        super(ref,alt,site,w,h);
     }
 
     /**
@@ -143,20 +53,6 @@ public abstract class SvgSequenceWalker {
      */
     public abstract String getWalker();
 
-
-
-
-
-    protected void writeHeader(Writer writer) throws IOException {
-        writer.write("<svg width=\""+width+"\" height=\""+height+"\" " +
-                "xmlns=\"http://www.w3.org/2000/svg\" " +
-                "xmlns:svg=\"http://www.w3.org/2000/svg\">\n");
-        writer.write("<!-- Created by svgwalker -->\n");
-        writer.write("<style>\n" +
-                "  text { font: 14px monospace; }\n" +
-                "  </style>\n");
-        writer.write("<g>\n");
-    }
 
     protected void initXYpositions() {
         this.currentX = XSTART;
@@ -170,46 +66,6 @@ public abstract class SvgSequenceWalker {
         this.currentY += Y_LINE_INCREMENT;
     }
 
-    protected void writeFooter(Writer writer) throws IOException {
-        writer.write("</g>\n</svg>\n");
-    }
-
-    private String getBaseColor(int b) {
-        switch (b) {
-            case A_BASE:
-                return A_COLOR;
-            case C_BASE:
-                return C_COLOR;
-            case G_BASE:
-                return G_COLOR;
-            case T_BASE:
-                return T_COLOR;
-            default:
-                // should never happen
-                throw new SvgwalkerRuntimeException("Unrecognized color: " + b);
-        }
-    }
-
-    /**
-     * Get the lower case character for this base
-     * @param b index (0,1,2,3)
-     * @return corresponding lower case character for the base (a,c,g,t)
-     */
-    private String getBaseCharLC(int b) {
-        switch (b) {
-            case A_BASE:
-                return "a";
-            case C_BASE:
-                return "c";
-            case G_BASE:
-                return "g";
-            case T_BASE:
-                return "t";
-            default:
-                // should never happen
-                throw new SvgwalkerRuntimeException("Unrecognized color: " + b);
-        }
-    }
 
     /**
      * Write one lower case nucleotide (a, c, g, t) to show the sequence. This goes above the actual walker logo
@@ -333,17 +189,4 @@ public abstract class SvgSequenceWalker {
         currentX = XSTART;
     }
 
-    /**
-     * If there is some IO Exception, return an SVG with a text that indicates the error
-     * @param msg The error
-     * @return An SVG element that contains the error
-     */
-    protected String getSvgErrorMessage(String msg) {
-        return String.format("<svg width=\"200\" height=\"100\" " +
-                 "xmlns=\"http://www.w3.org/2000/svg\" " +
-                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n" +
-                 "<!-- Created by svgwalker -->\n" +
-                 "<g><text x=\"10\" y=\"10\">%s</text>\n</g>\n" +
-             "</svg>\n", msg);
-    }
 }
