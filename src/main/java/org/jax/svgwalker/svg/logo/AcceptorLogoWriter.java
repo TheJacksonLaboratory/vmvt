@@ -14,7 +14,7 @@ public class AcceptorLogoWriter extends SvgSequenceLogo {
      * @param alt Alternate (mutant) sequence
      */
     public AcceptorLogoWriter(String ref, String alt) {
-        super(ref, alt, DoubleMatrix.donorHeightMatrix(), 500, 400);
+        super(ref, alt, DoubleMatrix.acceptorHeightMatrix(), 500, 400);
     }
 
     @Override
