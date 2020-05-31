@@ -3,7 +3,7 @@ package org.jax.vmvt.svg.logo;
 
 import org.jax.vmvt.except.SvgwalkerRuntimeException;
 import org.jax.vmvt.pssm.DoubleMatrix;
-import org.jax.vmvt.svg.AbstractSvgWriter;
+import org.jax.vmvt.svg.AbstractSvgMotifWriter;
 import org.jax.vmvt.svg.walker.SvgSequenceWalker;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.util.Map;
  * LATER -- PROBABLY MAKE COMMON SUPER CLASS FOR THIS AND {@link SvgSequenceWalker} AFTER
  * WE UNDERSTAND NEEDS/ARCHITECTURE
  */
-public abstract class SvgSequenceLogo extends AbstractSvgWriter {
+public abstract class SvgSequenceLogo extends AbstractSvgMotifWriter {
     /** Maximum height of the letters in the sequence logo. Needs to be adjusted together with {@link #FUDGE_FACTOR}.*/
     private final double LOGO_COLUMN_HEIGHT = 20.0;
     /** This is a magic number that places the letters in the correct vertical position. Works with {@link #LOGO_COLUMN_HEIGHT}.*/
@@ -45,16 +45,7 @@ public abstract class SvgSequenceLogo extends AbstractSvgWriter {
         super(ref,alt,site, w, h);
    }
 
-    /**
-     * @return An SVG representation of the sequence logo with variant base or bases.
-     */
-    public abstract String getLogo();
 
-
-    protected void initXYpositions() {
-        this.currentX = XSTART;
-        this.currentY = YSTART;
-    }
 
 
     /**

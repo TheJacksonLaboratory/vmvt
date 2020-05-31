@@ -1,11 +1,20 @@
 package org.jax.vmvt.svg.walker;
 
+import org.jax.vmvt.VmtVisualizer;
 import org.jax.vmvt.pssm.DoubleMatrix;
+import org.jax.vmvt.svg.AbstractSvgCoreWriter;
+import org.jax.vmvt.svg.AbstractSvgMotifWriter;
+import org.jax.vmvt.svg.AbstractSvgWriter;
+import org.jax.vmvt.svg.ruler.SequenceRuler;
 
 import java.io.IOException;
 import java.io.StringWriter;
 
-public class AcceptorWalkerWriter extends SvgSequenceWalker {
+public class AcceptorWalkerWriter extends AbstractSvgWriter implements VmtVisualizer {
+
+    private final String reference;
+    private final String alternate;
+    private final DoubleMatrix splicesite;
 
     /**
      * Write a sequence writer for a splice acceptor site (showing ref/alt sequences)
@@ -14,22 +23,32 @@ public class AcceptorWalkerWriter extends SvgSequenceWalker {
      * @param alt Alternate (mutant) sequence
      */
     public AcceptorWalkerWriter(String ref, String alt) {
-        super(ref, alt, DoubleMatrix.acceptor(),500,400);
+        super(500,400);
+        this.reference = ref;
+        this.alternate = alt;
+        this.splicesite = DoubleMatrix.acceptor();
     }
 
     @Override
-    public String getWalker() {
+    public String getSvg() {
         StringWriter swriter = new StringWriter();
+        int rulerStartX = 20;
+        int rulerStartY = 40;
+        // WIDTH AND HEIGHT ARE FROM THE SUPERCLASS -- SET ABOVE IN THE CTOR
+        AbstractSvgCoreWriter sequenceRuler = new SequenceRuler(reference, alternate,WIDTH, HEIGHT, rulerStartX, rulerStartY);
+        AbstractSvgCoreWriter acceptorWalker =
+                new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT,rulerStartX,rulerStartY);
         try {
             writeHeader(swriter);
-            initXYpositions();
-            writeRefPlain(swriter);
-            writeAltPlain(swriter);
-            writeBoxAroundMutation(swriter);
-            incrementYposition();
-            writeRefWalker(swriter);
-            writeRefAltSeparation(swriter);
-            writeAltWalker(swriter);
+            sequenceRuler.write(swriter);
+//            initXYpositions();
+//            writeRefPlain(swriter);
+//            writeAltPlain(swriter);
+//            writeBoxAroundMutation(swriter);
+//            incrementYposition();
+//            writeRefWalker(swriter);
+//            writeRefAltSeparation(swriter);
+//            writeAltWalker(swriter);
             writeFooter(swriter);
             return swriter.toString();
         } catch (IOException e) {
