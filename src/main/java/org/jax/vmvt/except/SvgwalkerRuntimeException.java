@@ -1,4 +1,4 @@
-package org.jax.svgwalker.except;
+package org.jax.vmvt.except;
 
 public class SvgwalkerRuntimeException extends RuntimeException {
 

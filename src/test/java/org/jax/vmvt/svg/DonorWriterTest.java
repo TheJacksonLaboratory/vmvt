@@ -1,6 +1,6 @@
-package org.jax.svgwalker.svg;
+package org.jax.vmvt.svg;
 
-import org.jax.svgwalker.WalkerWriter;
+import org.jax.vmvt.VmvtWriter;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
@@ -9,20 +9,25 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class AcceptorWriterTest {
-    private final String ref = "cctggctggcggcaccgggtgccagGT";
-    /** chr10-90768644-A-G, -2 position */
-    private final String alt = "cctggctggcggcaccgggtgccggGT";
+public class DonorWriterTest {
+    private final String ref = "AAGGTCAGA";
+    private final String alt = "AAGATCAGA";
 
 
     @Test
-    void testWriteSvgAcceptorWalker() {
-        WalkerWriter donor = new WalkerWriter();
-        String svg = donor.getAcceptorWalkerSvg(ref,alt);
+    void testCtor() {
+        VmvtWriter donor = new VmvtWriter();
+        assertNotNull(donor);
+    }
+
+    @Test
+    void testWriteDonorSvgWalker() {
+        VmvtWriter donor = new VmvtWriter();
+        String svg = donor.getDonorWalkerSvg(ref,alt);
         assertNotNull(svg);
         System.out.println(svg);
         try {
-            String path = "acceptorWalker.svg";
+            String path = "donorWalker.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();
@@ -31,15 +36,14 @@ public class AcceptorWriterTest {
         }
     }
 
-
     @Test
-    void testWriteSvgAcceptorLogo() {
-        WalkerWriter donor = new WalkerWriter();
-        String svg = donor.getAcceptorLogoSvg(ref,alt);
+    void testWriteDonorSvgLogo() {
+        VmvtWriter donor = new VmvtWriter();
+        String svg = donor.getDonorLogoSvg(ref,alt);
         assertNotNull(svg);
         System.out.println(svg);
         try {
-            String path = "acceptorLogo.svg";
+            String path = "donorLogo.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();
@@ -47,5 +51,4 @@ public class AcceptorWriterTest {
             e.printStackTrace();
         }
     }
-
 }

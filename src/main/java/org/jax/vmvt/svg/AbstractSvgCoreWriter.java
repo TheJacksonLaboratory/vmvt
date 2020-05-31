@@ -1,28 +1,22 @@
-package org.jax.svgwalker.svg;
+package org.jax.vmvt.svg;
 
-import org.jax.svgwalker.except.SvgwalkerRuntimeException;
-import org.jax.svgwalker.pssm.DoubleMatrix;
+import org.jax.vmvt.except.SvgwalkerRuntimeException;
 
 import java.io.IOException;
 import java.io.Writer;
 
-public class AbstractSvgWriter {
-    /** This name will appear in the comment of the SVGs we produce. */
-    private final String PROGRAM_NAME = "svgwalker";
+public abstract class AbstractSvgCoreWriter {
+
     /** The reference (wildtype) sequence of the donor or acceptor splice site. */
     protected final String ref;
     /** The alternate (mutant) sequence of the donor or acceptor splice site. */
     protected final String alt;
-    /** The length in nucleotides of the splice site (9 for donor TODO for acceptor). */
-    protected final int seqlen;
-
-    /** Representation of the Splice donor/acceptor IC matrix. */
-    protected final DoubleMatrix splicesite;
     /** A coding of the String representing the reference sequence {@link #ref} using A=0,C=1,G=2,T=3. */
     protected final int [] refidx;
     /** A coding of the String representing the alternate sequence {@link #ref} using A=0,C=1,G=2,T=3. */
     protected final int [] altidx;
-
+    /** The length in nucleotides of the splice site (9 for donor TODO for acceptor). */
+    protected final int seqlen;
     protected final static int A_BASE = 0;
     protected final static int C_BASE = 1;
     protected final static int G_BASE = 2;
@@ -46,17 +40,26 @@ public class AbstractSvgWriter {
     protected final static String GREEN = "#00A087";
     protected final static String BRIGHT_GREEN = "#00a087";
 
-    /** Total width of the SVG canvas. */
-    protected final int WIDTH;
-    /** Total height of the SVG canvas. */
-    protected final int HEIGHT;
+    /** Amount of horizontal space to be taken up by one base character. */
+    protected final int LOWER_CASE_BASE_INCREMENT = LETTER_WIDTH + 5;
+
+    protected final double HALF_A_BASE = (double)LOWER_CASE_BASE_INCREMENT/2.0;
+    /** Amount to shift down between ref and alt sequence lines */
+    protected final int Y_LINE_INCREMENT = 20;
+
+    protected final static int LETTER_WIDTH = 10;
+    /** Height of a letter before scaling */
+    protected final static int LETTER_BASE_HEIGHT = 12;
+    /** Width to be used for the current SVG element we will write. */
+    protected final int width;
+    /** Height to be used for the current SVG element we will write. */
+    protected final int height;
     /** Current X position on the SVG canvas. */
     protected int currentX;
     /** Current Y position on the SVG canvas. */
     protected int currentY;
 
-
-    public AbstractSvgWriter(String ref, String alt, DoubleMatrix site, int w, int h) {
+    public AbstractSvgCoreWriter(String ref, String alt, int w, int h) {
         this.ref = ref;
         this.alt = alt;
         if (ref.length() != alt.length()) {
@@ -64,9 +67,8 @@ public class AbstractSvgWriter {
                     ref, ref.length(), alt, alt.length()));
         }
         this.seqlen = ref.length();
-        this.splicesite = site;
-        this.WIDTH = w;
-        this.HEIGHT = h;
+        this.width = w;
+        this.height = h;
         this.refidx = new int[seqlen];
         this.altidx = new int[seqlen];
         for (int i=0; i<seqlen; i++) {
@@ -115,23 +117,6 @@ public class AbstractSvgWriter {
         }
     }
 
-
-    /** Write the header of the SVG */
-    protected void writeHeader(Writer writer) throws IOException {
-        writer.write("<svg width=\"" + this.WIDTH +"\" height=\""+ this.HEIGHT +"\" " +
-                "xmlns=\"http://www.w3.org/2000/svg\" " +
-                "xmlns:svg=\"http://www.w3.org/2000/svg\">\n");
-        writer.write("<!-- Created by " + this.PROGRAM_NAME + " -->\n");
-        writer.write("<style>\n" +
-                "  text { font: 24px monospace; }\n" +
-                "  </style>\n");
-        writer.write("<g>\n");
-    }
-
-    /** Write the footer of the SVG */
-    protected void writeFooter(Writer writer) throws IOException {
-        writer.write("</g>\n</svg>\n");
-    }
 
     /**
      * Get the lower case character for this base
@@ -212,19 +197,24 @@ public class AbstractSvgWriter {
 
 
     /**
-     * If there is some IO Exception, return an SVG with a text that indicates the error
-     * @param msg The error
-     * @return An SVG element that contains the error
+     * Write one lower case nucleotide (a, c, g, t) to show the sequence. This goes above the actual walker logo
+     * and is just a plain letter but with one of the four base colors
+     * @param writer A string writer
+     * @param x x position
+     * @param y y position
+     * @param base index of the base
+     * @throws IOException if we cannot write
      */
-    protected String getSvgErrorMessage(String msg) {
-        return String.format("<svg width=\"200\" height=\"100\" " +
-                "xmlns=\"http://www.w3.org/2000/svg\" " +
-                "xmlns:svg=\"http://www.w3.org/2000/svg\">\n" +
-                "<!-- Created by svgwalker -->\n" +
-                "<g><text x=\"10\" y=\"10\">%s</text>\n</g>\n" +
-                "</svg>\n", msg);
+    protected void writePlainBase(Writer writer, int x, int y, int base) throws IOException {
+        String color = getBaseColor(base);
+        String nt = getBaseCharLC(base);
+        String basestring = String.format("<text x=\"%d\" y=\"%d\" fill=\"%s\">%s</text>",x,y,color,nt);
+        writer.write(basestring + "\n");
     }
 
+    public abstract void write(Writer writer) throws IOException;
+
+    public abstract int getYincrement();
 
 
 }

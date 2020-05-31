@@ -1,7 +1,7 @@
-package org.jax.svgwalker.svg.walker;
+package org.jax.vmvt.svg.walker;
 
-import org.jax.svgwalker.pssm.DoubleMatrix;
-import org.jax.svgwalker.svg.AbstractSvgWriter;
+import org.jax.vmvt.pssm.DoubleMatrix;
+import org.jax.vmvt.svg.AbstractSvgMotifWriter;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -10,25 +10,16 @@ import java.io.Writer;
 /**
  * Base class for writing SVGs of Splice Acceptor or Donor sequences
  */
-public abstract class SvgSequenceWalker extends AbstractSvgWriter {
+public class SvgSequenceWalker extends AbstractSvgMotifWriter {
 
-    protected final static int LETTER_WIDTH = 10;
-    /** Height of a letter before scaling */
-    protected final static int LETTER_BASE_HEIGHT = 12;
 
-    protected final static int MAX_LETTER_HEIGHT = 5 * LETTER_BASE_HEIGHT;
+
 
 
     /** Position where we will start to write things from the left side of the SVG. */
-    protected final int XSTART = 10;
+    protected final int XSTART;
     /** Position where we will start to write things from the top of the SVG */
-    protected final int YSTART = 60;
-    /** Amount of horizontal space to be taken up by one base character. */
-    private final int LOWER_CASE_BASE_INCREMENT = LETTER_WIDTH + 5;
-
-    private final double HALF_A_BASE = (double)LOWER_CASE_BASE_INCREMENT/2.0;
-    /** Amount to shift down between ref and alt sequence lines */
-    private final int Y_LINE_INCREMENT = 20;
+    protected final int YSTART;
 
     protected int currentX;
     protected int currentY;
@@ -42,20 +33,16 @@ public abstract class SvgSequenceWalker extends AbstractSvgWriter {
      * @param w width of the SVG canvas
      * @param h height of the SVG canvas
      */
-    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h) {
+    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h, int x, int y) {
         super(ref,alt,site,w,h);
+        this.XSTART = x;
+        this.YSTART = y;
+        this.currentX = this.XSTART;
+        this.currentY = this.YSTART;
     }
 
-    /**
-     * @return An SVG representation of the sequence walker with variant base or bases.
-     */
-    public abstract String getWalker();
 
 
-    protected void initXYpositions() {
-        this.currentX = XSTART;
-        this.currentY = YSTART;
-    }
 
     /**
      * Add some extra vertical space (one {@link #Y_LINE_INCREMENT}).
@@ -65,68 +52,6 @@ public abstract class SvgSequenceWalker extends AbstractSvgWriter {
     }
 
 
-    /**
-     * Write one lower case nucleotide (a, c, g, t) to show the sequence. This goes above the actual walker logo
-     * and is just a plain letter but with one of the four base colors
-     * @param writer A string writer
-     * @param x x position
-     * @param y y position
-     * @param base index of the base
-     * @throws IOException if we cannot write
-     */
-    protected void writePlainBase(Writer writer, int x, int y, int base) throws IOException {
-        String color = getBaseColor(base);
-        String nt = getBaseCharLC(base);
-        String basestring = String.format("<text x=\"%d\" y=\"%d\" fill=\"%s\">%s</text>",x,y,color,nt);
-        writer.write(basestring + "\n");
-    }
-
-    protected void writeRefPlain(Writer writer) throws IOException {
-        int X = currentX;
-        int Y = currentY;
-        for (int i=0; i<seqlen; i++) {
-            writePlainBase(writer, X, Y, refidx[i]);
-            X += LOWER_CASE_BASE_INCREMENT;
-        }
-        // Reset (x,y) for next line
-        currentX = XSTART;
-        currentY = Y + Y_LINE_INCREMENT;
-    }
-
-    protected void writeAltPlain(Writer writer) throws IOException {
-        int X = currentX;
-        int Y = currentY;
-        for (int i=0; i<seqlen; i++) {
-            if (refidx[i] != altidx[i]) {
-                writePlainBase(writer, X, Y, altidx[i]);
-            }
-            X += LOWER_CASE_BASE_INCREMENT;
-        }
-        // Reset (x,y) for next line
-        currentX = XSTART;
-        currentY = Y + Y_LINE_INCREMENT;
-    }
-
-
-    protected void writeBoxAroundMutation(Writer writer) throws IOException {
-        // get location of first and last index with mutated bases
-        int b = Integer.MAX_VALUE;
-        int e = Integer.MIN_VALUE;
-        for (int i=0; i<refidx.length; i++) {
-            if (refidx[i] != altidx[i]) {
-                if (i<b) b = i;
-                if (i>e) e = i;
-            }
-        }
-        double startX = b*LOWER_CASE_BASE_INCREMENT + HALF_A_BASE;
-        int startY = YSTART - LETTER_BASE_HEIGHT;
-        writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"/>",
-                startX,
-                startY,
-                LOWER_CASE_BASE_INCREMENT,
-                LETTER_BASE_HEIGHT*3));
-
-    }
 
 
     /**
@@ -211,6 +136,19 @@ public abstract class SvgSequenceWalker extends AbstractSvgWriter {
         }
         // Reset (x,y) for next line
         currentX = XSTART;
+    }
+
+    @Override
+    public void write(Writer writer) throws IOException {
+        writeAltWalker(writer);
+        writeRefWalker(writer);
+        writeRefAltSeparation(writer);
+    }
+
+    @Override
+    public int getYincrement() {
+       // return this.currentY - this.startY;
+        throw new UnsupportedOperationException("TODO");
     }
 
 }

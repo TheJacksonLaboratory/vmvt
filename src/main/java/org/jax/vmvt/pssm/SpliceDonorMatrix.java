@@ -1,4 +1,4 @@
-package org.jax.svgwalker.pssm;
+package org.jax.vmvt.pssm;
 
 import java.util.List;
 
