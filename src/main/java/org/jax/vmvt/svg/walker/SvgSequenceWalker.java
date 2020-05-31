@@ -1,7 +1,7 @@
-package org.jax.svgwalker.svg.walker;
+package org.jax.vmvt.svg.walker;
 
-import org.jax.svgwalker.pssm.DoubleMatrix;
-import org.jax.svgwalker.svg.AbstractSvgWriter;
+import org.jax.vmvt.pssm.DoubleMatrix;
+import org.jax.vmvt.svg.AbstractSvgWriter;
 
 import java.io.IOException;
 import java.io.Writer;

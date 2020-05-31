@@ -1,10 +1,10 @@
-package org.jax.svgwalker.svg.logo;
+package org.jax.vmvt.svg.logo;
 
 
-import org.jax.svgwalker.except.SvgwalkerRuntimeException;
-import org.jax.svgwalker.pssm.DoubleMatrix;
-import org.jax.svgwalker.svg.AbstractSvgWriter;
-import org.jax.svgwalker.svg.walker.SvgSequenceWalker;
+import org.jax.vmvt.except.SvgwalkerRuntimeException;
+import org.jax.vmvt.pssm.DoubleMatrix;
+import org.jax.vmvt.svg.AbstractSvgWriter;
+import org.jax.vmvt.svg.walker.SvgSequenceWalker;
 
 import java.io.IOException;
 import java.io.Writer;

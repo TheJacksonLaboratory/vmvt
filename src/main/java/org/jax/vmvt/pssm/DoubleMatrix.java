@@ -1,6 +1,6 @@
-package org.jax.svgwalker.pssm;
+package org.jax.vmvt.pssm;
 
-import org.jax.svgwalker.except.SvgwalkerRuntimeException;
+import org.jax.vmvt.except.SvgwalkerRuntimeException;
 
 import java.util.*;
 
