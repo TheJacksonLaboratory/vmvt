@@ -1,6 +1,6 @@
 package org.jax.vmvt.svg;
 
-import org.jax.vmvt.except.SvgwalkerRuntimeException;
+import org.jax.vmvt.except.VmvtRuntimeException;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -63,7 +63,7 @@ public abstract class AbstractSvgCoreWriter {
         this.ref = ref;
         this.alt = alt;
         if (ref.length() != alt.length()) {
-            throw new SvgwalkerRuntimeException(String.format("Reference sequence (%s-len=%d) and alternate sequence (%s-len=%d) have different lengths:",
+            throw new VmvtRuntimeException(String.format("Reference sequence (%s-len=%d) and alternate sequence (%s-len=%d) have different lengths:",
                     ref, ref.length(), alt, alt.length()));
         }
         this.seqlen = ref.length();
@@ -90,7 +90,7 @@ public abstract class AbstractSvgCoreWriter {
                     refidx[i] = T_BASE;
                     break;
                 default:
-                    throw new SvgwalkerRuntimeException(String.format("Bad nucleotide in ref (%s): Only ACGT/acgt allowed!",ref));
+                    throw new VmvtRuntimeException(String.format("Bad nucleotide in ref (%s): Only ACGT/acgt allowed!",ref));
             }
         }
         for (int i=0; i<seqlen; i++) {
@@ -112,7 +112,7 @@ public abstract class AbstractSvgCoreWriter {
                     altidx[i] = T_BASE;
                     break;
                 default:
-                    throw new SvgwalkerRuntimeException(String.format("Bad nucleotide in alt (%s): Only ACGT/acgt allowed!", alt));
+                    throw new VmvtRuntimeException(String.format("Bad nucleotide in alt (%s): Only ACGT/acgt allowed!", alt));
             }
         }
     }
@@ -135,7 +135,7 @@ public abstract class AbstractSvgCoreWriter {
                 return "T";
             default:
                 // should never happen
-                throw new SvgwalkerRuntimeException("Unrecognized base: " + b);
+                throw new VmvtRuntimeException("Unrecognized base: " + b);
         }
     }
 
@@ -157,7 +157,7 @@ public abstract class AbstractSvgCoreWriter {
                 return "t";
             default:
                 // should never happen
-                throw new SvgwalkerRuntimeException("Unrecognized base: " + b);
+                throw new VmvtRuntimeException("Unrecognized base: " + b);
         }
     }
 
@@ -175,7 +175,7 @@ public abstract class AbstractSvgCoreWriter {
                 return T_COLOR;
             default:
                 // should never happen
-                throw new SvgwalkerRuntimeException("Unrecognized color: " + b);
+                throw new VmvtRuntimeException("Unrecognized color: " + b);
         }
     }
 
@@ -191,7 +191,7 @@ public abstract class AbstractSvgCoreWriter {
                 return T_COLOR;
             default:
                 // should never happen
-                throw new SvgwalkerRuntimeException("Unrecognized color: " + b);
+                throw new VmvtRuntimeException("Unrecognized color: " + b);
         }
     }
 

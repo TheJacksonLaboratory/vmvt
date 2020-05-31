@@ -1,6 +1,6 @@
 package org.jax.vmvt.pssm;
 
-import org.jax.vmvt.except.SvgwalkerRuntimeException;
+import org.jax.vmvt.except.VmvtRuntimeException;
 
 import java.util.*;
 
@@ -179,7 +179,7 @@ public class DoubleMatrix {
                 return "T";
             default:
                 // should never happen
-                throw new SvgwalkerRuntimeException("Unrecognized base index");
+                throw new VmvtRuntimeException("Unrecognized base index");
         }
     }
 

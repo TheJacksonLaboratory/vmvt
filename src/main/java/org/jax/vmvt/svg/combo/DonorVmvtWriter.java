@@ -15,13 +15,13 @@ import java.io.StringWriter;
 /**
  * Display a splice donor variant with both a sequence walker and a logo.
  */
-public class DonorComboWriter extends AbstractSvgWriter implements VmtVisualizer {
+public class DonorVmvtWriter extends AbstractSvgWriter implements VmtVisualizer {
     private final String reference;
     private final String alternate;
     private final DoubleMatrix splicesite;
     private final DoubleMatrix spliceHeightMatrix;
 
-    public DonorComboWriter(String ref, String alt) {
+    public DonorVmvtWriter(String ref, String alt) {
         super(400,400);
         this.reference = ref;
         this.alternate = alt;

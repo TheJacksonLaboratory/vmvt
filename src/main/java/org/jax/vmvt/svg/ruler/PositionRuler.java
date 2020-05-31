@@ -1,8 +1,7 @@
 package org.jax.vmvt.svg.ruler;
 
-import org.jax.vmvt.except.SvgwalkerRuntimeException;
+import org.jax.vmvt.except.VmvtRuntimeException;
 import org.jax.vmvt.svg.AbstractSvgCoreWriter;
-import org.jax.vmvt.svg.AbstractSvgWriter;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -26,7 +25,7 @@ public class PositionRuler extends AbstractSvgCoreWriter {
       } else if (seqlen == 27) {
           isDonor = false;
       } else {
-          throw new SvgwalkerRuntimeException(String.format("Length was %d but must be either 9 (donor) or 27 (acceptor)",
+          throw new VmvtRuntimeException(String.format("Length was %d but must be either 9 (donor) or 27 (acceptor)",
                   seqlen));
       }
     }
