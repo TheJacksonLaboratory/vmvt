@@ -54,16 +54,28 @@ public class PositionRuler extends AbstractSvgCoreWriter {
     }
 
     private void writeAcceptor(Writer writer) throws IOException {
-        int Xr = (int)(this.startX + 0.7 * LOWER_CASE_BASE_INCREMENT);
+        int Xr = this.startX;
         int Yr = this.startY;
+        final int X_NUDGE = 2;
         for (int i=0; i<seqlen; i++) {
             int j = i - 24; // substract 3 for the 3 intronic positions
             j = j <= 0 ? j - 1 : j; // we do not have a zeroth position in this display!
-            writer.write(String.format("<g transform='translate(%d,%d) scale(0.4,0.4) rotate(270)'>\n", Xr, Yr));
-            writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"black\">%d</text>\n", j));
+            if (j==1) Xr += X_NUDGE;
+            if(j==-25 || j==-20 || j==-15 || j>-10) {
+                writer.write(String.format("<g transform='translate(%d,%d) scale(0.4,0.4)'>\n", Xr, Yr));
+                writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"black\">%d</text>\n", j));
+            } else {
+                writer.write(String.format("<g transform='translate(%d,%d) scale(0.4,0.4)'>\n", Xr+X_NUDGE, Yr));
+                writer.write("<text x=\"0\" y=\"0\" fill=\"black\">.</text>\n");
+            }
             writer.write("</g>");
             Xr += LOWER_CASE_BASE_INCREMENT;
         }
+        // Write a vertical line between intron and exon
+        Xr = this.startX + 25*LOWER_CASE_BASE_INCREMENT;
+        int Y1 = this.startY - 18;
+        int Y2 = this.startY + 10;
+        writer.write(String.format("<line x1=\"%s\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"red\"/>\n",Xr,Y1,Xr,Y2));
     }
 
 

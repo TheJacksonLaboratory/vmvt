@@ -5,6 +5,7 @@ import org.jax.vmvt.pssm.DoubleMatrix;
 import org.jax.vmvt.svg.AbstractSvgCoreWriter;
 import org.jax.vmvt.svg.AbstractSvgMotifWriter;
 import org.jax.vmvt.svg.AbstractSvgWriter;
+import org.jax.vmvt.svg.ruler.PositionRuler;
 import org.jax.vmvt.svg.ruler.SequenceRuler;
 
 import java.io.IOException;
@@ -31,24 +32,21 @@ public class AcceptorWalkerWriter extends AbstractSvgWriter implements VmtVisual
 
     @Override
     public String getSvg() {
+        int startX = 20;
+        int startY = 60;
         StringWriter swriter = new StringWriter();
-        int rulerStartX = 20;
-        int rulerStartY = 40;
-        // WIDTH AND HEIGHT ARE FROM THE SUPERCLASS -- SET ABOVE IN THE CTOR
-        AbstractSvgCoreWriter sequenceRuler = new SequenceRuler(reference, alternate,WIDTH, HEIGHT, rulerStartX, rulerStartY);
-        AbstractSvgCoreWriter acceptorWalker =
-                new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT,rulerStartX,rulerStartY);
         try {
             writeHeader(swriter);
+            // WIDTH AND HEIGHT ARE FROM THE SUPERCLASS -- SET ABOVE IN THE CTOR
+            AbstractSvgCoreWriter posRuler = new PositionRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
+            posRuler.write(swriter);
+            startY += posRuler.getYincrement();
+            AbstractSvgCoreWriter sequenceRuler = new SequenceRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
             sequenceRuler.write(swriter);
-//            initXYpositions();
-//            writeRefPlain(swriter);
-//            writeAltPlain(swriter);
-//            writeBoxAroundMutation(swriter);
-//            incrementYposition();
-//            writeRefWalker(swriter);
-//            writeRefAltSeparation(swriter);
-//            writeAltWalker(swriter);
+            startY += sequenceRuler.getYincrement();
+            AbstractSvgCoreWriter acceptorWalker =
+                    new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT, startX, startY);
+            acceptorWalker.write(swriter);
             writeFooter(swriter);
             return swriter.toString();
         } catch (IOException e) {

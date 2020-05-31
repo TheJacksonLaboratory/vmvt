@@ -11,7 +11,7 @@ public class SequenceRuler extends AbstractSvgCoreWriter {
     /** Initial Y position. */
     protected final int startY;
     /** An additional amount of Y distance to skip after we finish with the Sequence Ruler. */
-    private final int Y_SKIP = 30;
+    private final int Y_SKIP = 40;
 
     public SequenceRuler(String ref, String alt, int w, int h, int X, int Y) {
         super(ref, alt, w, h);
@@ -57,9 +57,9 @@ public class SequenceRuler extends AbstractSvgCoreWriter {
             }
         }
         double X = this.startX + b*LOWER_CASE_BASE_INCREMENT;
-        int Y = (int)(this.startY - 1.5*LETTER_BASE_HEIGHT);
+        int Y = (int)(this.startY - 1.6*LETTER_BASE_HEIGHT);
         int boxwidth = LOWER_CASE_BASE_INCREMENT;
-        int boxheight = (int)(LETTER_BASE_HEIGHT*3.5);
+        int boxheight = (int)(LETTER_BASE_HEIGHT*4.1);
         writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"" +
                         " style=\"stroke-width:2; stroke:rgb(4, 12, 4);\"/>",
                 X,
