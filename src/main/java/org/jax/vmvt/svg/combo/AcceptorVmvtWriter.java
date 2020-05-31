@@ -19,10 +19,10 @@ public class AcceptorVmvtWriter extends AbstractSvgWriter implements VmtVisualiz
     private final DoubleMatrix spliceHeightMatrix;
 
     public AcceptorVmvtWriter(String ref, String alt) {
-        super(400,600);
+        super(500,600);
         this.reference = ref;
         this.alternate = alt;
-        this.splicesite = DoubleMatrix.donor();
+        this.splicesite = DoubleMatrix.acceptor();
         this.spliceHeightMatrix = DoubleMatrix.acceptorHeightMatrix();
     }
 
