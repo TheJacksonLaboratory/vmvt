@@ -9,25 +9,20 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class DonorWriterTest {
-    private final String ref = "AAGGTCAGA";
-    private final String alt = "AAGATCAGA";
+public class AcceptorWriterTest {
+    private final String ref = "cctggctggcggcaccgggtgccagGT";
+    /** chr10-90768644-A-G, -2 position */
+    private final String alt = "cctggctggcggcaccgggtgccggGT";
 
 
     @Test
-    void testCtor() {
+    void testWriteSvgAcceptorWalker() {
         WalkerWriter donor = new WalkerWriter();
-        assertNotNull(donor);
-    }
-
-    @Test
-    void testWriteDonorSvgWalker() {
-        WalkerWriter donor = new WalkerWriter();
-        String svg = donor.getDonorWalkerSvg(ref,alt);
+        String svg = donor.getAcceptorWalkerSvg(ref,alt);
         assertNotNull(svg);
         System.out.println(svg);
         try {
-            String path = "donorWalker.svg";
+            String path = "acceptorWalker.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();
@@ -36,14 +31,15 @@ public class DonorWriterTest {
         }
     }
 
+
     @Test
-    void testWriteDonorSvgLogo() {
+    void testWriteSvgAcceptorLogo() {
         WalkerWriter donor = new WalkerWriter();
-        String svg = donor.getDonorLogoSvg(ref,alt);
+        String svg = donor.getAcceptorLogoSvg(ref,alt);
         assertNotNull(svg);
         System.out.println(svg);
         try {
-            String path = "donorLogo.svg";
+            String path = "acceptorLogo.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();
@@ -51,4 +47,5 @@ public class DonorWriterTest {
             e.printStackTrace();
         }
     }
+
 }

@@ -60,8 +60,8 @@ public class AbstractSvgWriter {
         this.ref = ref;
         this.alt = alt;
         if (ref.length() != alt.length()) {
-            throw new SvgwalkerRuntimeException(String.format("Reference sequence (%s) and alternate sequence (%s) have different lengths:",
-                    ref, alt, ref.length(), alt.length()));
+            throw new SvgwalkerRuntimeException(String.format("Reference sequence (%s-len=%d) and alternate sequence (%s-len=%d) have different lengths:",
+                    ref, ref.length(), alt, alt.length()));
         }
         this.seqlen = ref.length();
         this.splicesite = site;
@@ -114,7 +114,6 @@ public class AbstractSvgWriter {
             }
         }
     }
-
 
 
     /** Write the header of the SVG */

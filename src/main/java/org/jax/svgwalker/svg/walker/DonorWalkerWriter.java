@@ -27,9 +27,10 @@ public class DonorWalkerWriter extends SvgSequenceWalker {
             writeAltPlain(swriter);
             writeBoxAroundMutation(swriter);
             incrementYposition();
+            writeAltWalker(swriter);
             writeRefWalker(swriter);
             writeRefAltSeparation(swriter);
-            writeAltWalker(swriter);
+
             writeFooter(swriter);
             return swriter.toString();
         } catch (IOException e) {

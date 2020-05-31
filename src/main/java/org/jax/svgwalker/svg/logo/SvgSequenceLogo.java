@@ -186,11 +186,20 @@ public abstract class SvgSequenceLogo extends AbstractSvgWriter {
                 writer.write("</g>");
                 Xr += LOWER_CASE_BASE_INCREMENT;
             }
-        } else if (seqlen == 27) {
-
+        } else if (seqlen == 27){
+            int Xr = (int)(currentX + 0.7 * LOWER_CASE_BASE_INCREMENT);
+            int Yr = (int)(Y-0.5*LOGO_COLUMN_HEIGHT);
+            for (int i=0; i<seqlen; i++) {
+                int j = i - 24; // substract 3 for the 3 intronic positions
+                j = j <= 0 ? j - 1 : j; // we do not have a zeroth position in this display!
+                writer.write(String.format("<g transform='translate(%d,%d) scale(0.25,0.25) rotate(270)'>\n", Xr, Yr)); //scale(1,%f)
+                writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"black\">%d</text>\n", j));
+                writer.write("</g>");
+                Xr += LOWER_CASE_BASE_INCREMENT;
+            }
         } else {
             // should never happen
-            throw new SvgwalkerRuntimeException("Unrecognized seqlen: " + seqlen);
+            throw new SvgwalkerRuntimeException("Sequence length must but 9 (donor) or 27 (acceptor) but we got " + seqlen);
         }
         // Reset (x,y) for next line
         currentX = XSTART;
