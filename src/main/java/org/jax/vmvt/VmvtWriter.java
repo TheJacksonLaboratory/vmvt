@@ -1,6 +1,8 @@
 package org.jax.vmvt;
 
+import org.jax.vmvt.svg.AbstractSvgCoreWriter;
 import org.jax.vmvt.svg.AbstractSvgWriter;
+import org.jax.vmvt.svg.combo.DonorComboWriter;
 import org.jax.vmvt.svg.logo.AcceptorLogoWriter;
 import org.jax.vmvt.svg.logo.DonorLogoWriter;
 import org.jax.vmvt.svg.logo.SvgSequenceLogo;
@@ -39,6 +41,11 @@ public class VmvtWriter {
 
     public String getAcceptorLogoSvg(String reference, String alternate) {
         AbstractSvgWriter svgwriter = new AcceptorLogoWriter(reference, alternate);
+        return svgwriter.getSvg();
+    }
+
+    public String getDonorVmvtSvg(String reference, String alternate) {
+        AbstractSvgWriter svgwriter = new DonorComboWriter(reference, alternate);
         return svgwriter.getSvg();
     }
 
