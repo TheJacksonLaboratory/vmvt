@@ -1,5 +1,6 @@
 package org.jax.svgwalker;
 
+import org.jax.svgwalker.svg.logo.AcceptorLogoWriter;
 import org.jax.svgwalker.svg.logo.DonorLogoWriter;
 import org.jax.svgwalker.svg.logo.SvgSequenceLogo;
 import org.jax.svgwalker.svg.walker.AcceptorWalkerWriter;
@@ -36,7 +37,7 @@ public class WalkerWriter {
     }
 
     public String getAcceptorLogoSvg(String reference, String alternate) {
-        SvgSequenceLogo svgwriter = new DonorLogoWriter(reference, alternate);
+        SvgSequenceLogo svgwriter = new AcceptorLogoWriter(reference, alternate);
         return svgwriter.getLogo();
     }
 
