@@ -1,11 +1,9 @@
 package org.jax.svgwalker.svg.walker;
 
-import org.jax.svgwalker.except.SvgwalkerRuntimeException;
 import org.jax.svgwalker.pssm.DoubleMatrix;
 import org.jax.svgwalker.svg.AbstractSvgWriter;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 
 

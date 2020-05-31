@@ -197,6 +197,9 @@ public abstract class SvgSequenceLogo extends AbstractSvgWriter {
                 writer.write("</g>");
                 Xr += LOWER_CASE_BASE_INCREMENT;
             }
+        } else {
+            // should never happen
+            throw new SvgwalkerRuntimeException("Sequence length must but 9 (donor) or 27 (acceptor) but we got " + seqlen);
         }
         // Reset (x,y) for next line
         currentX = XSTART;
