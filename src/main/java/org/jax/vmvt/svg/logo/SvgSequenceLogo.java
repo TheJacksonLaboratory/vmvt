@@ -15,7 +15,7 @@ import java.util.Map;
  * LATER -- PROBABLY MAKE COMMON SUPER CLASS FOR THIS AND {@link SvgSequenceWalker} AFTER
  * WE UNDERSTAND NEEDS/ARCHITECTURE
  */
-public abstract class SvgSequenceLogo extends AbstractSvgMotifWriter {
+public class SvgSequenceLogo extends AbstractSvgMotifWriter {
     /** Maximum height of the letters in the sequence logo. Needs to be adjusted together with {@link #FUDGE_FACTOR}.*/
     private final double LOGO_COLUMN_HEIGHT = 20.0;
     /** This is a magic number that places the letters in the correct vertical position. Works with {@link #LOGO_COLUMN_HEIGHT}.*/
@@ -25,13 +25,13 @@ public abstract class SvgSequenceLogo extends AbstractSvgMotifWriter {
     /** Height of a letter before scaling */
     protected final static int LETTER_BASE_HEIGHT = 12;
     /** Position where we will start to write things from the left side of the SVG. */
-    protected final int XSTART = 10;
+    protected final int XSTART;
     /** Position where we will start to write things from the top of the SVG */
-    protected final int YSTART = 60;
+    protected final int YSTART;
     /** Amount of horizontal space to be taken up by one base character. */
     private final int LOWER_CASE_BASE_INCREMENT = LETTER_WIDTH + 5;
-    /** Amount to shift down between ref and alt sequence lines */
-    private final int Y_LINE_INCREMENT = 20;
+    /** Amount to shift down after sequence logo */
+    private final int Y_SKIP = 50;
 
     /**
      * Create an Svg Logo for the donor or acceptor with representation of reference sequence and alt bases
@@ -41,8 +41,10 @@ public abstract class SvgSequenceLogo extends AbstractSvgMotifWriter {
      * @param w width of the SVG canvas
      * @param h height of the SVG canvas
      */
-    public SvgSequenceLogo(String ref, String alt, DoubleMatrix site, int w, int h) {
+    public SvgSequenceLogo(String ref, String alt, DoubleMatrix site, int w, int h, int x, int y) {
         super(ref,alt,site, w, h);
+        this.XSTART = x;
+        this.YSTART = y + 20; // Note that the logo is relatively high, so we want to start lower down!
    }
 
 
@@ -71,82 +73,27 @@ public abstract class SvgSequenceLogo extends AbstractSvgMotifWriter {
     }
 
 
-    /**
-     * Write one lower case nucleotide (a, c, g, t) to show the sequence. This goes above the actual walker logo
-     * and is just a plain letter but with one of the four base colors
-     * @param writer A string writer
-     * @param x x position
-     * @param y y position
-     * @param base index of the base
-     * @throws IOException if we cannot write
-     */
-    protected void writePlainBase(Writer writer, int x, int y, int base) throws IOException {
-        String color = getBaseColor(base);
-        String nt = getBaseCharLC(base);
-        String basestring = String.format("<text x=\"%d\" y=\"%d\" fill=\"%s\">%s</text>",x,y,color,nt);
-        writer.write(basestring + "\n");
-    }
 
-    protected void writeRefPlain(Writer writer) throws IOException {
-        int X = currentX;
-        int Y = currentY;
+
+    @Override
+    public void write(Writer writer) throws IOException {
+        int X = this.XSTART;
+        int Y = this.YSTART;
         for (int i=0; i<seqlen; i++) {
-            writePlainBase(writer, X, Y, refidx[i]);
+            writeLogoBaseColumn(writer, X, Y, i);
             X += LOWER_CASE_BASE_INCREMENT;
         }
-        // Reset (x,y) for next line
-        currentX = XSTART;
-        currentY = Y + Y_LINE_INCREMENT;
     }
 
-    protected void writeAltPlain(Writer writer) throws IOException {
-        int X = currentX;
-        int Y = currentY;
-        for (int i=0; i<seqlen; i++) {
-            if (refidx[i] != altidx[i]) {
-                writePlainBase(writer, X, Y, altidx[i]);
-            }
-            X += LOWER_CASE_BASE_INCREMENT;
-        }
-        // Reset (x,y) for next line
-        currentX = XSTART;
-        currentY = Y + Y_LINE_INCREMENT;
+    @Override
+    public int getYincrement() {
+        return Y_SKIP;
     }
 
-    protected void writeBoxAroundMutation(Writer writer) throws IOException {
-        // get location of first and last index with mutated bases
-        int b = Integer.MAX_VALUE;
-        int e = Integer.MIN_VALUE;
-        for (int i=0; i<refidx.length; i++) {
-            if (refidx[i] != altidx[i]) {
-                if (i<b) b = i;
-                if (i>e) e = i;
-            }
-        }
-        double startX = XSTART + b*LOWER_CASE_BASE_INCREMENT;
-        double endX = startX + LOWER_CASE_BASE_INCREMENT;
-        int startY = YSTART + LETTER_BASE_HEIGHT;
-        int endY = YSTART + 2*LETTER_BASE_HEIGHT;
-        writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"/>",
-                startX,
-                startY,
-                LOWER_CASE_BASE_INCREMENT,
-                LETTER_BASE_HEIGHT*3));
 
-    }
 
-    /**
-     * Add some extra vertical space (one {@link #Y_LINE_INCREMENT}).
-     */
-    protected void incrementYposition() {
-        this.currentY += Y_LINE_INCREMENT;
-    }
-    /**
-     * Add some extra vertical space (one {@link #Y_LINE_INCREMENT}).
-     */
-    protected void incrementYposition(double factor) {
-        this.currentY += (int)(factor*Y_LINE_INCREMENT);
-    }
+
+
 
 
 
