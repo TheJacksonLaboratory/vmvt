@@ -119,9 +119,7 @@ public abstract class SvgSequenceWalker extends AbstractSvgWriter {
             }
         }
         double startX = b*LOWER_CASE_BASE_INCREMENT + HALF_A_BASE;
-        double endX = (1+e)*LOWER_CASE_BASE_INCREMENT - HALF_A_BASE;
         int startY = YSTART - LETTER_BASE_HEIGHT;
-        int endY = YSTART + LETTER_BASE_HEIGHT;
         writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"/>",
                 startX,
                 startY,
@@ -148,8 +146,36 @@ public abstract class SvgSequenceWalker extends AbstractSvgWriter {
             writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
             writer.write("</g>");
         } else {
-            writer.write(String.format("<g transform='translate(%f,%d)  scale(1,%f)  rotate(180)'>\n",x+HALF_A_BASE,y, Math.abs(IC))); //
+            double xpos = (double)x + (double)LOWER_CASE_BASE_INCREMENT;
+            int ypos = y+1;
+            writer.write(String.format("<g transform='translate(%f,%d)  scale(1,%f)  rotate(180)'>\n",xpos,ypos, Math.abs(IC))); //
             writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
+            writer.write("</g>\n");
+        }
+    }
+
+
+    /**
+     * Write one lower case nucleotide (a, c, g, t) for the walker.
+     * @param writer A string writer
+     * @param x x position
+     * @param y y position
+     * @param base index of the base
+     */
+    protected void writeWalkerAltBase(Writer writer, int x, int y, int base, int pos) throws IOException {
+        String color = getBaseColor(base);
+        String nt = getBaseCharLC(base);
+        double IC = this.splicesite.get(base, pos);
+
+        if (IC>0) {
+            writer.write(String.format("<g transform='translate(%d,%d) scale(1,%f)'>\n",x,y,IC)); //scale(1,%f)
+            writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
+            writer.write("</g>");
+        } else {
+            double xpos = (double)x + (double)LOWER_CASE_BASE_INCREMENT;
+            int ypos = y+1;
+            writer.write(String.format("<g transform='translate(%f,%d)  scale(1,%f)  rotate(180)'>\n",xpos,ypos, Math.abs(IC))); //
+            writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\" opacity=\"0.4\" style=\"text-shadow: 2px 2px #FF0000;\">%s</text>\n",color,nt));
             writer.write("</g>\n");
         }
     }
@@ -168,7 +194,7 @@ public abstract class SvgSequenceWalker extends AbstractSvgWriter {
 
     protected void writeRefAltSeparation(Writer writer) throws IOException {
         //currentY += (double)Y_LINE_INCREMENT/5.0;
-        int endX = this.seqlen * LOWER_CASE_BASE_INCREMENT;
+        int endX = (1+this.seqlen) * LOWER_CASE_BASE_INCREMENT;
         writer.write("<g fill=\"none\" stroke=\"black\" stroke-width=\"1\">\n");
         writer.write(String.format("<path stroke-dasharray=\"2,2\" d=\"M%d %d L%d %d\"/>\n", XSTART, currentY, endX, currentY));
         writer.write("</g>\n");
@@ -179,7 +205,7 @@ public abstract class SvgSequenceWalker extends AbstractSvgWriter {
         int Y = currentY;
         for (int i=0; i<seqlen; i++) {
             if (refidx[i] != altidx[i]) {
-                writeWalkerBase(writer, X, Y, altidx[i], i);
+                writeWalkerAltBase(writer, X, Y, altidx[i], i);
             }
             X += LOWER_CASE_BASE_INCREMENT;
         }

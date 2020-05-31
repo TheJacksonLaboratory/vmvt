@@ -21,13 +21,13 @@ public class DonorWriterTest {
     }
 
     @Test
-    void testWriteSvgWalker() {
+    void testWriteDonorSvgWalker() {
         WalkerWriter donor = new WalkerWriter();
         String svg = donor.getDonorWalkerSvg(ref,alt);
         assertNotNull(svg);
         System.out.println(svg);
         try {
-            String path = "walkertest.svg";
+            String path = "donorWalker.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();
@@ -37,13 +37,13 @@ public class DonorWriterTest {
     }
 
     @Test
-    void testWriteSvgLogo() {
+    void testWriteDonorSvgLogo() {
         WalkerWriter donor = new WalkerWriter();
         String svg = donor.getDonorLogoSvg(ref,alt);
         assertNotNull(svg);
         System.out.println(svg);
         try {
-            String path = "logotest.svg";
+            String path = "donorLogo.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();

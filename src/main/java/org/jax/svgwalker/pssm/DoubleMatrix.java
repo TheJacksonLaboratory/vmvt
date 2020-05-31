@@ -59,7 +59,6 @@ public class DoubleMatrix {
            // iterate through all nucleotides
             // we do not need to care about row or column
             icm.vals[i] = calculateIC(freqMatrix.vals[i]);
-            System.out.println(icm.vals[i]);
         }
         return icm;
     }

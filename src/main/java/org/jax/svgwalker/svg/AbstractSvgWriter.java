@@ -116,7 +116,6 @@ public class AbstractSvgWriter {
     }
 
 
-
     /** Write the header of the SVG */
     protected void writeHeader(Writer writer) throws IOException {
         writer.write("<svg width=\"" + this.WIDTH +"\" height=\""+ this.HEIGHT +"\" " +
