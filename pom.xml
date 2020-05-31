@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.jax</groupId>
-  <artifactId>svgwalker</artifactId>
+  <artifactId>vmvt</artifactId>
   <version>0.4.1</version>
 
-  <name>svgwalker</name>
-  <url>https://github.com/TheJacksonLaboratory/svgwalker</url>
+  <name>vmvt</name>
+  <url>https://github.com/TheJacksonLaboratory/vmvt</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

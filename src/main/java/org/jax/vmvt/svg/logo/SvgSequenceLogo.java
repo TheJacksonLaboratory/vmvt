@@ -1,7 +1,6 @@
 package org.jax.vmvt.svg.logo;
 
 
-import org.jax.vmvt.except.SvgwalkerRuntimeException;
 import org.jax.vmvt.pssm.DoubleMatrix;
 import org.jax.vmvt.svg.AbstractSvgMotifWriter;
 import org.jax.vmvt.svg.walker.SvgSequenceWalker;
