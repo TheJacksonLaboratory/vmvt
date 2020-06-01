@@ -8,13 +8,10 @@ import java.io.Writer;
 
 
 /**
- * Base class for writing SVGs of Splice Acceptor or Donor sequences
+ * Base class for writing SVG sequence walkers for Splice Acceptor or Donor sequences
+ * @author Peter N Robinson
  */
 public class SvgSequenceWalker extends AbstractSvgMotifWriter {
-
-
-
-
 
     /** Position where we will start to write things from the left side of the SVG. */
     protected final int XSTART;

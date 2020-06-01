@@ -4,7 +4,11 @@ import org.jax.vmvt.svg.AbstractSvgCoreWriter;
 
 import java.io.IOException;
 import java.io.Writer;
-
+/**
+ * Write an SVG element for the sequence of the reference sequence. Also show the deviating alternate bases and
+ * draw a box around them.
+ * @author Peter N Robinson
+ */
 public class SequenceRuler extends AbstractSvgCoreWriter {
     /** Initial X position. */
     protected final int startX;

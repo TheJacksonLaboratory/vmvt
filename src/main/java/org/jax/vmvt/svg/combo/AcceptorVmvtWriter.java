@@ -1,6 +1,5 @@
 package org.jax.vmvt.svg.combo;
 
-import org.jax.vmvt.VmtVisualizer;
 import org.jax.vmvt.pssm.DoubleMatrix;
 import org.jax.vmvt.svg.AbstractSvgCoreWriter;
 import org.jax.vmvt.svg.AbstractSvgWriter;
@@ -12,14 +11,22 @@ import org.jax.vmvt.svg.walker.SvgSequenceWalker;
 import java.io.IOException;
 import java.io.StringWriter;
 
-public class AcceptorVmvtWriter extends AbstractSvgWriter implements VmtVisualizer {
+/**
+ * This class creates an SVG graphic that contains a sequence ruler (intron/exon positions), the
+ * reference sequence, deviating alternate bases, a box around the variant, the sequence logo,
+ * and a sequence walker. This class is for the acceptor.
+ * @author Peter N Robinson
+ */
+public class AcceptorVmvtWriter extends AbstractSvgWriter {
     private final String reference;
     private final String alternate;
     private final DoubleMatrix splicesite;
     private final DoubleMatrix spliceHeightMatrix;
+    private final static int SVG_WIDTH = 500;
+    private final static int SVG_HEIGHT = 600;
 
     public AcceptorVmvtWriter(String ref, String alt) {
-        super(500,600);
+        super(SVG_WIDTH,SVG_HEIGHT);
         this.reference = ref;
         this.alternate = alt;
         this.splicesite = DoubleMatrix.acceptor();
