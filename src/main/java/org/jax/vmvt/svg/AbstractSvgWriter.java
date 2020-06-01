@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * This is the superclass for writing an SVG string of all types.
+ * This is the base class for writing an SVG string of all types.
  * @author Peter Robinson
  */
 public abstract class AbstractSvgWriter {

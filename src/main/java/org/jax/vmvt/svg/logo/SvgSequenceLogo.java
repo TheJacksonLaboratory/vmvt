@@ -3,16 +3,16 @@ package org.jax.vmvt.svg.logo;
 
 import org.jax.vmvt.pssm.DoubleMatrix;
 import org.jax.vmvt.svg.AbstractSvgMotifWriter;
-import org.jax.vmvt.svg.walker.SvgSequenceWalker;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
 
 /**
- * TODO -- FOR NOW DUPLICATE CODE.
- * LATER -- PROBABLY MAKE COMMON SUPER CLASS FOR THIS AND {@link SvgSequenceWalker} AFTER
- * WE UNDERSTAND NEEDS/ARCHITECTURE
+ * This class writes a sequence logo as an SVG element (which needs to be included in a complete SVG, which is
+ * done in {@link DonorLogoWriter}, {@link AcceptorLogoWriter}, {@link org.jax.vmvt.svg.combo.AcceptorVmvtWriter},
+ * or {@link org.jax.vmvt.svg.combo.DonorVmvtWriter}.
+ * @author Peter N Robinson
  */
 public class SvgSequenceLogo extends AbstractSvgMotifWriter {
     /** Maximum height of the letters in the sequence logo. Needs to be adjusted together with {@link #FUDGE_FACTOR}.*/
@@ -69,9 +69,8 @@ public class SvgSequenceLogo extends AbstractSvgMotifWriter {
     @Override
     public void write(Writer writer) throws IOException {
         int X = this.XSTART;
-        int Y = this.YSTART;
         for (int i=0; i<seqlen; i++) {
-            writeLogoBaseColumn(writer, X, Y, i);
+            writeLogoBaseColumn(writer, X, this.YSTART, i);
             X += LOWER_CASE_BASE_INCREMENT;
         }
     }

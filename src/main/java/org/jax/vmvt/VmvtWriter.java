@@ -7,18 +7,14 @@ import org.jax.vmvt.svg.logo.AcceptorLogoWriter;
 import org.jax.vmvt.svg.logo.DonorLogoWriter;
 import org.jax.vmvt.svg.walker.AcceptorWalkerWriter;
 import org.jax.vmvt.svg.walker.DonorWalkerWriter;
-
+/**
+ * Public interface to VMVT: Variant-Motif Visualization Tool. For all functions listed here, there
+ * are two parameters: reference and alternate. In the case of the donor functions, these should be
+ * 9 nucleotide sequences (3:intron + 6: exon). In the case of the acceptor functions, these should
+ * be 27 nucleotide sequences (25:intron + 2 exon).
+ * @author Peter N Robinson
+ */
 public class VmvtWriter {
-    
-
-
-    public static void main( String[] args ) {
-        System.out.println( "vmvt" );
-    }
-
-    public VmvtWriter() {
-
-    }
 
     public String getDonorWalkerSvg(String reference, String alternate) {
         AbstractSvgWriter svgwriter = new DonorWalkerWriter(reference, alternate);

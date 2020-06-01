@@ -4,8 +4,14 @@ import org.jax.vmvt.except.VmvtRuntimeException;
 
 import java.util.*;
 
+/**
+ * A class to hold a two-dimensional matrix of double values, together with convenience methods to
+ * generate an information-content matrix representing binding sites as well as a height matrix
+ * that is used to create Sequence Logos
+ * @author Peter N Robinson
+ */
 public class DoubleMatrix {
-
+    /** The 2 dimensional {@link #nRows} x {@link #nCols} matrix is stored as a one-dimensional array. */
     private final double[] vals;
     private final int nRows;
     private final int nCols;

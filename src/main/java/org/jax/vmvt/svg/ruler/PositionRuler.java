@@ -6,6 +6,10 @@ import org.jax.vmvt.svg.AbstractSvgCoreWriter;
 import java.io.IOException;
 import java.io.Writer;
 
+/**
+ * Write an SVG element for a "ruler", being the positions in the intron and exon
+ * @author Peter N Robinson
+ */
 public class PositionRuler extends AbstractSvgCoreWriter {
     /** Initial X position. */
     protected final int startX;
@@ -13,7 +17,7 @@ public class PositionRuler extends AbstractSvgCoreWriter {
     protected final int startY;
 
     protected final int Y_DISTANCE_FOR_RULER = 40;
-
+    /** True if the current element is a splice donor, false if the element is an acceptor. */
     boolean isDonor;
 
     public PositionRuler(String ref, String alt, int w, int h, int X, int Y) {
