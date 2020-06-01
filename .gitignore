@@ -3,6 +3,9 @@
 .idea/
 *.svg
 
+# Maven build directory
+target/
+
 # Compiled class file
 *.class
 
