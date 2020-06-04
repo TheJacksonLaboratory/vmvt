@@ -1,8 +1,8 @@
-module vmvt {
-    exports org.jax.vmvt;
+module org.monarchinitiative.vmvt {
+    exports org.monarchinitiative.vmvt;
 
-    opens org.jax.vmvt;
-    opens org.jax.vmvt.pssm;
-    opens org.jax.vmvt.svg;
+    opens org.monarchinitiative.vmvt;
+    opens org.monarchinitiative.vmvt.pssm;
+    opens org.monarchinitiative.vmvt.svg;
 }
 

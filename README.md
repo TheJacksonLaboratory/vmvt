@@ -9,7 +9,6 @@ SVG Walker is a Java 11 library. To use it, <TODO describe how to inlcude this i
 ## Usage
 
 ```java
-import org.jax.vmvt.VmvtWriter;
 
 // Sequence of a reference and alternate donor site
 final String ref = "AAGGTCAGA";
