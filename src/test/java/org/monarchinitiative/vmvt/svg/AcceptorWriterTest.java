@@ -21,7 +21,7 @@ public class AcceptorWriterTest {
         String svg = donor.getAcceptorWalkerSvg(ref,alt);
         assertNotNull(svg);
         try {
-            String path = "acceptorWalker.svg";
+            String path = "target/acceptorWalker.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();
@@ -37,7 +37,7 @@ public class AcceptorWriterTest {
         String svg = donor.getAcceptorLogoSvg(ref,alt);
         assertNotNull(svg);
         try {
-            String path = "acceptorLogo.svg";
+            String path = "target/acceptorLogo.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();
@@ -52,7 +52,7 @@ public class AcceptorWriterTest {
         String svg = donor.getAcceptorVmvtSvg(ref,alt);
         assertNotNull(svg);
         try {
-            String path = "acceptorVmvt.svg";
+            String path = "target/acceptorVmvt.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();
