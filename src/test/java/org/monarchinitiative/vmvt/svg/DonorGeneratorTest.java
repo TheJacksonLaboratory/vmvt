@@ -1,6 +1,6 @@
 package org.monarchinitiative.vmvt.svg;
 
-import org.monarchinitiative.vmvt.VmvtWriter;
+import org.monarchinitiative.vmvt.VmvtGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
@@ -9,20 +9,20 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class DonorWriterTest {
+public class DonorGeneratorTest {
     private final String ref = "AAGGTCAGA";
     private final String alt = "AAGATCAGA";
 
 
     @Test
     void testCtor() {
-        VmvtWriter donor = new VmvtWriter();
+        VmvtGenerator donor = new VmvtGenerator();
         assertNotNull(donor);
     }
 
     @Test
     void testWriteDonorSvgWalker() {
-        VmvtWriter donor = new VmvtWriter();
+        VmvtGenerator donor = new VmvtGenerator();
         String svg = donor.getDonorWalkerSvg(ref,alt);
         assertNotNull(svg);
         try {
@@ -37,7 +37,7 @@ public class DonorWriterTest {
 
     @Test
     void testWriteDonorSvgLogo() {
-        VmvtWriter donor = new VmvtWriter();
+        VmvtGenerator donor = new VmvtGenerator();
         String svg = donor.getDonorLogoSvg(ref,alt);
         assertNotNull(svg);
         try {
@@ -52,7 +52,7 @@ public class DonorWriterTest {
 
     @Test
     void testWriteDonorSvgCombo() {
-        VmvtWriter donor = new VmvtWriter();
+        VmvtGenerator donor = new VmvtGenerator();
         String svg = donor.getDonorVmvtSvg(ref,alt);
         assertNotNull(svg);
         try {

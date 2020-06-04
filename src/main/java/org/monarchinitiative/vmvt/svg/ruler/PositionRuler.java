@@ -1,7 +1,7 @@
 package org.monarchinitiative.vmvt.svg.ruler;
 
 import org.monarchinitiative.vmvt.except.VmvtRuntimeException;
-import org.monarchinitiative.vmvt.svg.AbstractSvgCoreWriter;
+import org.monarchinitiative.vmvt.svg.AbstractSvgCoreGenerator;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -10,7 +10,7 @@ import java.io.Writer;
  * Write an SVG element for a "ruler", being the positions in the intron and exon
  * @author Peter N Robinson
  */
-public class PositionRuler extends AbstractSvgCoreWriter {
+public class PositionRuler extends AbstractSvgCoreGenerator {
     /** Initial X position. */
     protected final int startX;
     /** Initial Y position. */

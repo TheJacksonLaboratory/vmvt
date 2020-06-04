@@ -1,38 +1,39 @@
-package org.monarchinitiative.vmvt.svg.walker;
+package org.monarchinitiative.vmvt.svg.logo;
 
+
+import org.monarchinitiative.vmvt.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.svg.ruler.PositionRuler;
 import org.monarchinitiative.vmvt.svg.ruler.SequenceRuler;
-import org.monarchinitiative.vmvt.pssm.DoubleMatrix;
-import org.monarchinitiative.vmvt.svg.AbstractSvgCoreWriter;
-import org.monarchinitiative.vmvt.svg.AbstractSvgWriter;
+import org.monarchinitiative.vmvt.svg.AbstractSvgCoreGenerator;
+import org.monarchinitiative.vmvt.svg.AbstractSvgGenerator;
 
 import java.io.IOException;
 import java.io.StringWriter;
 
 /**
- * Write an SVG sequence walker for a splice acceptor variant
+ * Write an SVG sequence logo for a splice donor site with reference and alternate sequences
  * @author Peter N Robinson
  */
-public class AcceptorWalkerWriter extends AbstractSvgWriter {
+public class DonorLogoGenerator extends AbstractSvgGenerator {
 
     private final String reference;
     private final String alternate;
     private final DoubleMatrix splicesite;
 
-    private final static int SVG_WIDTH = 500;
+    private final static int SVG_WIDTH = 400;
     private final static int SVG_HEIGHT = 400;
 
-    /**
-     * Write a sequence writer for a splice acceptor site (showing ref/alt sequences)
+        /**
+     * Write a sequence logo for a splice donor site (showing ref/alt sequences)
      * Note that the size of the SVG is set in the superclass constructor (w,h)
      * @param ref Reference sequence
      * @param alt Alternate (mutant) sequence
      */
-    public AcceptorWalkerWriter(String ref, String alt) {
-        super(SVG_WIDTH,SVG_HEIGHT);
+    public DonorLogoGenerator(String ref, String alt) {
+        super(SVG_WIDTH, SVG_HEIGHT);
         this.reference = ref;
         this.alternate = alt;
-        this.splicesite = DoubleMatrix.acceptor();
+        this.splicesite = DoubleMatrix.donorHeightMatrix();
     }
 
     @Override
@@ -43,16 +44,15 @@ public class AcceptorWalkerWriter extends AbstractSvgWriter {
         try {
             writeHeader(swriter);
             // WIDTH AND HEIGHT ARE FROM THE SUPERCLASS -- SET ABOVE IN THE CTOR
-            AbstractSvgCoreWriter posRuler = new PositionRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
+            AbstractSvgCoreGenerator posRuler = new PositionRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
             posRuler.write(swriter);
             startY += posRuler.getYincrement();
-            AbstractSvgCoreWriter sequenceRuler = new SequenceRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
+            AbstractSvgCoreGenerator sequenceRuler = new SequenceRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
             sequenceRuler.write(swriter);
             startY += sequenceRuler.getYincrement();
-            AbstractSvgCoreWriter acceptorWalker =
-                    new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT, startX, startY);
-            acceptorWalker.write(swriter);
-            writeFooter(swriter);
+            AbstractSvgCoreGenerator donorLogo = new SvgSequenceLogo(reference, alternate, this.splicesite, WIDTH, HEIGHT, startX, startY);
+            donorLogo.write(swriter);
+           writeFooter(swriter);
             return swriter.toString();
         } catch (IOException e) {
             return getSvgErrorMessage(e.getMessage());

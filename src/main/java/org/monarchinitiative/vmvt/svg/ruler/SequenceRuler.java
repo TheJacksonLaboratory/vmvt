@@ -1,6 +1,6 @@
 package org.monarchinitiative.vmvt.svg.ruler;
 
-import org.monarchinitiative.vmvt.svg.AbstractSvgCoreWriter;
+import org.monarchinitiative.vmvt.svg.AbstractSvgCoreGenerator;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -9,7 +9,7 @@ import java.io.Writer;
  * draw a box around them.
  * @author Peter N Robinson
  */
-public class SequenceRuler extends AbstractSvgCoreWriter {
+public class SequenceRuler extends AbstractSvgCoreGenerator {
     /** Initial X position. */
     protected final int startX;
     /** Initial Y position. */

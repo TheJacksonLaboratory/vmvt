@@ -1,7 +1,7 @@
 package org.monarchinitiative.vmvt.svg.walker;
 
 import org.monarchinitiative.vmvt.pssm.DoubleMatrix;
-import org.monarchinitiative.vmvt.svg.AbstractSvgMotifWriter;
+import org.monarchinitiative.vmvt.svg.AbstractSvgMotifGenerator;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -11,7 +11,7 @@ import java.io.Writer;
  * Base class for writing SVG sequence walkers for Splice Acceptor or Donor sequences
  * @author Peter N Robinson
  */
-public class SvgSequenceWalker extends AbstractSvgMotifWriter {
+public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
 
     /** Position where we will start to write things from the left side of the SVG. */
     protected final int XSTART;

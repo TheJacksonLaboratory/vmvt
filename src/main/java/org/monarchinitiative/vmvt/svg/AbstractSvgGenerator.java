@@ -7,7 +7,7 @@ import java.io.Writer;
  * This is the base class for writing an SVG string of all types.
  * @author Peter Robinson
  */
-public abstract class AbstractSvgWriter {
+public abstract class AbstractSvgGenerator {
     /** This name will appear in the comment of the SVGs we produce. */
     private final String PROGRAM_NAME = "vmvt";
 
@@ -16,7 +16,7 @@ public abstract class AbstractSvgWriter {
     /** Total height of the SVG canvas. */
     protected final int HEIGHT;
 
-    public AbstractSvgWriter(int w, int h) {
+    public AbstractSvgGenerator(int w, int h) {
         this.WIDTH = w;
         this.HEIGHT = h;
     }

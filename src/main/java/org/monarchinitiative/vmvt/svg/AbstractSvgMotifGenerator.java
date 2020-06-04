@@ -7,14 +7,14 @@ import org.monarchinitiative.vmvt.pssm.DoubleMatrix;
  * content or height).
  * @author Peter Robinson
  */
-public abstract class AbstractSvgMotifWriter extends AbstractSvgCoreWriter {
+public abstract class AbstractSvgMotifGenerator extends AbstractSvgCoreGenerator {
 
     /** Representation of the Splice donor/acceptor IC matrix. */
     protected final DoubleMatrix splicesite;
 
 
 
-    public AbstractSvgMotifWriter(String ref, String alt, DoubleMatrix site, int w, int h) {
+    public AbstractSvgMotifGenerator(String ref, String alt, DoubleMatrix site, int w, int h) {
        super(ref,alt, w, h);
         this.splicesite = site;
     }

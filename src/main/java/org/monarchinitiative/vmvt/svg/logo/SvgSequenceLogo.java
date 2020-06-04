@@ -2,9 +2,9 @@ package org.monarchinitiative.vmvt.svg.logo;
 
 
 import org.monarchinitiative.vmvt.pssm.DoubleMatrix;
-import org.monarchinitiative.vmvt.svg.AbstractSvgMotifWriter;
-import org.monarchinitiative.vmvt.svg.combo.AcceptorVmvtWriter;
-import org.monarchinitiative.vmvt.svg.combo.DonorVmvtWriter;
+import org.monarchinitiative.vmvt.svg.AbstractSvgMotifGenerator;
+import org.monarchinitiative.vmvt.svg.combo.AcceptorVmvtGenerator;
+import org.monarchinitiative.vmvt.svg.combo.DonorVmvtGenerator;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -12,11 +12,11 @@ import java.util.Map;
 
 /**
  * This class writes a sequence logo as an SVG element (which needs to be included in a complete SVG, which is
- * done in {@link DonorLogoWriter}, {@link AcceptorLogoWriter}, {@link AcceptorVmvtWriter},
- * or {@link DonorVmvtWriter}.
+ * done in {@link DonorLogoGenerator}, {@link AcceptorLogoGenerator}, {@link AcceptorVmvtGenerator},
+ * or {@link DonorVmvtGenerator}.
  * @author Peter N Robinson
  */
-public class SvgSequenceLogo extends AbstractSvgMotifWriter {
+public class SvgSequenceLogo extends AbstractSvgMotifGenerator {
     /** Maximum height of the letters in the sequence logo. Needs to be adjusted together with {@link #FUDGE_FACTOR}.*/
     private final double LOGO_COLUMN_HEIGHT = 20.0;
     /** This is a magic number that places the letters in the correct vertical position. Works with {@link #LOGO_COLUMN_HEIGHT}.*/

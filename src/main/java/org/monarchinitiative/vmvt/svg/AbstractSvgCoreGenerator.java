@@ -5,7 +5,7 @@ import org.monarchinitiative.vmvt.except.VmvtRuntimeException;
 import java.io.IOException;
 import java.io.Writer;
 
-public abstract class AbstractSvgCoreWriter {
+public abstract class AbstractSvgCoreGenerator {
 
     /** The reference (wildtype) sequence of the donor or acceptor splice site. */
     protected final String ref;
@@ -59,7 +59,7 @@ public abstract class AbstractSvgCoreWriter {
     /** Current Y position on the SVG canvas. */
     protected int currentY;
 
-    public AbstractSvgCoreWriter(String ref, String alt, int w, int h) {
+    public AbstractSvgCoreGenerator(String ref, String alt, int w, int h) {
         this.ref = ref;
         this.alt = alt;
         if (ref.length() != alt.length()) {
