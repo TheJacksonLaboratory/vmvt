@@ -214,6 +214,28 @@ public class DoubleMatrix {
         return sortedMap;
     }
 
+
+    public double getIndividualSequenceInformation(int [] sequence) {
+        if (sequence.length != this.nCols) {
+            // should never happen
+            throw new VmvtRuntimeException("Attempt to get Ri with length mismatch");
+        }
+        double R_i = 0.0;
+        for (int i=0;i<sequence.length;i++) {
+            int index = sequence[i];
+            if (index<0 || index>3) {
+                // should never happen
+                throw new VmvtRuntimeException("Index for R_i matrix must be between 0 and 3");
+            }
+            R_i += this.get(index,i);
+        }
+        return R_i;
+    }
+
+    public int getMotifLength() {
+        return nCols;
+    }
+
     /**
      * @return A matrix representing the information content of the splice donor site
      */
