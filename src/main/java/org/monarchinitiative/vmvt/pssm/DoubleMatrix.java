@@ -214,6 +214,62 @@ public class DoubleMatrix {
         return sortedMap;
     }
 
+
+    public double getIndividualSequenceInformation(int [] sequence) {
+        if (sequence.length != this.nCols) {
+            // should never happen
+            throw new VmvtRuntimeException("Attempt to get Ri with length mismatch");
+        }
+        double R_i = 0.0;
+        for (int i=0;i<sequence.length;i++) {
+            int index = sequence[i];
+            if (index<0 || index>3) {
+                // should never happen
+                throw new VmvtRuntimeException("Index for R_i matrix must be between 0 and 3");
+            }
+            R_i += this.get(index,i);
+        }
+        return R_i;
+    }
+
+
+    public double getIndividualSequenceInformation(String seq) {
+        int N = seq.length();
+        int [] codedSequence = new int[N];
+        double R_i = 0.0;
+        for (int i=0;i<N; i++) {
+            switch (seq.charAt(i)) {
+                case 'A':
+                case 'a':
+                    R_i += this.get(0,i);
+                    codedSequence[i] = 0; break;
+                case 'C':
+                case 'c':
+                    R_i += this.get(1,i);
+                    codedSequence[i] = 1; break;
+                case 'G':
+                case 'g':
+                    R_i += this.get(2,i);
+                    codedSequence[i] = 2; break;
+                case 'T':
+                case 't':
+                    R_i += this.get(3,i);
+                    codedSequence[i] = 3; break;
+                default:
+                    throw new VmvtRuntimeException("Did not recognize base character: " + seq.charAt(i));
+            }
+        }
+        double R_i2 = getIndividualSequenceInformation(codedSequence);
+        if ((R_i2 - R_i)>0.00001) {
+            throw new VmvtRuntimeException("Bad R_i from string cal");
+        }
+        return R_i2;
+    }
+
+    public int getMotifLength() {
+        return nCols;
+    }
+
     /**
      * @return A matrix representing the information content of the splice donor site
      */
