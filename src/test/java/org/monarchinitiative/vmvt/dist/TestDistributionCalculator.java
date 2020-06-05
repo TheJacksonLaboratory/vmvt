@@ -5,7 +5,16 @@ import org.junit.jupiter.api.Test;
 import org.monarchinitiative.vmvt.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.svg.delta.DeltaSvg;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 public class TestDistributionCalculator {
+
+    private final String ref = "AAGGTCAGA";
+    private final String alt = "AAGATCAGA";
 
     @Test
     void testDonorDist() {
@@ -26,8 +35,18 @@ public class TestDistributionCalculator {
 
     @Test
     void testDump() {
-        DistributionCalculator dcal = new DistributionCalculator(DoubleMatrix.donor());
-        DeltaSvg dsvg = new DeltaSvg(dcal.getDeltas());
-        dsvg.dump();
+
+        DeltaSvg dsvg = new DeltaSvg(ref, alt);
+        //dsvg.dump();
+        String svg = dsvg.getSvg();
+        assertNotNull(svg);
+        try {
+            String path = "target/donorHistogram.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
