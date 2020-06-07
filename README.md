@@ -3,19 +3,19 @@ Variant Motif Visualization Tool: Create SVG plots to represent splice variants
 
 
 ## Requirements
-SVG Walker is a Java 11 library. To use it, <TODO describe how to inlcude this in module-info etc.
+SVG Walker is a Java 11 library. To use it, <TODO describe how to include this in module-info etc.
 
 
 ## Usage
 
-```$xslt
-import org.jax.vmvt.VmvtWriter;
+```java
 
 // Sequence of a reference and alternate donor site
 final String ref = "AAGGTCAGA";
 final String alt = "AAGATCAGA";
-VmvtWriter donor = new VmvtWriter();
-String svg = donor.getDonorLogoSvg(ref,alt);
+VmvtGenerator vmvt = new VmvtGenerator();
+String dist = vmvt.getDonorDistributionSvg(ref, alt);
+String donor = vmvt.getDonorLogoSvg(ref,alt);
 ```
 
 
@@ -24,7 +24,7 @@ String svg = donor.getDonorLogoSvg(ref,alt);
 vmvt produces SVG visualizations of the predicted effects of splice variants.
 Here is an example variant at the +1 position of a donor sequence.
 
-![donor vmvt image](https://github.com/TheJacksonLaboratory/vmvt/blob/master/docs/vmvt-donor.png "VMVT Donor Variant")
+![donor vmvt image](docs/vmvt-donor.png "VMVT Donor Variant")
 
 
 
