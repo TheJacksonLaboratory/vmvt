@@ -15,7 +15,7 @@ public class SequenceRuler extends AbstractSvgCoreGenerator {
     /** Initial Y position. */
     protected final int startY;
     /** An additional amount of Y distance to skip after we finish with the Sequence Ruler. */
-    private final int Y_SKIP = 40;
+    private final static int Y_SKIP = 40;
 
     public SequenceRuler(String ref, String alt, int w, int h, int X, int Y) {
         super(ref, alt, w, h);

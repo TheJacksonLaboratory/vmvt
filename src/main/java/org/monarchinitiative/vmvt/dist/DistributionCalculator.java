@@ -18,6 +18,7 @@ import java.util.Random;
  * We will model the distribution of scores of the R_i as a normal distribution. Here,
  * we will collect all possible R_i scores for R_i. We will write 10,000 of these to a file
  * for visualization, and we will also calculate the mean and stddev
+ * @author Peter N Robinson
  */
 public class DistributionCalculator  {
 
@@ -35,17 +36,25 @@ public class DistributionCalculator  {
     private final Random random;
 
 
-    private int [] currentIndices;
+    private final int [] currentIndices;
     /** This is used to create a variant sequence that differs from the
      * original sequence in one of multiple nucleotides.
      */
-    private int [] variantIndices;
+    private final int [] variantIndices;
 
     private final double mean;
 
-
+    private final static int DEFAULT_NUM_SAMPLES = 100_000;
 
     public DistributionCalculator(DoubleMatrix site) {
+        this(site, DEFAULT_NUM_SAMPLES);
+    }
+
+    /**
+     * @param site A representating of the donor/acceptor
+     * @param n_samples Number of samples to take to estimate distribution of differences for SNV
+     */
+    public DistributionCalculator(DoubleMatrix site, int n_samples) {
         this.splicesite = site;
         values = new ArrayList<>();
         deltas = new ArrayList<>();
@@ -72,7 +81,7 @@ public class DistributionCalculator  {
             System.out.printf("Total %d mean %f.\n", values.size(), mean);
         } else {
             // acceptor sequence, too long to calculate everything, let's just sample
-            // 100 million times
+            // 100 thousand times
             for (int i = 0; i<100_000; i++) {
                 long j = (long) (Math.random() * max);
                 double R_i = getR_i(j);
@@ -108,7 +117,11 @@ public class DistributionCalculator  {
         return splicesite.getIndividualSequenceInformation(currentIndices);
     }
 
-
+    /**
+     * There are four bases. This function chooses a base that is different from 'current' at random
+     * @param current current reference base
+     * @return one of the three bases other than current, at random
+     */
     private int getRandomIndex(int current) {
         int r = random.nextInt(4);
         while (current==r){
@@ -117,6 +130,12 @@ public class DistributionCalculator  {
         return r;
     }
 
+    /**
+     * This function creates a random single-nucleotide change in compared to the sequence
+     * that is currently represented in {@link #currentIndices} and places the variant
+     * sequence into {@link #variantIndices}. It choose a random position within the sequence
+     * and then choose a different base at random.
+     */
     private void createVariantSequence() {
         System.arraycopy(this.currentIndices, 0, this.variantIndices, 0, seqlen);
         int i = random.nextInt(seqlen);
@@ -125,7 +144,13 @@ public class DistributionCalculator  {
     }
 
 
-
+    /**
+     * Write the R_i scores of the examined sequences (from values) and write the delta scores.
+     * This function can be used to write out results for plotting in R, but is not needed for
+     * creating SVG files.
+     * @param fname Name of the output file for the R_i values
+     * @param deltaFname Name of the output file for the delta-R_i values.
+     */
     public void writeVals(String fname, String deltaFname) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fname))) {
             for (Double v : values) {
@@ -142,10 +167,5 @@ public class DistributionCalculator  {
             e.printStackTrace();
         }
     }
-
-
-
-
-
 
 }

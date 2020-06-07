@@ -9,7 +9,7 @@ import java.io.Writer;
  */
 public abstract class AbstractSvgGenerator {
     /** This name will appear in the comment of the SVGs we produce. */
-    private final String PROGRAM_NAME = "vmvt";
+    private final static String PROGRAM_NAME = "vmvt";
 
     /** Total width of the SVG canvas. */
     protected final int WIDTH;

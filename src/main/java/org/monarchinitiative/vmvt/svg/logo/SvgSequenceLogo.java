@@ -26,7 +26,7 @@ public class SvgSequenceLogo extends AbstractSvgMotifGenerator {
     /** Position where we will start to write things from the top of the SVG */
     protected final int YSTART;
     /** Amount to shift down after sequence logo */
-    private final int Y_SKIP = 50;
+    private final static int Y_SKIP = 50;
 
     /**
      * Create an Svg Logo for the donor or acceptor with representation of reference sequence and alt bases
