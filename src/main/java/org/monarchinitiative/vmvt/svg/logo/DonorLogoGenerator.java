@@ -23,7 +23,7 @@ public class DonorLogoGenerator extends AbstractSvgGenerator {
     private final static int SVG_WIDTH = 400;
     private final static int SVG_HEIGHT = 400;
 
-        /**
+    /**
      * Write a sequence logo for a splice donor site (showing ref/alt sequences)
      * Note that the size of the SVG is set in the superclass constructor (w,h)
      * @param ref Reference sequence
@@ -34,6 +34,19 @@ public class DonorLogoGenerator extends AbstractSvgGenerator {
         this.reference = ref;
         this.alternate = alt;
         this.splicesite = DoubleMatrix.donorHeightMatrix();
+    }
+
+    /**
+     * Write a sequence logo for a splice donor site (showing ref/alt sequences)
+     * Note that the size of the SVG is set in the superclass constructor (w,h)
+     * @param ref Reference sequence
+     * @param alt Alternate (mutant) sequence
+     */
+    public DonorLogoGenerator(String ref, String alt, DoubleMatrix donorHeight) {
+        super(SVG_WIDTH, SVG_HEIGHT);
+        this.reference = ref;
+        this.alternate = alt;
+        this.splicesite = donorHeight;
     }
 
     @Override

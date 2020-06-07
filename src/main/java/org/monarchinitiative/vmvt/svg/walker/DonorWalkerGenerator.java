@@ -34,6 +34,20 @@ public class DonorWalkerGenerator extends AbstractSvgGenerator {
         this.splicesite = DoubleMatrix.donor();
     }
 
+    /**
+     * Write a sequence writer for a splice donor site (showing ref/alt sequences)
+     * Note that the size of the SVG is set in the superclass constructor (w,h)
+     * @param ref Reference sequence
+     * @param alt Alternate (mutant) sequence
+     * @param donor Donor information content matrix
+     */
+    public DonorWalkerGenerator(String ref, String alt, DoubleMatrix donor) {
+        super(SVG_WIDTH,SVG_HEIGHT);
+        this.reference = ref;
+        this.alternate = alt;
+        this.splicesite = donor;
+    }
+
     @Override
     public String getSvg() {
         int startX = 20;

@@ -90,6 +90,37 @@ public class DeltaSvg extends AbstractSvgGenerator {
     }
 
     /**
+     * Construct Delta-SVG for either a donor or an acceptor site.
+     * @param ref reference sequence
+     * @param alt alternate sequence
+     */
+    public DeltaSvg(String ref, String alt, DistributionCalculator dcal) {
+        super(SVG_WIDTH, SVG_HEIGHT);
+        this.deltavals = dcal.getDeltas();
+        this.min = deltavals.stream().mapToDouble(Double::doubleValue).min().orElseThrow();
+        this.max = deltavals.stream().mapToDouble(Double::doubleValue).max().orElseThrow();
+        double span = max - min;
+        if (span==0.0) {
+            throw new VmvtRuntimeException("min == max in DeltaSvg");
+        }
+        bins = new int[BIN_COUNT];
+        for (Double d : deltavals) {
+            double normalized = (d-min)/span;
+            int i = (int)Math.ceil((BIN_COUNT-1) * normalized);
+            bins[i]++;
+        }
+        this.splicesite = dcal.getSplicesite();
+        this.ref_R_i = this.splicesite.getIndividualSequenceInformation(ref);
+        this.alt_R_i = this.splicesite.getIndividualSequenceInformation(alt);
+        this.delta = ref_R_i - alt_R_i;
+
+    }
+
+
+
+
+
+    /**
      * For testing. Dump the number of counts in each bin to the shell.
      */
     public void dump() {

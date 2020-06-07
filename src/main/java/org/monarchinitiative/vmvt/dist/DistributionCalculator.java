@@ -108,6 +108,10 @@ public class DistributionCalculator  {
         return deltas;
     }
 
+    public DoubleMatrix getSplicesite() {
+        return splicesite;
+    }
+
     private double getR_i(long seq) {
         for (int i=0;i<seqlen;i++) {
             int remainder = (int)(seq % 4);

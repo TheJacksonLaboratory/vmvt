@@ -2,6 +2,7 @@ package org.monarchinitiative.vmvt.dist;
 
 
 import org.junit.jupiter.api.Test;
+import org.monarchinitiative.vmvt.VmvtGenerator;
 import org.monarchinitiative.vmvt.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.svg.delta.DeltaSvg;
 
@@ -35,10 +36,8 @@ public class TestDistributionCalculator {
 
     @Test
     void testDump() {
-
-        DeltaSvg dsvg = new DeltaSvg(ref, alt);
-        //dsvg.dump();
-        String svg = dsvg.getSvg();
+        VmvtGenerator vmvt = new VmvtGenerator();
+        String svg = vmvt.getDonorDistributionSvg(ref, alt);
         assertNotNull(svg);
         try {
             String path = "target/donorHistogram.svg";

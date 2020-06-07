@@ -13,8 +13,9 @@ SVG Walker is a Java 11 library. To use it, <TODO describe how to inlcude this i
 // Sequence of a reference and alternate donor site
 final String ref = "AAGGTCAGA";
 final String alt = "AAGATCAGA";
-VmvtWriter donor = new VmvtWriter();
-String svg = donor.getDonorLogoSvg(ref,alt);
+VmvtGenerator vmvt = new VmvtGenerator();
+String dist = vmvt.getDonorDistributionSvg(ref, alt);
+String donor = vmvt.getDonorLogoSvg(ref,alt);
 ```
 
 

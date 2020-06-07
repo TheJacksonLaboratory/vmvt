@@ -1,7 +1,10 @@
 package org.monarchinitiative.vmvt;
 
+import org.monarchinitiative.vmvt.dist.DistributionCalculator;
+import org.monarchinitiative.vmvt.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.svg.combo.AcceptorVmvtGenerator;
 import org.monarchinitiative.vmvt.svg.combo.DonorVmvtGenerator;
+import org.monarchinitiative.vmvt.svg.delta.DeltaSvg;
 import org.monarchinitiative.vmvt.svg.logo.AcceptorLogoGenerator;
 import org.monarchinitiative.vmvt.svg.logo.DonorLogoGenerator;
 import org.monarchinitiative.vmvt.svg.walker.AcceptorWalkerGenerator;
@@ -17,25 +20,42 @@ import org.monarchinitiative.vmvt.svg.AbstractSvgGenerator;
  */
 public class VmvtGenerator {
 
+    private final DoubleMatrix donor;
+    private final DoubleMatrix acceptor;
+    private final DoubleMatrix donorHeight;
+    private final DoubleMatrix acceptorHeight;
+    private final DistributionCalculator donorDistribution;
+    private final DistributionCalculator acceptorDistribution;
+    private final static int NUM_SAMPLES = 250_000;
+
+    public VmvtGenerator() {
+        donor = DoubleMatrix.donor();
+        acceptor = DoubleMatrix.acceptor();
+        donorHeight = DoubleMatrix.donorHeightMatrix();
+        acceptorHeight = DoubleMatrix.acceptorHeightMatrix();
+        donorDistribution = new DistributionCalculator(donor);
+        acceptorDistribution = new DistributionCalculator(acceptor,NUM_SAMPLES);
+    }
+
     public String getDonorWalkerSvg(String reference, String alternate) {
-        AbstractSvgGenerator svgGenerator = new DonorWalkerGenerator(reference, alternate);
+        AbstractSvgGenerator svgGenerator = new DonorWalkerGenerator(reference, alternate, donor);
         return svgGenerator.getSvg();
     }
 
 
     public String getAcceptorWalkerSvg(String reference, String alternate) {
-        AbstractSvgGenerator svgGenerator = new AcceptorWalkerGenerator(reference, alternate);
+        AbstractSvgGenerator svgGenerator = new AcceptorWalkerGenerator(reference, alternate, acceptor);
         return svgGenerator.getSvg();
     }
 
 
     public String getDonorLogoSvg(String reference, String alternate) {
-        AbstractSvgGenerator svgwriter = new DonorLogoGenerator(reference, alternate);
+        AbstractSvgGenerator svgwriter = new DonorLogoGenerator(reference, alternate, donorHeight);
         return svgwriter.getSvg();
     }
 
     public String getAcceptorLogoSvg(String reference, String alternate) {
-        AbstractSvgGenerator svgGenerator = new AcceptorLogoGenerator(reference, alternate);
+        AbstractSvgGenerator svgGenerator = new AcceptorLogoGenerator(reference, alternate, acceptorHeight);
         return svgGenerator.getSvg();
     }
 
@@ -47,6 +67,16 @@ public class VmvtGenerator {
     public String getAcceptorVmvtSvg(String reference, String alternate) {
         AbstractSvgGenerator svgGenerator = new AcceptorVmvtGenerator(reference, alternate);
         return svgGenerator.getSvg();
+    }
+
+    public String getDonorDistributionSvg(String reference, String alternate) {
+        DeltaSvg dsvg = new DeltaSvg(reference, alternate, donorDistribution);
+        return dsvg.getSvg();
+    }
+
+    public String getAcceptorDistributionSvg(String reference, String alternate) {
+        DeltaSvg dsvg = new DeltaSvg(reference, alternate, acceptorDistribution);
+        return dsvg.getSvg();
     }
 
 
