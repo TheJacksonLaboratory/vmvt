@@ -26,7 +26,7 @@ public abstract class AbstractSvgGenerator {
         writer.write("<svg width=\"" + this.WIDTH +"\" height=\""+ this.HEIGHT +"\" " +
                 "xmlns=\"http://www.w3.org/2000/svg\" " +
                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n");
-        writer.write("<!-- Created by " + this.PROGRAM_NAME + " -->\n");
+        writer.write("<!-- Created by " + PROGRAM_NAME + " -->\n");
         writer.write("<style>\n" +
                 "  text { font: 24px monospace; }\n" +
                 "  </style>\n");
@@ -47,7 +47,7 @@ public abstract class AbstractSvgGenerator {
         return String.format("<svg width=\"200\" height=\"100\" " +
                 "xmlns=\"http://www.w3.org/2000/svg\" " +
                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n" +
-                "<!-- Created by svgwalker -->\n" +
+                "<!-- Created by " + PROGRAM_NAME +" -->\n" +
                 "<g><text x=\"10\" y=\"10\">%s</text>\n</g>\n" +
                 "</svg>\n", msg);
     }

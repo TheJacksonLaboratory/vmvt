@@ -3,7 +3,7 @@ Variant Motif Visualization Tool: Create SVG plots to represent splice variants
 
 
 ## Requirements
-SVG Walker is a Java 11 library. To use it, <TODO describe how to inlcude this in module-info etc.
+SVG Walker is a Java 11 library. To use it, <TODO describe how to include this in module-info etc.
 
 
 ## Usage
