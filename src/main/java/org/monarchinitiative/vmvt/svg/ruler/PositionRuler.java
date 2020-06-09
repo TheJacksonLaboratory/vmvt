@@ -37,13 +37,12 @@ public class PositionRuler extends AbstractSvgCoreGenerator {
 
     private void writeDonor(Writer writer) throws IOException {
         int Xr = this.startX;
-        int Yr = this.startY;
         final int X_NUDGE = 2;
         for (int i=0; i<seqlen; i++) {
             int j = i-2; // substract 3 for the 3 intronic positions
             j = j<=0 ? j-1 : j; // we do not have a zeroth position in this display!
             if (j==1) Xr += X_NUDGE;
-            writer.write(String.format("<g transform='translate(%d,%d) scale(0.4,0.4) '>\n",Xr, Yr));
+            writer.write(String.format("<g transform='translate(%d,%d) scale(0.4,0.4) '>\n",Xr, this.startY));
             writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"black\">%d</text>\n",j));
             writer.write("</g>\n");
             Xr += LOWER_CASE_BASE_INCREMENT;

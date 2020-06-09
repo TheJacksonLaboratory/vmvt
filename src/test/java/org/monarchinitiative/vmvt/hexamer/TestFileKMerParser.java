@@ -3,8 +3,6 @@ package org.monarchinitiative.vmvt.hexamer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.monarchinitiative.vmvt.VmvtGenerator;
-import org.monarchinitiative.vmvt.svg.ese.EseSvg;
-import org.monarchinitiative.vmvt.svg.ese.HexamerEseSvg;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

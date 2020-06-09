@@ -23,7 +23,7 @@ public abstract class AbstractSvgGenerator {
 
     /** Write the header of the SVG */
     protected void writeHeader(Writer writer) throws IOException {
-        writer.write("<svg width=\"" + this.WIDTH +"\" height=\""+ this.HEIGHT +"\" " +
+        writer.write("<svg width=\"" + this.WIDTH +"\" height=\""+ this.HEIGHT +"\" style=\"border:1px solid black\" " +
                 "xmlns=\"http://www.w3.org/2000/svg\" " +
                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n");
         writer.write("<!-- Created by " + PROGRAM_NAME + " -->\n");

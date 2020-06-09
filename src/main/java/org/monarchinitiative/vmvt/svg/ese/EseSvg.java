@@ -1,5 +1,6 @@
 package org.monarchinitiative.vmvt.svg.ese;
 
+import com.google.common.collect.ArrayListMultimap;
 import org.monarchinitiative.vmvt.except.VmvtRuntimeException;
 import org.monarchinitiative.vmvt.hexamer.KmerFeatureCalculator;
 import org.monarchinitiative.vmvt.svg.AbstractSvgGenerator;
@@ -7,8 +8,19 @@ import org.monarchinitiative.vmvt.svg.AbstractSvgGenerator;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Arrays;
 
 public abstract class EseSvg extends AbstractSvgGenerator  {
+
+
+    /** Canvas width of the SVG. */
+    private final static int SVG_WIDTH = 900;
+    /** Canvas height of the SVG. */
+    private final static int SVG_HEIGHT = 400;
+    /** Width of one of the two kmer plots (ref/alt) this SVG will show. Needs to be less than half of {@link #SVG_WIDTH}*/
+    private final static int KMER_PLOT_WIDTH = 400;
+
+
     /** Reference to a hexa (6) or hepta (7) feature calculator. */
     private final KmerFeatureCalculator calculator;
 
@@ -22,17 +34,22 @@ public abstract class EseSvg extends AbstractSvgGenerator  {
      */
     private final int expectedSequenceLength;
 
-    private final int XSTART = 70;
-    private final int XEND = WIDTH - 20;
+    private int XSTART = 70;
+    private int XEND = KMER_PLOT_WIDTH - 20;
     private final int YTOP = 30;
     private final int YBOTTOM = HEIGHT - YTOP;
     /* This will convert the scores in {@link #ESEscoresRef} to the corresponding height. */
     private final double YSCALE = 0.5 * (YBOTTOM - YTOP);
+    /** This is the Y position of where x=0. */
+    private final int X_AXIS_BASELINE = (YTOP+YBOTTOM)/2;
 
     private final double [] ESEscoresRef;
+    private final double [] ESEscoresAlt;
+    private final double meanESEref;
+    private final double meanESEalt;
 
-    public EseSvg(KmerFeatureCalculator calc, String ref, String alt, int w, int h) {
-        super(w,h);
+    public EseSvg(KmerFeatureCalculator calc, String ref, String alt) {
+        super(SVG_WIDTH, SVG_HEIGHT);
         this.calculator = calc;
         this.reference = ref.toUpperCase();
         this.alternate = alt.toUpperCase();
@@ -46,7 +63,9 @@ public abstract class EseSvg extends AbstractSvgGenerator  {
             throw new VmvtRuntimeException("Unexpected alternate sequence length for kmer analysis: " + alternate);
         }
         ESEscoresRef = calc.kmerScoreArray(this.reference);
-
+        ESEscoresAlt = calc.kmerScoreArray(this.alternate);
+        meanESEref = Arrays.stream(ESEscoresRef).average().orElseThrow();
+        meanESEalt = Arrays.stream(ESEscoresAlt).average().orElseThrow();
     }
 
     private void writeYaxis(Writer writer) throws IOException {
@@ -77,43 +96,91 @@ public abstract class EseSvg extends AbstractSvgGenerator  {
     }
 
 
-    private void writeXaxis(Writer writer) throws IOException {
-        int y = (YTOP+YBOTTOM)/2;
+
+    private void writeReferenceBoxes(Writer writer, double esescores[]) throws IOException {
+        int y = X_AXIS_BASELINE;
         writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"black\"/>\n",
                 XSTART,y,XEND,y));
-        double Xincrement = (double)(XEND-XSTART)/(double)kmerLen;
+        int numbins = reference.length() - this.padding;
+        double Xincrement = (double)(XEND-XSTART)/(double)numbins;
         double barWidth = 0.6*Xincrement;
         double x = XSTART;
-        double x2 = XSTART - 0.5*Xincrement;
-        double xStartForBoxes = XSTART - 0.8*Xincrement;
+        double xposForNumbers = XSTART - 0.5*Xincrement;
+        double xposForBoxes = XSTART - 0.8*Xincrement;
         double y3 = y+20.0;
         int y2 = y+5; // height of tick on X axis
         for (int i=0;i<kmerLen;i++) {
             x += Xincrement;
-            x2 += Xincrement;
-            xStartForBoxes += Xincrement;
+            xposForNumbers += Xincrement;
+            xposForBoxes += Xincrement;
             writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"black\"/>\n",
                     x,y,x,y2));
 
-            double barHeight = this.ESEscoresRef[i] * YSCALE;
+            double barHeight = esescores[i] * YSCALE;
             double Y = y - barHeight;
             if (barHeight > 1.0) {
                 String rect = String.format("<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" rx=\"2\" " +
                                 "style=\"stroke:#006600; fill: #00cc00\" />\n",
-                        xStartForBoxes, Y, barWidth, barHeight);
+                        xposForBoxes, Y, barWidth, barHeight);
                 writer.write(rect);
             } else if (barHeight < -1.0){
                 String rect = String.format("<rect x=\"%f\" y=\"%d\" width=\"%f\" height=\"%f\" rx=\"2\" " +
                                 "style=\"stroke:#006600; fill: #00cc00\" fill-opacity=\"0.4\"/>\n",
-                        xStartForBoxes, y, barWidth, Math.abs(barHeight));
+                        xposForBoxes, y, barWidth, Math.abs(barHeight));
                 writer.write(rect);
             }
             writer.write(String.format("<g transform='translate(%f,%f) scale(0.6,0.6)'><text>%d</text></g>\n",
-                    x2, y3, (1+i)));
+                    xposForNumbers, y3, (1+i)));
         }
+
+        double meanESE = Arrays.stream(esescores).average().orElse(0);
+        if (meanESE == 0) {
+            return; // no need to draw line
+        }
+        if (meanESE < 0) {
+            y = X_AXIS_BASELINE - (int) (meanESE * YSCALE);
+        } else {
+            y = X_AXIS_BASELINE -  (int) (meanESE * YSCALE);
+        }
+        writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"red\"/>\n",
+                XSTART,y,XEND,y));
     }
 
 
+    private void plotInterplotLine(Writer writer) throws IOException {
+        double deltaESE = meanESEalt - meanESEref;
+        int x1 = KMER_PLOT_WIDTH - 20;
+        int x2 = 570; // TODO -- fragile, make this more robust
+        int y1 =  X_AXIS_BASELINE - (int) (meanESEref * YSCALE);
+        int y2 =  X_AXIS_BASELINE - (int) (meanESEalt * YSCALE);
+        int maxY = Math.max(y1, y2);
+        int midX = (int)(0.9*x1+0.1*x2);
+        String line = String.format("<line x1=\"%d\" x2=\"%d\" y1=\"%d\" y2=\"%d\" " +
+                        "stroke=\"red\" stroke-width=\"1\"  stroke-dasharray=\"1, 3\"/>\n",
+                x1,x2,y1,y2);
+        writer.write(line);
+        String eseText = String.format("<text font-size=\"smaller\">ΔESE: %.2f</text>",deltaESE);
+        int Y = Math.max(20, maxY-100);
+        String smallerText = String.format("<g transform='translate(%d,%d) scale(0.75,0.75)'>%s</g>\n",
+                midX, Y,eseText );
+        writer.write(smallerText);
+    }
+
+
+
+    private void plotReference(Writer writer) throws IOException {
+        XSTART = 70;
+        XEND = KMER_PLOT_WIDTH - 20;
+        writeYaxis(writer);
+        writeReferenceBoxes(writer, this.ESEscoresRef);
+    }
+
+    private void plotAlternate(Writer writer) throws IOException {
+        XSTART += 500;
+        XEND += 500;
+        writeYaxis(writer);
+        writeReferenceBoxes(writer, this.ESEscoresAlt);
+    }
 
 
 
@@ -121,8 +188,9 @@ public abstract class EseSvg extends AbstractSvgGenerator  {
         StringWriter swriter = new StringWriter();
         try {
             writeHeader(swriter);
-            writeYaxis(swriter);
-            writeXaxis(swriter);
+            plotReference(swriter);
+            plotAlternate(swriter);
+            plotInterplotLine(swriter);
             writeFooter(swriter);
         } catch (IOException e) {
             return getSvgErrorMessage(e.getMessage());

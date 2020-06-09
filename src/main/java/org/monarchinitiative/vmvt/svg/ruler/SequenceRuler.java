@@ -82,6 +82,6 @@ public class SequenceRuler extends AbstractSvgCoreGenerator {
 
     @Override
     public int getYincrement() {
-        return this.Y_SKIP + this.currentY - this.startY;
+        return Y_SKIP + this.currentY - this.startY;
     }
 }
