@@ -2,7 +2,12 @@ package org.monarchinitiative.vmvt.hexamer;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.monarchinitiative.vmvt.VmvtGenerator;
+import org.monarchinitiative.vmvt.svg.ese.EseSvg;
+import org.monarchinitiative.vmvt.svg.ese.HexamerEseSvg;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
@@ -46,6 +51,16 @@ public class TestFileKMerParser {
     void writeEseSvg() {
         String ref = "cctggctatat";
         String alt = "cctagctatat";
+        VmvtGenerator vmvt = new VmvtGenerator();
+        String svg = vmvt.getHexamerSvg(ref,alt);
+        try {
+            String path = "target/ese6.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

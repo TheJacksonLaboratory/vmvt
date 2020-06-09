@@ -30,7 +30,9 @@ public abstract class KmerFeatureCalculator {
                 .orElse(Double.NaN);
     }
 
-    protected abstract int getPadding();
+    public abstract int getPadding();
+    /** @return 6 or 7 (hexa or hepta) */
+    public abstract int getKmerLength();
 
 
     /**
@@ -51,7 +53,17 @@ public abstract class KmerFeatureCalculator {
 
 
 
-    public double score(String reference, String alternate) {
+    public double[] kmerScoreArray(String sequence) {
+        int len = getKmerLength();
+        double [] scores = new double[len];
+        for (int i=0;i<scores.length;i++) {
+            String subseq = sequence.substring(i,i+len);
+            scores[i] = kmerMap.getOrDefault(subseq,0.0);
+        }
+        return scores;
+    }
+
+    public double delta(String reference, String alternate) {
         double refScore = scoreSequence(reference);
         double altScore = scoreSequence(alternate);
         // subtract total alt from total ref

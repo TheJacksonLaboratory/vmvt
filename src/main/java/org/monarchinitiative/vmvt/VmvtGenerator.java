@@ -5,6 +5,8 @@ import org.monarchinitiative.vmvt.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.svg.combo.AcceptorVmvtGenerator;
 import org.monarchinitiative.vmvt.svg.combo.DonorVmvtGenerator;
 import org.monarchinitiative.vmvt.svg.delta.DeltaSvg;
+import org.monarchinitiative.vmvt.svg.ese.EseSvg;
+import org.monarchinitiative.vmvt.svg.ese.HexamerEseSvg;
 import org.monarchinitiative.vmvt.svg.logo.AcceptorLogoGenerator;
 import org.monarchinitiative.vmvt.svg.logo.DonorLogoGenerator;
 import org.monarchinitiative.vmvt.svg.walker.AcceptorWalkerGenerator;
@@ -77,6 +79,11 @@ public class VmvtGenerator {
     public String getAcceptorDistributionSvg(String reference, String alternate) {
         DeltaSvg dsvg = new DeltaSvg(reference, alternate, acceptorDistribution);
         return dsvg.getSvg();
+    }
+
+    public String getHexamerSvg(String reference, String alternate) {
+        EseSvg ese = new HexamerEseSvg(reference, alternate);
+        return ese.getSvg();
     }
 
 

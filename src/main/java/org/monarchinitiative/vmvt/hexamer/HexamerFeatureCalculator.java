@@ -15,7 +15,13 @@ public class HexamerFeatureCalculator extends KmerFeatureCalculator {
     }
 
     @Override
-    protected int getPadding() {
+    public int getPadding() {
         return PADDING;
+    }
+
+    /** @return length of the hexamers, i.e., 6*/
+    @Override
+    public int getKmerLength() {
+        return 6;
     }
 }

@@ -17,8 +17,14 @@ public class HeptamerFeatureCalculator extends KmerFeatureCalculator {
     }
 
     @Override
-    protected int getPadding() {
+    public int getPadding() {
         return PADDING;
+    }
+
+    /** @return length of the heptamers, i.e., 7*/
+    @Override
+    public int getKmerLength() {
+        return 7;
     }
 
 }

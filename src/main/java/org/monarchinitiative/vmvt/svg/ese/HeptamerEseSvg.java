@@ -16,8 +16,4 @@ public class HeptamerEseSvg extends EseSvg {
         super(heptaCalc, reference, alternate, SVG_WIDTH, SVG_HEIGHT);
     }
 
-    @Override
-    public String getSvg() {
-        return null;
-    }
 }

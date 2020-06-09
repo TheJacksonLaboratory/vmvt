@@ -5,7 +5,7 @@ import org.monarchinitiative.vmvt.hexamer.HexamerFeatureCalculator;
 
 public class HexamerEseSvg extends EseSvg {
 
-    private final static HexamerFeatureCalculator hexaCalc = new HexamerFeatureCalculator(FileKMerParser.heptamerMap());
+    private final static HexamerFeatureCalculator hexaCalc = new HexamerFeatureCalculator(FileKMerParser.hexamerMap());
     /** Canvas width of the SVG. */
     private final static int SVG_WIDTH = 400;
     /** Canvas height of the SVG. */
@@ -15,8 +15,4 @@ public class HexamerEseSvg extends EseSvg {
         super(hexaCalc, reference, alternate, SVG_WIDTH, SVG_HEIGHT);
     }
 
-    @Override
-    public String getSvg() {
-        return null;
-    }
 }
