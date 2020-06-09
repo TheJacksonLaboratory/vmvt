@@ -4,7 +4,6 @@ package org.monarchinitiative.vmvt.dist;
 import org.junit.jupiter.api.Test;
 import org.monarchinitiative.vmvt.VmvtGenerator;
 import org.monarchinitiative.vmvt.pssm.DoubleMatrix;
-import org.monarchinitiative.vmvt.svg.delta.DeltaSvg;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
