@@ -14,6 +14,9 @@ import java.io.Writer;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.monarchinitiative.vmvt.svg.SvgColors.*;
+
+
 /**
  * Write an SVG that shows the distribution of differences expected by a random single-nucleotide variant
  * in a splice sequence (acceptor or donor). Note that the difference induced by a multinucleotide change
@@ -137,8 +140,8 @@ public class DeltaSvg extends AbstractSvgGenerator {
      *   Write an axis from -10 to +10
      */
     private void writeTicks(Writer writer, double startX, double endX) throws IOException {
-        writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"red\"/>\n",
-                startX,START_Y,endX,START_Y));
+        writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
+                startX,START_Y,endX,START_Y, RED));
         // for both donor and acceptor the biggest change is nearly 10/-10 startX is -10 and startY is 10
         if (Math.round(this.min) != -10) {
             // should never happen
@@ -153,8 +156,8 @@ public class DeltaSvg extends AbstractSvgGenerator {
         int tickHeight = 5;
         int Y2 = START_Y + tickHeight;
         for (int i=0;i<span;i++) {
-            writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"red\"/>\n",
-                    X,START_Y,X,Y2));
+            writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
+                    X,START_Y,X,Y2, RED));
             // Write numbers under the tick marks. We use fudge factors to adjust for
             // different widths of the numbers (-10, -5, 0, 5, 10).
             if (i==0) {
@@ -213,12 +216,12 @@ public class DeltaSvg extends AbstractSvgGenerator {
                 "<text x=\"%d\" y=\"%d\">: %.2f</text>\n",
                 X_LOC_DELTA_RI,Y_LOC_DELTA_RI,X_LOC_DELTA_RI+35,Y_LOC_DELTA_RI,this.delta);
         int lineheight = START_Y-100;
-        String line2 = String.format("<g fill=\"none\" stroke=\"rgb(121,0,121)\" stroke-width=\"2\">\n" +
+        String line2 = String.format("<g fill=\"none\" stroke=\"%s\" stroke-width=\"2\">\n" +
                 "<path stroke-dasharray=\"2,2\" d=\"M%d %d l0 %d\"/>" +
-                "</g>\n", x,100,lineheight);
+                "</g>\n", PURPLE, x,100,lineheight);
 
         String circle = String.format("<circle cx=\"%d\" cy=\"%d\" r=\"8\" stroke=\"black\" \n" +
-                " stroke-width=\"3\" fill=\"rgb(121,0,121)\"/>\n",x,100);
+                " stroke-width=\"3\" fill=\"%s\"/>\n",x,100, PURPLE);
 
         writer.write(deltaRi);
         writer.write(line2);
@@ -244,8 +247,8 @@ public class DeltaSvg extends AbstractSvgGenerator {
                 // the "y" of a rect is the upper left hand corner
                 double Y = START_Y - barHeight;
                 String rect = String.format("<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" rx=\"2\" " +
-                                "style=\"stroke:#006600; fill: #00cc00\" />\n",
-                        X, Y, barWidth, barHeight);
+                                "style=\"stroke:#006600; fill:%s\" />\n",
+                        X, Y, barWidth, barHeight, GREEN);
                 swriter.write(rect);
                 X += barWidth;
             }

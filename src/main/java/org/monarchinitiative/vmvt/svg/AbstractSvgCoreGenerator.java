@@ -29,16 +29,8 @@ public abstract class AbstractSvgCoreGenerator {
     protected final static String G_COLOR = "#00A087";
     /** A yellow color for Thymine */
     protected final static String T_COLOR = "#ffdf00";
-    // NOTE SURE WE NEED THESE COLORS ?
-    protected final static String BLUE ="#4dbbd5";
-    protected final static String RED ="#e64b35";
-    protected final static String BROWN="#7e6148";
-    protected final static String DARKBLUE = "#3c5488";
-    protected final static String VIOLET = "#8491b4";
-    protected final static String ORANGE = "#ff9900";
-    protected final static String BLACK = "#000000";
-    protected final static String GREEN = "#00A087";
-    protected final static String BRIGHT_GREEN = "#00a087";
+
+
 
     /** Amount of horizontal space to be taken up by one base character. */
     protected final int LOWER_CASE_BASE_INCREMENT = LETTER_WIDTH + 5;
