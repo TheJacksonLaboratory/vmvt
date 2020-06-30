@@ -21,14 +21,15 @@ public abstract class AbstractSvgCoreGenerator {
     protected final static int C_BASE = 1;
     protected final static int G_BASE = 2;
     protected final static int T_BASE = 3;
-    /** A blue color for Adenine */
-    protected final static String A_COLOR = "#4dbbd5";
-    /** A red color for Cytosine */
-    protected final static String C_COLOR = "#e64b35";
-    /** A green color for Guanine */
-    protected final static String G_COLOR = "#00A087";
-    /** A yellow color for Thymine */
-    protected final static String T_COLOR = "#ffdf00";
+
+    /** A green color for Adenine */
+    protected final static String A_COLOR = SvgColors.GREEN;
+    /** A blue color for Cytosine */
+    protected final static String C_COLOR = SvgColors.BLUE;
+    /** An orange color for Guanine */
+    protected final static String G_COLOR = SvgColors.ORANGE;
+    /** A red color for Thymine */
+    protected final static String T_COLOR = SvgColors.RED;
 
 
 
