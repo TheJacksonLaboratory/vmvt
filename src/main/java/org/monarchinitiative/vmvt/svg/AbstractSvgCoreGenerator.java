@@ -21,24 +21,17 @@ public abstract class AbstractSvgCoreGenerator {
     protected final static int C_BASE = 1;
     protected final static int G_BASE = 2;
     protected final static int T_BASE = 3;
-    /** A blue color for Adenine */
-    protected final static String A_COLOR = "#4dbbd5";
-    /** A red color for Cytosine */
-    protected final static String C_COLOR = "#e64b35";
-    /** A green color for Guanine */
-    protected final static String G_COLOR = "#00A087";
-    /** A yellow color for Thymine */
-    protected final static String T_COLOR = "#ffdf00";
-    // NOTE SURE WE NEED THESE COLORS ?
-    protected final static String BLUE ="#4dbbd5";
-    protected final static String RED ="#e64b35";
-    protected final static String BROWN="#7e6148";
-    protected final static String DARKBLUE = "#3c5488";
-    protected final static String VIOLET = "#8491b4";
-    protected final static String ORANGE = "#ff9900";
-    protected final static String BLACK = "#000000";
-    protected final static String GREEN = "#00A087";
-    protected final static String BRIGHT_GREEN = "#00a087";
+
+    /** A green color for Adenine */
+    protected final static String A_COLOR = SvgColors.GREEN;
+    /** A blue color for Cytosine */
+    protected final static String C_COLOR = SvgColors.BLUE;
+    /** An orange color for Guanine */
+    protected final static String G_COLOR = SvgColors.ORANGE;
+    /** A red color for Thymine */
+    protected final static String T_COLOR = SvgColors.RED;
+
+
 
     /** Amount of horizontal space to be taken up by one base character. */
     protected final int LOWER_CASE_BASE_INCREMENT = LETTER_WIDTH + 5;
