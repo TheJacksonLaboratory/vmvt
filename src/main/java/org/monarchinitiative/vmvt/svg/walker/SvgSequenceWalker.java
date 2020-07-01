@@ -5,6 +5,7 @@ import org.monarchinitiative.vmvt.svg.AbstractSvgMotifGenerator;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.DoubleSummaryStatistics;
 
 
 /**
@@ -20,6 +21,8 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
 
     protected int currentX;
     protected int currentY;
+
+    private double maxIc = Double.MIN_VALUE;
 
 
     /**
@@ -62,6 +65,9 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
         String color = getBaseColor(base);
         String nt = getBaseCharLC(base);
         double IC = this.splicesite.get(base, pos);
+        if (Math.abs(IC) > maxIc) {
+            maxIc = Math.abs(IC); // keep track of largest IC in order to calculate height of grey box
+        }
 
         if (IC>0) {
             writer.write(String.format("<g transform='translate(%d,%d) scale(1,%f)'>\n",x,y,IC)); //scale(1,%f)
@@ -97,7 +103,7 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
             double xpos = (double)x + (double)LOWER_CASE_BASE_INCREMENT;
             int ypos = y+1;
             writer.write(String.format("<g transform='translate(%f,%d)  scale(1,%f)  rotate(180)'>\n",xpos,ypos, Math.abs(IC))); //
-            writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\" opacity=\"0.4\" style=\"text-shadow: 2px 2px #FF0000;\">%s</text>\n",color,nt));
+            writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\" opacity=\"0.8\" style=\"text-shadow: 1px 1px #000000;\">%s</text>\n",color,nt));
             writer.write("</g>\n");
         }
     }
@@ -115,7 +121,6 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
     }
 
     protected void writeRefAltSeparation(Writer writer) throws IOException {
-        //currentY += (double)Y_LINE_INCREMENT/5.0;
         int endX = (1+this.seqlen) * LOWER_CASE_BASE_INCREMENT;
         writer.write("<g fill=\"none\" stroke=\"black\" stroke-width=\"1\">\n");
         writer.write(String.format("<path stroke-dasharray=\"2,2\" d=\"M%d %d L%d %d\"/>\n", XSTART, currentY, endX, currentY));
@@ -135,11 +140,44 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
         currentX = XSTART;
     }
 
+
+    /**
+     * Write a grey box around the mutation, using heuristics to find the Y positions that cover
+     * both the sequence logo and the sequence walker (here we use maxIc, because the height of
+     * the walker bases depends on the maximum IC).
+     * @param writer
+     * @throws IOException
+     */
+    private void writeBoxAroundMutation(Writer writer) throws IOException {
+        // get location of first and last index with mutated bases
+        int b = Integer.MAX_VALUE;
+        int e = Integer.MIN_VALUE;
+        for (int i=0; i<refidx.length; i++) {
+            if (refidx[i] != altidx[i]) {
+                if (i<b) b = i;
+                if (i>e) e = i;
+            }
+        }
+        double X = this.XSTART + b*LOWER_CASE_BASE_INCREMENT;
+        int Y = 15;
+        int boxwidth = LOWER_CASE_BASE_INCREMENT;
+        int boxheight = YSTART + (int)(30*maxIc);
+        writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"" +
+                        " style=\"stroke-width:1; stroke:rgb(4, 12, 4);\"/>",
+                X,
+                Y,
+                boxwidth,
+                boxheight));
+
+    }
+
+
     @Override
     public void write(Writer writer) throws IOException {
         writeAltWalker(writer);
         writeRefWalker(writer);
         writeRefAltSeparation(writer);
+        writeBoxAroundMutation(writer);
     }
 
     @Override
