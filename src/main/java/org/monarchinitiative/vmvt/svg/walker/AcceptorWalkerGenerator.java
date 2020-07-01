@@ -48,6 +48,20 @@ public class AcceptorWalkerGenerator extends AbstractSvgGenerator {
         this.splicesite = acceptor;
     }
 
+    private AcceptorWalkerGenerator(int width, int height, String ref, String alt, DoubleMatrix donor) {
+        super(width,height);
+        this.reference = ref;
+        this.alternate = alt;
+        this.splicesite = donor;
+    }
+
+    public static AcceptorWalkerGenerator sequenceRuler(String ref, String alt, DoubleMatrix donor) {
+        int width = 450;
+        int height = 110;
+        return new AcceptorWalkerGenerator(width, height, ref, alt, donor);
+    }
+
+
     @Override
     public String getSvg() {
         int startX = 20;
@@ -71,4 +85,24 @@ public class AcceptorWalkerGenerator extends AbstractSvgGenerator {
             return getSvgErrorMessage(e.getMessage());
         }
     }
+
+    public String getSequenceRulerSvg() {
+        int startX = 20;
+        int startY = 25;
+        StringWriter swriter = new StringWriter();
+        try {
+            writeHeader(swriter);
+            // WIDTH AND HEIGHT ARE FROM THE SUPERCLASS -- SET ABOVE IN THE CTOR
+            AbstractSvgCoreGenerator posRuler = new PositionRuler(reference, alternate, WIDTH, HEIGHT, startX, startY);
+            posRuler.write(swriter);
+            startY += posRuler.getYincrement();
+            AbstractSvgCoreGenerator sequenceRuler = new SequenceRuler(reference, alternate, WIDTH, HEIGHT, startX, startY);
+            sequenceRuler.write(swriter);
+            writeFooter(swriter);
+            return swriter.toString();
+        } catch (IOException e) {
+            return getSvgErrorMessage(e.getMessage());
+        }
+    }
+
 }

@@ -39,10 +39,23 @@ public class VmvtGenerator {
         acceptorDistribution = new DistributionCalculator(acceptor,NUM_SAMPLES);
     }
 
+    public String getDonorSequenceRuler(String reference, String alternate) {
+        DonorWalkerGenerator svgGenerator = DonorWalkerGenerator.sequenceRuler(reference, alternate, donor);
+        return svgGenerator.getSequenceRulerSvg();
+    }
+
+    public String getAcceptorSequenceRuler(String reference, String alternate) {
+        AcceptorWalkerGenerator svgGenerator = AcceptorWalkerGenerator.sequenceRuler(reference, alternate, donor);
+        return svgGenerator.getSequenceRulerSvg();
+    }
+
+
     public String getDonorWalkerSvg(String reference, String alternate) {
         AbstractSvgGenerator svgGenerator = new DonorWalkerGenerator(reference, alternate, donor);
         return svgGenerator.getSvg();
     }
+
+
 
 
     public String getAcceptorWalkerSvg(String reference, String alternate) {
