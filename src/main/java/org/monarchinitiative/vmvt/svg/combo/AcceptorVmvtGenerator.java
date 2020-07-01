@@ -22,8 +22,8 @@ public class AcceptorVmvtGenerator extends AbstractSvgGenerator {
     private final String alternate;
     private final DoubleMatrix splicesite;
     private final DoubleMatrix spliceHeightMatrix;
-    private final static int SVG_WIDTH = 500;
-    private final static int SVG_HEIGHT = 600;
+    private final static int SVG_WIDTH = 450;
+    private final static int SVG_HEIGHT = 250;
 
     public AcceptorVmvtGenerator(String ref, String alt) {
         super(SVG_WIDTH,SVG_HEIGHT);
@@ -42,16 +42,10 @@ public class AcceptorVmvtGenerator extends AbstractSvgGenerator {
         try {
             writeHeader(swriter);
             // WIDTH AND HEIGHT ARE FROM THE SUPERCLASS -- SET ABOVE IN THE CTOR
-            AbstractSvgCoreGenerator posRuler = new PositionRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
-            posRuler.write(swriter);
-            startY += posRuler.getYincrement();
-            AbstractSvgCoreGenerator sequenceRuler = new SequenceRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
-            sequenceRuler.write(swriter);
-            startY += sequenceRuler.getYincrement();
-            AbstractSvgCoreGenerator donorLogo =
+            AbstractSvgCoreGenerator acceptorLogo =
                     new SvgSequenceLogo(reference, alternate, this.spliceHeightMatrix, WIDTH, HEIGHT, startX, startY);
-            donorLogo.write(swriter);
-            startY += donorLogo.getYincrement();
+            acceptorLogo.write(swriter);
+            startY += acceptorLogo.getYincrement();
             AbstractSvgCoreGenerator acceptorWalker =
                     new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT, startX, startY);
             acceptorWalker.write(swriter);

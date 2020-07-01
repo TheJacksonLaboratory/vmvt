@@ -65,10 +65,6 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
         String color = getBaseColor(base);
         String nt = getBaseCharLC(base);
         double IC = this.splicesite.get(base, pos);
-        if (Math.abs(IC) > maxIc) {
-            maxIc = Math.abs(IC); // keep track of largest IC in order to calculate height of grey box
-        }
-
         if (IC>0) {
             writer.write(String.format("<g transform='translate(%d,%d) scale(1,%f)'>\n",x,y,IC)); //scale(1,%f)
             writer.write(String.format("<text x=\"0\" y=\"0\" fill=\"%s\">%s</text>\n",color,nt));
@@ -94,6 +90,9 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
         String color = getBaseColor(base);
         String nt = getBaseCharLC(base);
         double IC = this.splicesite.get(base, pos);
+        if (Math.abs(IC) > maxIc) {
+            maxIc = Math.abs(IC); // keep track of largest IC in order to calculate height of grey box
+        }
 
         if (IC>0) {
             writer.write(String.format("<g transform='translate(%d,%d) scale(1,%f)'>\n",x,y,IC)); //scale(1,%f)
@@ -161,7 +160,7 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
         double X = this.XSTART + b*LOWER_CASE_BASE_INCREMENT;
         int Y = 15;
         int boxwidth = LOWER_CASE_BASE_INCREMENT;
-        int boxheight = YSTART + (int)(30*maxIc);
+        int boxheight = YSTART + (int)(13*maxIc);
         writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"" +
                         " style=\"stroke-width:1; stroke:rgb(4, 12, 4);\"/>",
                 X,

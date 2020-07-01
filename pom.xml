@@ -6,7 +6,7 @@
 
     <groupId>org.monarchinitiative.vmvt</groupId>
     <artifactId>vmvt</artifactId>
-    <version>0.6.1</version>
+    <version>0.7.1</version>
 
     <name>VMVT</name>
     <description>Variant-motif visualization tool</description>

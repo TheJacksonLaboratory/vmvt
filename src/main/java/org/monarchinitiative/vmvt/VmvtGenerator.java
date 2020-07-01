@@ -56,8 +56,6 @@ public class VmvtGenerator {
     }
 
 
-
-
     public String getAcceptorWalkerSvg(String reference, String alternate) {
         AbstractSvgGenerator svgGenerator = new AcceptorWalkerGenerator(reference, alternate, acceptor);
         return svgGenerator.getSvg();
