@@ -20,8 +20,6 @@ public class DonorLogoGenerator extends AbstractSvgGenerator {
     private final String alternate;
     private final DoubleMatrix splicesite;
 
-    private final static int SVG_WIDTH = 400;
-    private final static int SVG_HEIGHT = 400;
 
     /**
      * Write a sequence logo for a splice donor site (showing ref/alt sequences)
@@ -30,7 +28,7 @@ public class DonorLogoGenerator extends AbstractSvgGenerator {
      * @param alt Alternate (mutant) sequence
      */
     public DonorLogoGenerator(String ref, String alt) {
-        super(SVG_WIDTH, SVG_HEIGHT);
+        super(SVG_DONOR_WIDTH, SVG_LOGO_HEIGHT);
         this.reference = ref;
         this.alternate = alt;
         this.splicesite = DoubleMatrix.donorHeightMatrix();
@@ -43,7 +41,7 @@ public class DonorLogoGenerator extends AbstractSvgGenerator {
      * @param alt Alternate (mutant) sequence
      */
     public DonorLogoGenerator(String ref, String alt, DoubleMatrix donorHeight) {
-        super(SVG_WIDTH, SVG_HEIGHT);
+        super(SVG_DONOR_WIDTH, SVG_LOGO_HEIGHT);
         this.reference = ref;
         this.alternate = alt;
         this.splicesite = donorHeight;
@@ -51,19 +49,23 @@ public class DonorLogoGenerator extends AbstractSvgGenerator {
 
     @Override
     public String getSvg() {
-        int startX = 20;
-        int startY = 60;
         StringWriter swriter = new StringWriter();
         try {
             writeHeader(swriter);
             // WIDTH AND HEIGHT ARE FROM THE SUPERCLASS -- SET ABOVE IN THE CTOR
-            AbstractSvgCoreGenerator posRuler = new PositionRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
-            posRuler.write(swriter);
-            startY += posRuler.getYincrement();
-            AbstractSvgCoreGenerator sequenceRuler = new SequenceRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
-            sequenceRuler.write(swriter);
-            startY += sequenceRuler.getYincrement();
-            AbstractSvgCoreGenerator donorLogo = new SvgSequenceLogo(reference, alternate, this.splicesite, WIDTH, HEIGHT, startX, startY);
+//            AbstractSvgCoreGenerator posRuler = new PositionRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
+//            posRuler.write(swriter);
+//            startY += posRuler.getYincrement();
+//            AbstractSvgCoreGenerator sequenceRuler = new SequenceRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
+//            sequenceRuler.write(swriter);
+//            startY += sequenceRuler.getYincrement();
+            AbstractSvgCoreGenerator donorLogo = new SvgSequenceLogo(reference,
+                    alternate,
+                    this.splicesite,
+                    WIDTH,
+                    HEIGHT,
+                    SVG_STARTX,
+                    SVG_LOGO_STARTY);
             donorLogo.write(swriter);
            writeFooter(swriter);
             return swriter.toString();

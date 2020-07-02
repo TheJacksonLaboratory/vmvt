@@ -15,6 +15,14 @@ public abstract class AbstractSvgGenerator {
     protected final int WIDTH;
     /** Total height of the SVG canvas. */
     protected final int HEIGHT;
+    /** X Position on the SVG canvas to start drawing. */
+    protected final static int SVG_STARTX = 10;
+    /** The width of the SVG canvas for all Donor figures. */
+    protected final static int SVG_DONOR_WIDTH = 150;
+    /** Y Position on the SVG canvas to start drawing Sequence logos. */
+    protected final static int SVG_LOGO_STARTY = 40;
+    /** Height on the SVG canvas for Sequence logos. */
+    protected final static int SVG_LOGO_HEIGHT = 50;
 
     public AbstractSvgGenerator(int w, int h) {
         this.WIDTH = w;
