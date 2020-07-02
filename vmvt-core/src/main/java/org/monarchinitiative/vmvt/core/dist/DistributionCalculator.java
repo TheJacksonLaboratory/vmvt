@@ -1,8 +1,5 @@
 package org.monarchinitiative.vmvt.core.dist;
 
-
-
-
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 
 import java.io.BufferedWriter;
@@ -11,8 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-
 
 /**
  * We will model the distribution of scores of the R_i as a normal distribution. Here,
@@ -23,23 +18,16 @@ import java.util.Random;
 public class DistributionCalculator  {
 
     private final int seqlen;
-    private final static int A_BASE = 0;
-    private final static int C_BASE = 1;
-    private final static int G_BASE = 2;
-    private final static int T_BASE = 3;
     private final DoubleMatrix splicesite;
-
+    /** R_i values (distribution) */
     private final List<Double> values;
+    /** Differences between R_i values and values with one changed base. */
     private final List<Double> deltas;
-
-
     private final Random random;
-
-
+    /** The current sequence is represented by indices (0,1,2,3) for the 4 bases. */
     private final int [] currentIndices;
     /** This is used to create a variant sequence that differs from the
-     * original sequence in one of multiple nucleotides.
-     */
+     * original sequence in one of multiple nucleotides. */
     private final int [] variantIndices;
 
     private final double mean;
@@ -72,13 +60,8 @@ public class DistributionCalculator  {
                 double var_r_i = this.splicesite.getIndividualSequenceInformation(this.variantIndices);
                 double delta = R_i - var_r_i;
                 deltas.add(delta);
-                if (i % 10_000_000 == 0) {
-                    double perc = 100.0 * (double) i / (double) max;
-                    System.out.printf("%d/%d (%.1f%%).\n", i, max, perc);
-                }
             }
             mean = values.stream().mapToDouble(Double::doubleValue).average().orElseThrow();
-            System.out.printf("Total %d mean %f.\n", values.size(), mean);
         } else {
             // acceptor sequence, too long to calculate everything, let's just sample
             // 100 thousand times
@@ -90,13 +73,8 @@ public class DistributionCalculator  {
                 double var_r_i = this.splicesite.getIndividualSequenceInformation(this.variantIndices);
                 double delta = R_i - var_r_i;
                 deltas.add(delta);
-                if (i % 1_000_000 == 0) {
-                    double perc = 100.0 * (double) i / (double) 10_000_000;
-                    System.out.printf("%d/%d (%.1f%%).\n", i, 10_000_000, perc);
-                }
             }
             mean = values.stream().mapToDouble(Double::doubleValue).average().orElseThrow();
-            System.out.printf("Total %d mean %f.\n", values.size(), mean);
         }
     }
 
