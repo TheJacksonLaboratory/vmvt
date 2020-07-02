@@ -53,12 +53,6 @@ public class DonorLogoGenerator extends AbstractSvgGenerator {
         try {
             writeHeader(swriter);
             // WIDTH AND HEIGHT ARE FROM THE SUPERCLASS -- SET ABOVE IN THE CTOR
-//            AbstractSvgCoreGenerator posRuler = new PositionRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
-//            posRuler.write(swriter);
-//            startY += posRuler.getYincrement();
-//            AbstractSvgCoreGenerator sequenceRuler = new SequenceRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
-//            sequenceRuler.write(swriter);
-//            startY += sequenceRuler.getYincrement();
             AbstractSvgCoreGenerator donorLogo = new SvgSequenceLogo(reference,
                     alternate,
                     this.splicesite,

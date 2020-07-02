@@ -10,6 +10,7 @@ import org.monarchinitiative.vmvt.core.svg.ese.EseSvg;
 import org.monarchinitiative.vmvt.core.svg.ese.HexamerEseSvg;
 import org.monarchinitiative.vmvt.core.svg.logo.AcceptorLogoGenerator;
 import org.monarchinitiative.vmvt.core.svg.logo.DonorLogoGenerator;
+import org.monarchinitiative.vmvt.core.svg.ruler.AcceptorRuler;
 import org.monarchinitiative.vmvt.core.svg.ruler.DonorRuler;
 import org.monarchinitiative.vmvt.core.svg.ruler.SvgSequenceRuler;
 import org.monarchinitiative.vmvt.core.svg.walker.AcceptorWalkerGenerator;
@@ -47,8 +48,8 @@ public class VmvtGenerator {
     }
 
     public String getAcceptorSequenceRuler(String reference, String alternate) {
-        AcceptorWalkerGenerator svgGenerator = AcceptorWalkerGenerator.sequenceRuler(reference, alternate, donor);
-        return svgGenerator.getSequenceRulerSvg();
+        SvgSequenceRuler ruler = new AcceptorRuler(reference, alternate);
+        return ruler.getSvg();
     }
 
 
