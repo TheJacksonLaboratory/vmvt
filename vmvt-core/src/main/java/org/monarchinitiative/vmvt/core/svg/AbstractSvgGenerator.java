@@ -26,6 +26,13 @@ public abstract class AbstractSvgGenerator {
     /** Height on the SVG canvas for Sequence logos. */
     protected final static int SVG_LOGO_HEIGHT = 50;
 
+    protected final static int DONOR_NT_LENGTH = 9;
+    protected final static int ACCEPTOR_NT_LENGTH = 27;
+    /** Height on the SVG canvas for Sequence rulers. */
+    protected final static int SVG_RULER_HEIGHT = 110;
+
+    protected final static int SVG_RULER_STARTY = 30;
+
     public AbstractSvgGenerator(int w, int h) {
         this.WIDTH = w;
         this.HEIGHT = h;

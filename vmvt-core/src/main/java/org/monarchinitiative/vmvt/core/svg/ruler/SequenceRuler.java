@@ -65,7 +65,7 @@ public class SequenceRuler extends AbstractSvgCoreGenerator {
         int boxwidth = LOWER_CASE_BASE_INCREMENT;
         int boxheight = (int)(LETTER_BASE_HEIGHT*4.1);
         writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"" +
-                        " style=\"stroke-width:2; stroke:rgb(4, 12, 4);\"/>",
+                        " style=\"stroke-width:1; stroke:rgb(4, 12, 4);\"/>",
                 X,
                 Y,
                 boxwidth,
