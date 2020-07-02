@@ -4,8 +4,6 @@ package org.monarchinitiative.vmvt.core.svg.logo;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgCoreGenerator;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
-import org.monarchinitiative.vmvt.core.svg.ruler.PositionRuler;
-import org.monarchinitiative.vmvt.core.svg.ruler.SequenceRuler;
 
 import java.io.IOException;
 import java.io.StringWriter;

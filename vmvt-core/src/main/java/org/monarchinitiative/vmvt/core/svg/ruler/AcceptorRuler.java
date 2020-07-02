@@ -2,7 +2,6 @@ package org.monarchinitiative.vmvt.core.svg.ruler;
 
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgCoreGenerator;
-import org.monarchinitiative.vmvt.core.svg.logo.SvgSequenceLogo;
 
 import java.io.IOException;
 import java.io.StringWriter;

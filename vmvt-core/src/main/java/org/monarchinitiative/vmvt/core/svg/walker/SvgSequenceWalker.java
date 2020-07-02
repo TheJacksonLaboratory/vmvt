@@ -143,8 +143,8 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
      * Write a grey box around the mutation, using heuristics to find the Y positions that cover
      * both the sequence logo and the sequence walker (here we use maxIc, because the height of
      * the walker bases depends on the maximum IC).
-     * @param writer
-     * @throws IOException
+     * @param writer handle
+     * @throws IOException if we cannot write the Box
      */
     private void writeBoxAroundMutation(Writer writer) throws IOException {
         // get location of first and last index with mutated bases

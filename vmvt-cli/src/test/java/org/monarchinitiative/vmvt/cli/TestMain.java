@@ -8,7 +8,7 @@ public class TestMain {
 
     @Test
     void test (){
-        assertNotNull(Integer.valueOf(42));
+        assertNotNull(42);
     }
 
 

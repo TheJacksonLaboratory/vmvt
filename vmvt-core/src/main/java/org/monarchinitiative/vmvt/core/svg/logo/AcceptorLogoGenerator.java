@@ -3,8 +3,6 @@ package org.monarchinitiative.vmvt.core.svg.logo;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgCoreGenerator;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
-import org.monarchinitiative.vmvt.core.svg.ruler.PositionRuler;
-import org.monarchinitiative.vmvt.core.svg.ruler.SequenceRuler;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -52,12 +50,6 @@ public class AcceptorLogoGenerator extends AbstractSvgGenerator {
         try {
             writeHeader(swriter);
             // WIDTH AND HEIGHT ARE FROM THE SUPERCLASS -- SET ABOVE IN THE CTOR
-//            AbstractSvgCoreGenerator posRuler = new PositionRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
-//            posRuler.write(swriter);
-//            startY += posRuler.getYincrement();
-//            AbstractSvgCoreGenerator sequenceRuler = new SequenceRuler(reference, alternate,WIDTH, HEIGHT, startX, startY);
-//            sequenceRuler.write(swriter);
-//            startY += sequenceRuler.getYincrement();
             AbstractSvgCoreGenerator acceptorLogo = new SvgSequenceLogo(reference, alternate, this.splicesite, WIDTH, HEIGHT, startX, startY);
             acceptorLogo.write(swriter);
             writeFooter(swriter);
