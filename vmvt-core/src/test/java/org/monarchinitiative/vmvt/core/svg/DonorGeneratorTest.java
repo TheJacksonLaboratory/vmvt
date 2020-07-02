@@ -64,4 +64,19 @@ public class DonorGeneratorTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    void testGetDonorRuler(){
+        VmvtGenerator donor = new VmvtGenerator();
+        String svg = donor.getDonorSequenceRuler(ref,alt);
+        assertNotNull(svg);
+        try {
+            String path = "target/donorRuler.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

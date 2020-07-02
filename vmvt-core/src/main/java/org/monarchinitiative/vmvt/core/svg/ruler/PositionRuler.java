@@ -6,6 +6,8 @@ import org.monarchinitiative.vmvt.core.svg.AbstractSvgCoreGenerator;
 import java.io.IOException;
 import java.io.Writer;
 
+import static org.monarchinitiative.vmvt.svg.SvgColors.RED;
+
 /**
  * Write an SVG element for a "ruler", being the positions in the intron and exon
  * @author Peter N Robinson
@@ -51,7 +53,7 @@ public class PositionRuler extends AbstractSvgCoreGenerator {
         Xr = this.startX + 3*LOWER_CASE_BASE_INCREMENT;
         int Y1 = this.startY - 18;
         int Y2 = this.startY + 10;
-        writer.write(String.format("<line x1=\"%s\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"red\"/>\n",Xr,Y1,Xr,Y2));
+        writer.write(String.format("<line x1=\"%s\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\"/>\n",Xr,Y1,Xr,Y2, RED));
 
     }
 
@@ -77,7 +79,7 @@ public class PositionRuler extends AbstractSvgCoreGenerator {
         Xr = this.startX + 25*LOWER_CASE_BASE_INCREMENT;
         int Y1 = this.startY - 18;
         int Y2 = this.startY + 10;
-        writer.write(String.format("<line x1=\"%s\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"red\"/>\n",Xr,Y1,Xr,Y2));
+        writer.write(String.format("<line x1=\"%s\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\"/>\n",Xr,Y1,Xr,Y2, RED));
     }
 
 

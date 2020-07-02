@@ -14,7 +14,7 @@
 
     <parent>
         <groupId>org.monarchinitiative.vmvt</groupId>
-        <artifactId>Vmvt</artifactId>
+        <artifactId>vmvt</artifactId>
         <version>0.7.5</version>
     </parent>
 

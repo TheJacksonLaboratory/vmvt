@@ -9,6 +9,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Arrays;
 
+import static org.monarchinitiative.vmvt.svg.SvgColors.*;
+
 public abstract class EseSvg extends AbstractSvgGenerator  {
 
 
@@ -96,8 +98,8 @@ public abstract class EseSvg extends AbstractSvgGenerator  {
 
 
 
-    private void writeReferenceBoxes(Writer writer, double esescores[]) throws IOException {
-        int y = X_AXIS_BASELINE;
+    private void writeReferenceBoxes(Writer writer, double[] esescores) throws IOException {
+        int y = X_AXIS_BASELINE; // y at y=0, i.e., the X-axis baseline
         writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"black\"/>\n",
                 XSTART,y,XEND,y));
         int numbins = reference.length() - this.padding;
@@ -119,13 +121,13 @@ public abstract class EseSvg extends AbstractSvgGenerator  {
             double Y = y - barHeight;
             if (barHeight > 1.0) {
                 String rect = String.format("<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" rx=\"2\" " +
-                                "style=\"stroke:#006600; fill: #00cc00\" />\n",
-                        xposForBoxes, Y, barWidth, barHeight);
+                                "style=\"stroke:%s; fill: %s\" />\n",
+                        xposForBoxes, Y, barWidth, barHeight, DARKGREEN, GREEN);
                 writer.write(rect);
             } else if (barHeight < -1.0){
                 String rect = String.format("<rect x=\"%f\" y=\"%d\" width=\"%f\" height=\"%f\" rx=\"2\" " +
-                                "style=\"stroke:#006600; fill: #00cc00\" fill-opacity=\"0.4\"/>\n",
-                        xposForBoxes, y, barWidth, Math.abs(barHeight));
+                                "style=\"stroke:%s; fill: %s\" fill-opacity=\"0.4\"/>\n",
+                        xposForBoxes, y, barWidth, Math.abs(barHeight), DARKGREEN, GREEN);
                 writer.write(rect);
             }
             writer.write(String.format("<g transform='translate(%f,%f) scale(0.6,0.6)'><text>%d</text></g>\n",
@@ -141,8 +143,8 @@ public abstract class EseSvg extends AbstractSvgGenerator  {
         } else {
             y = X_AXIS_BASELINE -  (int) (meanESE * YSCALE);
         }
-        writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"red\"/>\n",
-                XSTART,y,XEND,y));
+        writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\"/>\n",
+                XSTART,y,XEND,y, RED));
     }
 
 
@@ -155,8 +157,8 @@ public abstract class EseSvg extends AbstractSvgGenerator  {
         int maxY = Math.max(y1, y2);
         int midX = (int)(0.9*x1+0.1*x2);
         String line = String.format("<line x1=\"%d\" x2=\"%d\" y1=\"%d\" y2=\"%d\" " +
-                        "stroke=\"red\" stroke-width=\"1\"  stroke-dasharray=\"1, 3\"/>\n",
-                x1,x2,y1,y2);
+                        "stroke=\"%s\" stroke-width=\"1\"  stroke-dasharray=\"1, 3\"/>\n",
+                x1,x2,y1,y2, RED);
         writer.write(line);
         String eseText = String.format("<text font-size=\"smaller\">ΔESE: %.2f</text>",deltaESE);
         int Y = Math.max(20, maxY-100);
