@@ -1,5 +1,5 @@
-module org.monarchinitiative.vmvt.core {
-    exports org.monarchinitiative.vmvt.core;
+module org.monarchinitiative.vmvtcore {
+    exports org.monarchinitiative.vmvtcore;
 
     requires slf4j.api;
     requires com.google.common;
