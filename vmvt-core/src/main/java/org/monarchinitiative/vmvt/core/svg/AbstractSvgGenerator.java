@@ -19,6 +19,8 @@ public abstract class AbstractSvgGenerator {
     protected final static int SVG_STARTX = 10;
     /** The width of the SVG canvas for all Donor figures. */
     protected final static int SVG_DONOR_WIDTH = 150;
+    /** The width of the SVG canvas for all Acceptor figures. */
+    protected final static int SVG_ACCEPTOR_WIDTH = 420;
     /** Y Position on the SVG canvas to start drawing Sequence logos. */
     protected final static int SVG_LOGO_STARTY = 40;
     /** Height on the SVG canvas for Sequence logos. */
