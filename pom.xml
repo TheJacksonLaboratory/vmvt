@@ -2,44 +2,45 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.monarchinitiative</groupId>
-    <artifactId>vmvt</artifactId>
+    <groupId>org.monarchinitiative.vmvt</groupId>
+    <artifactId>Vmvt</artifactId>
     <version>0.7.5</version>
     <packaging>pom</packaging>
-    <name>vmvt</name>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>11</java.version>
-        <slf4j.version>1.7.25</slf4j.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <junit.jupiter.version>5.7.0-M1</junit.jupiter.version>
-        <junit.platform.version>1.7.0-M1</junit.platform.version>
-        <guava.version>29.0-jre</guava.version>
-    </properties>
+    <name>Vmvt</name>
+    <description>Variant-motif visualization tool</description>
+    <url>https://github.com/TheJacksonLaboratory/vmvt</url>
 
     <modules>
         <module>vmvt-core</module>
         <module>vmvt-cli</module>
     </modules>
-     <!-- Inherit artifact from SonaType OSS pom.xml -->
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <junit.jupiter.version>5.7.0-M1</junit.jupiter.version>
+        <junit.platform.version>1.7.0-M1</junit.platform.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <guava.version>29.0-jre</guava.version>
+    </properties>
+
     <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>9</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.1.RELEASE</version>
     </parent>
 
-     <licenses>
-        <license>
-            <name>BSD 3-Clause</name>
-            <url>https://opensource.org/licenses/BSD-3-Clause</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
-
+    <!-- SCM Information for Maven Central -->
+    <scm>
+        <connection>scm:git:git@github.com:TheJacksonLaboratory/vmvt.git</connection>
+        <developerConnection>scm:git:git@github.com:TheJacksonLaboratory/vmvt.git</developerConnection>
+        <url>scm:git:git@github.com:TheJacksonLaboratory/vmvt.git</url>
+        <tag>v${project.version}</tag>
+    </scm>
 
     <!-- Developers Information for Maven Central -->
     <developers>
@@ -57,7 +58,15 @@
         </developer>
     </developers>
 
-     <distributionManagement>
+    <licenses>
+        <license>
+            <name>BSD 3-Clause</name>
+            <url>https://opensource.org/licenses/BSD-3-Clause</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <distributionManagement>
         <repository>
             <id>ossrh</id>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
@@ -103,123 +112,32 @@
     </profiles>
 
 
-
     <dependencies>
-       
-
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <!--        Libraries for testing         -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
         </dependency>
-
-       
-
-        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
         </dependency>
-       
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
-  
-
-    <build>
-        <plugins>
-            <!-- JUnit testing -->
-            <!--https://stackoverflow.com/questions/36970384/surefire-is-not-picking-up-junit-5-tests -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.21.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.junit.platform</groupId>
-                        <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>1.3.2</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0-M3</version>
-                <executions>
-                    <execution>
-                        <id>default-cli</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <banDuplicateClasses/>
-                            </rules>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>enforce-maven</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireMavenVersion>
-                                    <version>3.4</version>
-                                </requireMavenVersion>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-
-            <!-- Javadoc generation. -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
-                <configuration>
-                    <defaultVersion>${project.version}</defaultVersion>
-                    <additionalparam>-Xdoclint:none</additionalparam>
-                    <aggregate>true</aggregate>
-                    <show>public</show>
-                    <nohelp>true</nohelp>
-                    <header>${project.artifactId}, ${project.version}</header>
-                    <footer>${project.artifactId}, ${project.version}</footer>
-                    <doctitle>${project.artifactId}, ${project.version}</doctitle>
-                    <destDir>${project.version}</destDir>
-                    <reportOutputDirectory>${project.reporting.outputDirectory}/apidocs/api/</reportOutputDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>aggregate</id>
-                        <goals>
-                            <goal>aggregate</goal>
-                        </goals>
-                        <phase>site</phase>
-                        <configuration>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- mvn versions:display-plugin-updates -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <generateBackupPoms>false</generateBackupPoms>
-                </configuration>
-            </plugin>
-        </plugins>
-           
-    </build>
 
     <!-- Sphinx Manual, build with "mvn site". -->
     <reporting>
@@ -230,7 +148,7 @@
                 <version>2.4</version>
                 <reportSets>
                     <reportSet>
-                        <reports />
+                        <reports/>
                     </reportSet>
                 </reportSets>
             </plugin>
@@ -243,12 +161,6 @@
                 </configuration>
             </plugin>
         </plugins>
-
     </reporting>
-
-
-
-
-
 
 </project>

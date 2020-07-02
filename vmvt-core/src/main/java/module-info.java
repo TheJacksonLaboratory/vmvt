@@ -1,10 +1,13 @@
-module org.monarchinitiative.vmvt {
+module org.monarchinitiative.vmvt.core {
+    exports org.monarchinitiative.vmvt.core;
+
     requires slf4j.api;
     requires com.google.common;
-    exports org.monarchinitiative.vmvt;
 
-    opens org.monarchinitiative.vmvt;
-    opens org.monarchinitiative.vmvt.pssm;
-    opens org.monarchinitiative.vmvt.svg;
+    opens org.monarchinitiative.vmvt.core;
+    opens org.monarchinitiative.vmvt.core.pssm;
+    opens org.monarchinitiative.vmvt.core.svg;
+    opens org.monarchinitiative.vmvt.core.dist;
+    opens org.monarchinitiative.vmvt.core.hexamer;
 }
 
