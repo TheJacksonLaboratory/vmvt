@@ -5,14 +5,14 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.monarchinitiative</groupId>
-    <artifactId>vmvtcore</artifactId>
+    <groupId>org.monarchinitiative.vmvt.core</groupId>
+    <artifactId>vmvt-core</artifactId>
     <version>0.7.5</version>
     <packaging>jar</packaging>
     <name>vmvt-core</name>
 
     <parent>
-        <groupId>org.monarchinitiative</groupId>
+        <groupId>org.monarchinitiative.vmvt</groupId>
         <artifactId>vmvt</artifactId>
         <version>0.7.5</version>
     </parent>

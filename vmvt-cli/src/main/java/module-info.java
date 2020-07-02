@@ -1,5 +1,5 @@
 module org.monarchinitiative.vmvt.cli {
-    requires org.monarchinitiative.vmvtcore;
+    requires org.monarchinitiative.vmvt.core;
 
-    opens org.monarchinitiative.vmvtcli;
+    opens org.monarchinitiative.vmvt.cli;
 }

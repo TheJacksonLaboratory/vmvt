@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.monarchinitiative</groupId>
-    <artifactId>vmvtcli</artifactId>
+    <groupId>org.monarchinitiative.vmvt.cli</groupId>
+    <artifactId>vmvt-cli</artifactId>
     <version>0.7.5</version>
 
     <name>vmvtcli</name>
@@ -13,25 +13,20 @@
     <url>https://github.com/TheJacksonLaboratory/vmvt</url>
 
     <parent>
-        <groupId>org.monarchinitiative</groupId>
+        <groupId>org.monarchinitiative.vmvt</groupId>
         <artifactId>vmvt</artifactId>
         <version>0.7.5</version>
     </parent>
 
     <dependencies>
         <dependency>
-            <groupId>org.monarchinitiative</groupId>
-            <artifactId>vmvtcore</artifactId>
-            <version>${project.parent.version}</version>
+            <groupId>org.monarchinitiative.vmvt.core</groupId>
+            <artifactId>vmvt-core</artifactId>
+            <version>0.7.5</version>
         </dependency>
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
+
     </build>
 </project>
