@@ -72,13 +72,8 @@ public class DistributionCalculator  {
                 double var_r_i = this.splicesite.getIndividualSequenceInformation(this.variantIndices);
                 double delta = R_i - var_r_i;
                 deltas.add(delta);
-                if (i % 10_000_000 == 0) {
-                    double perc = 100.0 * (double) i / (double) max;
-                    System.out.printf("%d/%d (%.1f%%).\n", i, max, perc);
-                }
             }
             mean = values.stream().mapToDouble(Double::doubleValue).average().orElseThrow();
-            System.out.printf("Total %d mean %f.\n", values.size(), mean);
         } else {
             // acceptor sequence, too long to calculate everything, let's just sample
             // 100 thousand times
@@ -90,13 +85,8 @@ public class DistributionCalculator  {
                 double var_r_i = this.splicesite.getIndividualSequenceInformation(this.variantIndices);
                 double delta = R_i - var_r_i;
                 deltas.add(delta);
-                if (i % 1_000_000 == 0) {
-                    double perc = 100.0 * (double) i / (double) 10_000_000;
-                    System.out.printf("%d/%d (%.1f%%).\n", i, 10_000_000, perc);
-                }
             }
             mean = values.stream().mapToDouble(Double::doubleValue).average().orElseThrow();
-            System.out.printf("Total %d mean %f.\n", values.size(), mean);
         }
     }
 
