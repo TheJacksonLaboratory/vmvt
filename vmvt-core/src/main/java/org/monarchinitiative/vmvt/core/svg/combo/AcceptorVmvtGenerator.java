@@ -1,13 +1,13 @@
 package org.monarchinitiative.vmvt.core.svg.combo;
 
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
-import org.monarchinitiative.vmvt.core.svg.AbstractSvgCoreGenerator;
+import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
-import org.monarchinitiative.vmvt.core.svg.logo.SvgSequenceLogo;
 import org.monarchinitiative.vmvt.core.svg.walker.SvgSequenceWalker;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.Writer;
 
 /**
  * This class creates an SVG graphic that contains a sequence ruler (intron/exon positions), the
@@ -44,13 +44,18 @@ public class AcceptorVmvtGenerator extends AbstractSvgGenerator {
 //                    new SvgSequenceLogo(reference, alternate, this.spliceHeightMatrix, WIDTH, HEIGHT, startX, startY);
 //            acceptorLogo.write(swriter);
 //            startY += acceptorLogo.getYincrement();
-            AbstractSvgCoreGenerator acceptorWalker =
-                    new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT, startX, startY);
+            AbstractSvgMotifGenerator acceptorWalker =
+                    new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT);
             acceptorWalker.write(swriter);
             writeFooter(swriter);
             return swriter.toString();
         } catch (IOException e) {
             return getSvgErrorMessage(e.getMessage());
         }
+    }
+
+    @Override
+    public void write(Writer writer) throws IOException {
+        throw new UnsupportedOperationException("todo");
     }
 }

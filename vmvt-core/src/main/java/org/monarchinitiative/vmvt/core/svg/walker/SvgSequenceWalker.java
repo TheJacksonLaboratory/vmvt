@@ -4,6 +4,7 @@ import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.Writer;
 
 
@@ -32,25 +33,13 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
      * @param w width of the SVG canvas
      * @param h height of the SVG canvas
      */
-    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h, int x, int y) {
+    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h) {
         super(ref,alt,site,w,h);
-        this.XSTART = x;
-        this.YSTART = y;
+        this.XSTART = SVG_STARTX;
+        this.YSTART = SVG_WALKER_STARTY;
         this.currentX = this.XSTART;
         this.currentY = this.YSTART;
     }
-
-
-
-
-    /**
-     * Add some extra vertical space (one {@link #Y_LINE_INCREMENT}).
-     */
-    protected void incrementYposition() {
-        this.currentY += Y_LINE_INCREMENT;
-    }
-
-
 
 
     /**
@@ -171,17 +160,24 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
 
 
     @Override
+    public String getSvg() {
+        StringWriter swriter = new StringWriter();
+        try {
+            writeHeader(swriter);
+            write(swriter);
+            writeFooter(swriter);
+            return swriter.toString();
+        } catch (IOException e) {
+            return getSvgErrorMessage(e.getMessage());
+        }
+    }
+
+    @Override
     public void write(Writer writer) throws IOException {
         writeAltWalker(writer);
         writeRefWalker(writer);
         writeRefAltSeparation(writer);
         writeBoxAroundMutation(writer);
-    }
-
-    @Override
-    public int getYincrement() {
-       // return this.currentY - this.startY;
-        throw new UnsupportedOperationException("TODO");
     }
 
 }

@@ -1,20 +1,16 @@
 package org.monarchinitiative.vmvt.cli.commands;
 
+
 import org.monarchinitiative.vmvt.core.VmvtGenerator;
 import picocli.CommandLine;
 
-import java.io.*;
-import java.util.List;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
-/**
- * Print an SVG with the donor or acceptor ruler.
- * @author Peter N Robinson
- */
-@CommandLine.Command(name = "ruler", aliases = {"R"}, description = "Create sequence ruler")
-public class RulerCommand extends AbstractSequenceComparisonCommand implements Callable<Integer> {
-
-
+@CommandLine.Command(name = "ruler", aliases = {"W"}, description = "Create sequence ruler")
+public class WalkerCommand extends AbstractSequenceComparisonCommand implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         VmvtGenerator vmvt = new VmvtGenerator();
@@ -22,9 +18,9 @@ public class RulerCommand extends AbstractSequenceComparisonCommand implements C
         initSequences();
         if (seqlen == 9) {
             // donor
-            svg= vmvt.getDonorSequenceRuler(this.reference, this.alternate);
+            svg= vmvt.getDonorWalkerSvg(this.reference, this.alternate);
         } else {
-            svg = vmvt.getAcceptorSequenceRuler(this.reference, this.alternate);
+            svg = vmvt.getAcceptorWalkerSvg(this.reference, this.alternate);
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outname))) {
             writer.write(svg);

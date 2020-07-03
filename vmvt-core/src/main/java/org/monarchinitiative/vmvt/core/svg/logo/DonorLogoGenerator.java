@@ -2,11 +2,6 @@ package org.monarchinitiative.vmvt.core.svg.logo;
 
 
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
-import org.monarchinitiative.vmvt.core.svg.AbstractSvgCoreGenerator;
-import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
-
-import java.io.IOException;
-import java.io.StringWriter;
 
 /**
  * Write an SVG sequence logo for a splice donor site with reference and alternate sequences

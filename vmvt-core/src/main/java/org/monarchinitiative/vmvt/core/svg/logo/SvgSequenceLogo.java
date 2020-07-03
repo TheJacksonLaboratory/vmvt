@@ -3,7 +3,6 @@ package org.monarchinitiative.vmvt.core.svg.logo;
 
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
-import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
 import org.monarchinitiative.vmvt.core.svg.combo.AcceptorVmvtGenerator;
 import org.monarchinitiative.vmvt.core.svg.combo.DonorVmvtGenerator;
 
