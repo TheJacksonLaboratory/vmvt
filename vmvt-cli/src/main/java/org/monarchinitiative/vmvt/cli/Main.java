@@ -5,6 +5,7 @@ package org.monarchinitiative.vmvt.cli;
  */
 
 import org.monarchinitiative.vmvt.cli.commands.LogoCommand;
+import org.monarchinitiative.vmvt.cli.commands.RulerCommand;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -18,7 +19,8 @@ public class Main implements Callable<Integer> {
 
     public static void main(String[] args) {
         CommandLine cline = new CommandLine(new Main()).
-                addSubcommand("logo", new LogoCommand());
+                addSubcommand("logo", new LogoCommand()).
+                addSubcommand("ruler", new RulerCommand());
         cline.setToggleBooleanFlags(false);
         int exitCode = cline.execute(args);
         System.exit(exitCode);

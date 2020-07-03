@@ -3,7 +3,6 @@ package org.monarchinitiative.vmvt.cli.commands;
 import org.monarchinitiative.vmvt.core.VmvtGenerator;
 import picocli.CommandLine;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
