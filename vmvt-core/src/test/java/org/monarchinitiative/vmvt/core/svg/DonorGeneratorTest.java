@@ -51,12 +51,12 @@ public class DonorGeneratorTest {
     }
 
     @Test
-    void testWriteDonorSvgCombo() {
+    void testWriteDonorTrekker() {
         VmvtGenerator donor = new VmvtGenerator();
-        String svg = donor.getDonorVmvtSvg(ref,alt);
+        String svg = donor.getDonorTrekkerSvg(ref,alt);
         assertNotNull(svg);
         try {
-            String path = "target/donorVmvt.svg";
+            String path = "target/donorTrekker.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();

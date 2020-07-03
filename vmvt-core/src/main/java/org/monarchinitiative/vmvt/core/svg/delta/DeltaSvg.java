@@ -29,10 +29,7 @@ public class DeltaSvg extends AbstractSvgGenerator {
     private final double min;
     /** Maximum R_i value for any sequence */
     private final double max;
-    /** Number of nucleotides in a donor splice site. */
-    private static final int DONOR_LENGTH = 9;
-    /** Number of nucleotides in an acceptor splice site. */
-    private static final int ACCEPTOR_LENGTH = 27;
+
     /** Number of bins to show in the histogram. */
     private static final int BIN_COUNT = 51;
     /** Counts of values in each of the bins. */
@@ -65,9 +62,9 @@ public class DeltaSvg extends AbstractSvgGenerator {
         if (ref.length() != alt.length()) {
             throw new VmvtRuntimeException("Ref and alt must have the same length");
         }
-        if (ref.length() == DONOR_LENGTH) {
+        if (ref.length() == DONOR_NT_LENGTH) {
             splicesite = DoubleMatrix.donor();
-        } else if (ref.length() == ACCEPTOR_LENGTH) {
+        } else if (ref.length() == ACCEPTOR_NT_LENGTH) {
             splicesite = DoubleMatrix.acceptor();
         } else {
             throw new VmvtRuntimeException("Sequence length must be 9 or 27");
@@ -259,5 +256,10 @@ public class DeltaSvg extends AbstractSvgGenerator {
             return getSvgErrorMessage(e.getMessage());
         }
         return swriter.toString();
+    }
+
+    @Override
+    public void write(Writer writer) throws IOException {
+        throw new UnsupportedOperationException("todo");
     }
 }

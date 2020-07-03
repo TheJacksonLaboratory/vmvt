@@ -4,6 +4,7 @@ import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.Writer;
 
 
@@ -14,7 +15,7 @@ import java.io.Writer;
 public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
 
     /** Position where we will start to write things from the left side of the SVG. */
-    protected final int XSTART;
+    protected final int XSTART = SVG_STARTX;
     /** Position where we will start to write things from the top of the SVG */
     protected final int YSTART;
 
@@ -32,25 +33,29 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
      * @param w width of the SVG canvas
      * @param h height of the SVG canvas
      */
-    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h, int x, int y) {
-        super(ref,alt,site,w,h);
-        this.XSTART = x;
-        this.YSTART = y;
-        this.currentX = this.XSTART;
-        this.currentY = this.YSTART;
+    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h) {
+        this(ref,alt,site,w,h,SVG_WALKER_STARTY);
+//        super(ref,alt,site,w,h);
+//        this.XSTART = SVG_STARTX;
+//        this.YSTART = SVG_LOGO_STARTY;
+//        this.currentX = this.XSTART;
+//        this.currentY = this.YSTART;
     }
-
-
-
 
     /**
-     * Add some extra vertical space (one {@link #Y_LINE_INCREMENT}).
+     * Create an Svg Walker for the donor or acceptor with representation of reference sequence and alt bases
+     * @param ref reference sequence
+     * @param alt alternate (mutant) sequence
+     * @param site Representation of the splice site (weight matrix)
+     * @param w width of the SVG canvas
+     * @param h height of the SVG canvas
      */
-    protected void incrementYposition() {
-        this.currentY += Y_LINE_INCREMENT;
+    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h, int ystart) {
+        super(ref,alt,site,w,h);
+        this.YSTART = ystart;
+        this.currentX = this.XSTART;
+        this.currentY = ystart;
     }
-
-
 
 
     /**
@@ -109,7 +114,6 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
     protected void writeRefWalker(Writer writer) throws IOException {
         int X = currentX;
         int Y = currentY;
-        int startX = X;
         for (int i=0; i<seqlen; i++) {
             writeWalkerBase(writer, X, Y, refidx[i], i);
             X += LOWER_CASE_BASE_INCREMENT;
@@ -171,17 +175,24 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
 
 
     @Override
+    public String getSvg() {
+        StringWriter swriter = new StringWriter();
+        try {
+            writeHeader(swriter);
+            write(swriter);
+            writeFooter(swriter);
+            return swriter.toString();
+        } catch (IOException e) {
+            return getSvgErrorMessage(e.getMessage());
+        }
+    }
+
+    @Override
     public void write(Writer writer) throws IOException {
         writeAltWalker(writer);
         writeRefWalker(writer);
         writeRefAltSeparation(writer);
         writeBoxAroundMutation(writer);
-    }
-
-    @Override
-    public int getYincrement() {
-       // return this.currentY - this.startY;
-        throw new UnsupportedOperationException("TODO");
     }
 
 }

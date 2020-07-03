@@ -1,3 +1,4 @@
+.. _rstindex:
 ======================================
 Variant Motif Visualization Tool: vmvt
 ======================================
@@ -47,12 +48,8 @@ The best place to leave feedback, ask questions, and report bugs is the `vmvt Is
    :name: tutorial
    :maxdepth: 1
 
-    install
-    input
-    tutorial_io
-    tutorial_hpo
-    tutorial_go
-    tutorial_similarity
+   ruler
+   build
 
 
 .. toctree::

@@ -197,4 +197,9 @@ public abstract class EseSvg extends AbstractSvgGenerator {
         }
         return swriter.toString();
     }
+
+    @Override
+    public void write(Writer writer) throws IOException {
+        throw new UnsupportedOperationException("todo");
+    }
 }
