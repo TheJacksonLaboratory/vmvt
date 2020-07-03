@@ -22,6 +22,8 @@ public abstract class AbstractSvgMotifGenerator extends AbstractSvgGenerator {
 
 
 
+
+
     /** Current X position on the SVG canvas. */
     protected int currentX;
     /** Current Y position on the SVG canvas. */

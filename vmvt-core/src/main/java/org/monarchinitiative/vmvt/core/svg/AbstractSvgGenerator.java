@@ -40,7 +40,12 @@ public abstract class AbstractSvgGenerator {
 
     protected final double HALF_A_BASE = (double)LOWER_CASE_BASE_INCREMENT/2.0;
     /** Amount to shift down between ref and alt sequence lines */
-    protected final int Y_LINE_INCREMENT = 20;
+    protected final static int Y_LINE_INCREMENT = 20;
+    /** Amount to shift between logo and walker for the Trekker view. */
+    protected final static int TREKKER_Y_INCREMENT = 20;
+    protected final static int SVG_TREKKER_HEIGHT = 220;
+    protected final static int SVG_TREKKER_ACCEPTOR_WIDTH = SVG_ACCEPTOR_WIDTH + 10;
+    protected final static int SVG_TREKKER_DONOR_WIDTH = SVG_DONOR_WIDTH + 10;
     /** Height of a letter before scaling */
     protected final static int LETTER_BASE_HEIGHT = 12;
 

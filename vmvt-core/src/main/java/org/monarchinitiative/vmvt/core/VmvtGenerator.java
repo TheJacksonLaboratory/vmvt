@@ -3,8 +3,8 @@ package org.monarchinitiative.vmvt.core;
 import org.monarchinitiative.vmvt.core.dist.DistributionCalculator;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
-import org.monarchinitiative.vmvt.core.svg.combo.AcceptorVmvtGenerator;
-import org.monarchinitiative.vmvt.core.svg.combo.DonorVmvtGenerator;
+import org.monarchinitiative.vmvt.core.svg.trek.AcceptorTrekkerGenerator;
+import org.monarchinitiative.vmvt.core.svg.trek.DonorTrekkerGenerator;
 import org.monarchinitiative.vmvt.core.svg.delta.DeltaSvg;
 import org.monarchinitiative.vmvt.core.svg.ese.EseSvg;
 import org.monarchinitiative.vmvt.core.svg.ese.HeptamerEseSvg;
@@ -77,13 +77,13 @@ public class VmvtGenerator {
         return svgGenerator.getSvg();
     }
 
-    public String getDonorVmvtSvg(String reference, String alternate) {
-        AbstractSvgGenerator svgGenerator = new DonorVmvtGenerator(reference, alternate);
+    public String getDonorTrekkerSvg(String reference, String alternate) {
+        AbstractSvgGenerator svgGenerator = new DonorTrekkerGenerator(reference, alternate);
         return svgGenerator.getSvg();
     }
 
-    public String getAcceptorVmvtSvg(String reference, String alternate) {
-        AbstractSvgGenerator svgGenerator = new AcceptorVmvtGenerator(reference, alternate);
+    public String getAcceptorTrekkerSvg(String reference, String alternate) {
+        AbstractSvgGenerator svgGenerator = new AcceptorTrekkerGenerator(reference, alternate);
         return svgGenerator.getSvg();
     }
 

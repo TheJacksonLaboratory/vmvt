@@ -47,12 +47,12 @@ public class AcceptorGeneratorTest {
     }
 
     @Test
-    void testWriteSvgAcceptorVmvt() {
+    void testWriteSvgAcceptorTrekker() {
         VmvtGenerator donor = new VmvtGenerator();
-        String svg = donor.getAcceptorVmvtSvg(ref,alt);
+        String svg = donor.getAcceptorTrekkerSvg(ref,alt);
         assertNotNull(svg);
         try {
-            String path = "target/acceptorVmvt.svg";
+            String path = "target/acceptorTrekker.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();

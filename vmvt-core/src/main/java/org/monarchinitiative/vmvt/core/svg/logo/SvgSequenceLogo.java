@@ -3,8 +3,8 @@ package org.monarchinitiative.vmvt.core.svg.logo;
 
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
-import org.monarchinitiative.vmvt.core.svg.combo.AcceptorVmvtGenerator;
-import org.monarchinitiative.vmvt.core.svg.combo.DonorVmvtGenerator;
+import org.monarchinitiative.vmvt.core.svg.trek.AcceptorTrekkerGenerator;
+import org.monarchinitiative.vmvt.core.svg.trek.DonorTrekkerGenerator;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -13,8 +13,8 @@ import java.util.Map;
 
 /**
  * This class writes a sequence logo as an SVG element (which needs to be included in a complete SVG, which is
- * done in {@link DonorLogoGenerator}, {@link AcceptorLogoGenerator}, {@link AcceptorVmvtGenerator},
- * or {@link DonorVmvtGenerator}.
+ * done in {@link DonorLogoGenerator}, {@link AcceptorLogoGenerator}, {@link AcceptorTrekkerGenerator},
+ * or {@link DonorTrekkerGenerator}.
  * @author Peter N Robinson
  */
 public abstract class SvgSequenceLogo extends AbstractSvgGenerator {
