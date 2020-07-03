@@ -5,7 +5,8 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>vmvt-cli</artifactId>
-    <name>vmvtcli</name>
+    <groupId>org.monarchinitiative.vmvt</groupId>
+    <name>vmvt-cli</name>
 
     <parent>
         <groupId>org.monarchinitiative.vmvt</groupId>
@@ -88,11 +89,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
             </plugin>
 
             <!-- Make an executable jar and specify the main class and classpath -->

@@ -146,6 +146,7 @@
 
     <build>
         <pluginManagement>
+            <!-- sets defaults for child POMs -->
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
