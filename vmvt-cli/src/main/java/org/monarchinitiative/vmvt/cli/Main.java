@@ -19,13 +19,14 @@ public class Main implements Callable<Integer> {
     public static void main(String[] args) {
         CommandLine cline = new CommandLine(new Main()).
                 addSubcommand("logo", new LogoCommand());
+        cline.setToggleBooleanFlags(false);
         int exitCode = cline.execute(args);
         System.exit(exitCode);
     }
 
     @Override
-    public Integer call() throws Exception { // your business logic goes here...
-        System.out.printf("HI");
+    public Integer call() {
+        // work done in subcommands
         return 0;
     }
 }

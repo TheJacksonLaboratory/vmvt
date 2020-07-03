@@ -38,7 +38,7 @@ public class DonorGeneratorTest {
     @Test
     void testWriteDonorSvgLogo() {
         VmvtGenerator donor = new VmvtGenerator();
-        String svg = donor.getDonorLogoSvg(ref,alt);
+        String svg = donor.getDonorLogoSvg();
         assertNotNull(svg);
         try {
             String path = "target/donorLogo.svg";

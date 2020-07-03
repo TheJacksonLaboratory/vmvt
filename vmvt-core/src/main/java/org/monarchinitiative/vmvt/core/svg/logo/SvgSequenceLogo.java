@@ -2,11 +2,13 @@ package org.monarchinitiative.vmvt.core.svg.logo;
 
 
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
+import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
 import org.monarchinitiative.vmvt.core.svg.combo.AcceptorVmvtGenerator;
 import org.monarchinitiative.vmvt.core.svg.combo.DonorVmvtGenerator;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Map;
 
@@ -16,7 +18,7 @@ import java.util.Map;
  * or {@link DonorVmvtGenerator}.
  * @author Peter N Robinson
  */
-public class SvgSequenceLogo extends AbstractSvgMotifGenerator {
+public abstract class SvgSequenceLogo extends AbstractSvgGenerator {
     /** Maximum height of the letters in the sequence logo. Needs to be adjusted together with {@link #FUDGE_FACTOR}.*/
     private final double LOGO_COLUMN_HEIGHT = 20.0;
     /** This is a magic number that places the letters in the correct vertical position. Works with {@link #LOGO_COLUMN_HEIGHT}.*/
@@ -28,18 +30,20 @@ public class SvgSequenceLogo extends AbstractSvgMotifGenerator {
     /** Amount to shift down after sequence logo */
     private final static int Y_SKIP = 50;
 
+    /** Representation of the Splice donor/acceptor IC matrix. */
+    protected final DoubleMatrix splicesite;
+
     /**
      * Create an Svg Logo for the donor or acceptor with representation of reference sequence and alt bases
-     * @param ref reference sequence
-     * @param alt alternate (mutant) sequence
      * @param site Representation of the splice site (height matrix)
      * @param w width of the SVG canvas
      * @param h height of the SVG canvas
      */
-    public SvgSequenceLogo(String ref, String alt, DoubleMatrix site, int w, int h, int x, int y) {
-        super(ref,alt,site, w, h);
-        this.XSTART = x;
-        this.YSTART = y + 20; // Note that the logo is relatively high, so we want to start lower down!
+    public SvgSequenceLogo(DoubleMatrix site, int w, int h) {
+        super(w, h);
+        splicesite = site;
+        this.XSTART = SVG_STARTX;
+        this.YSTART = SVG_LOGO_STARTY; // Note that the logo is relatively high, so we want to start lower down!
    }
 
 
@@ -67,20 +71,37 @@ public class SvgSequenceLogo extends AbstractSvgMotifGenerator {
         }
     }
 
-
-    @Override
-    public void write(Writer writer) throws IOException {
+    /**
+     * Write the logo itself to be a component of another SVG, i.e., this method
+     * does not write the header/footer. It is called by the vmvt-combo methods
+     * @param swriter a file handle (String writer)
+     * @throws IOException if we cannot write the logo
+     */
+    public void write(Writer swriter) throws IOException {
         int X = this.XSTART;
+        int seqlen = this.splicesite.getMotifLength();
         for (int i=0; i<seqlen; i++) {
-            writeLogoBaseColumn(writer, X, this.YSTART, i);
+            writeLogoBaseColumn(swriter, X, this.YSTART, i);
             X += LOWER_CASE_BASE_INCREMENT;
         }
     }
 
+
     @Override
-    public int getYincrement() {
-        return Y_SKIP;
+    public String getSvg() {
+        StringWriter swriter = new StringWriter();
+        try {
+            writeHeader(swriter);
+            int X = this.XSTART;
+            int seqlen = this.splicesite.getMotifLength();
+            for (int i=0; i<seqlen; i++) {
+                writeLogoBaseColumn(swriter, X, this.YSTART, i);
+                X += LOWER_CASE_BASE_INCREMENT;
+            }
+            writeFooter(swriter);
+            return swriter.toString();
+        } catch (IOException e) {
+            return getSvgErrorMessage(e.getMessage());
+        }
     }
-
-
 }

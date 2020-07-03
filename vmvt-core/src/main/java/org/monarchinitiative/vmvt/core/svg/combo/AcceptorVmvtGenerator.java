@@ -40,10 +40,10 @@ public class AcceptorVmvtGenerator extends AbstractSvgGenerator {
         try {
             writeHeader(swriter);
             // WIDTH AND HEIGHT ARE FROM THE SUPERCLASS -- SET ABOVE IN THE CTOR
-            AbstractSvgCoreGenerator acceptorLogo =
-                    new SvgSequenceLogo(reference, alternate, this.spliceHeightMatrix, WIDTH, HEIGHT, startX, startY);
-            acceptorLogo.write(swriter);
-            startY += acceptorLogo.getYincrement();
+//            AbstractSvgCoreGenerator acceptorLogo =
+//                    new SvgSequenceLogo(reference, alternate, this.spliceHeightMatrix, WIDTH, HEIGHT, startX, startY);
+//            acceptorLogo.write(swriter);
+//            startY += acceptorLogo.getYincrement();
             AbstractSvgCoreGenerator acceptorWalker =
                     new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT, startX, startY);
             acceptorWalker.write(swriter);
