@@ -172,21 +172,7 @@ public abstract class AbstractSvgCoreGenerator {
         }
     }
 
-    protected String getBaseColorFromChar(String b) {
-        switch (b) {
-            case "A":
-                return A_COLOR;
-            case "C":
-                return C_COLOR;
-            case "G":
-                return G_COLOR;
-            case "T":
-                return T_COLOR;
-            default:
-                // should never happen
-                throw new VmvtRuntimeException("Unrecognized color: " + b);
-        }
-    }
+
 
 
     /**

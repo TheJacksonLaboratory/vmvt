@@ -10,6 +10,7 @@
 
     <name>vmvt</name>
     <description>Variant-motif visualization tool</description>
+    <inceptionYear>2020</inceptionYear>
     <url>https://github.com/TheJacksonLaboratory/vmvt</url>
 
     <modules>
@@ -146,6 +147,7 @@
 
     <build>
         <pluginManagement>
+            <!-- sets defaults for child POMs -->
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

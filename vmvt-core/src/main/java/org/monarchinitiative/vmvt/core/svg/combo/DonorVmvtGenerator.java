@@ -3,6 +3,7 @@ package org.monarchinitiative.vmvt.core.svg.combo;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgCoreGenerator;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
+import org.monarchinitiative.vmvt.core.svg.logo.DonorLogoGenerator;
 import org.monarchinitiative.vmvt.core.svg.logo.SvgSequenceLogo;
 import org.monarchinitiative.vmvt.core.svg.walker.SvgSequenceWalker;
 
@@ -41,11 +42,10 @@ public class DonorVmvtGenerator extends AbstractSvgGenerator {
         try {
             writeHeader(swriter);
             // WIDTH AND HEIGHT ARE FROM THE SUPERCLASS -- SET ABOVE IN THE CTOR
-            AbstractSvgCoreGenerator donorLogo =
-                    new SvgSequenceLogo(reference, alternate, this.spliceHeightMatrix, WIDTH, HEIGHT, startX, startY);
+            SvgSequenceLogo donorLogo =
+                    new DonorLogoGenerator(this.spliceHeightMatrix);
             donorLogo.write(swriter);
-            startY += donorLogo.getYincrement();
-
+            startY += SVG_LOGO_HEIGHT;
             AbstractSvgCoreGenerator donorWalker =
                     new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT, startX, startY);
             donorWalker.write(swriter);
