@@ -7,6 +7,7 @@ import org.monarchinitiative.vmvt.core.svg.combo.AcceptorVmvtGenerator;
 import org.monarchinitiative.vmvt.core.svg.combo.DonorVmvtGenerator;
 import org.monarchinitiative.vmvt.core.svg.delta.DeltaSvg;
 import org.monarchinitiative.vmvt.core.svg.ese.EseSvg;
+import org.monarchinitiative.vmvt.core.svg.ese.HeptamerEseSvg;
 import org.monarchinitiative.vmvt.core.svg.ese.HexamerEseSvg;
 import org.monarchinitiative.vmvt.core.svg.logo.AcceptorLogoGenerator;
 import org.monarchinitiative.vmvt.core.svg.logo.DonorLogoGenerator;
@@ -98,6 +99,11 @@ public class VmvtGenerator {
 
     public String getHexamerSvg(String reference, String alternate) {
         EseSvg ese = new HexamerEseSvg(reference, alternate);
+        return ese.getSvg();
+    }
+
+    public String getHeptamerSvg(String reference, String alternate) {
+        EseSvg ese = new HeptamerEseSvg(reference, alternate);
         return ese.getSvg();
     }
 
