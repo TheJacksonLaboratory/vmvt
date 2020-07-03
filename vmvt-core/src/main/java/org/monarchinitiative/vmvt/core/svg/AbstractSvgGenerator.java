@@ -1,5 +1,7 @@
 package org.monarchinitiative.vmvt.core.svg;
 
+import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
+
 import java.io.IOException;
 import java.io.Writer;
 
@@ -22,7 +24,7 @@ public abstract class AbstractSvgGenerator {
     /** The width of the SVG canvas for all Acceptor figures. */
     protected final static int SVG_ACCEPTOR_WIDTH = 420;
     /** Y Position on the SVG canvas to start drawing Sequence logos. */
-    protected final static int SVG_LOGO_STARTY = 40;
+    protected final static int SVG_LOGO_STARTY = 60;
     /** Height on the SVG canvas for Sequence logos. */
     protected final static int SVG_LOGO_HEIGHT = 50;
 
@@ -32,6 +34,24 @@ public abstract class AbstractSvgGenerator {
     protected final static int SVG_RULER_HEIGHT = 110;
 
     protected final static int SVG_RULER_STARTY = 30;
+
+    protected final static int A_BASE = 0;
+    protected final static int C_BASE = 1;
+    protected final static int G_BASE = 2;
+    protected final static int T_BASE = 3;
+    /** A green color for Adenine */
+    protected final static String A_COLOR = SvgColors.GREEN;
+    /** A blue color for Cytosine */
+    protected final static String C_COLOR = SvgColors.BLUE;
+    /** An orange color for Guanine */
+    protected final static String G_COLOR = SvgColors.ORANGE;
+    /** A red color for Thymine */
+    protected final static String T_COLOR = SvgColors.RED;
+
+    protected final static int LETTER_WIDTH = 10;
+    /** Amount of horizontal space to be taken up by one base character. */
+    protected final int LOWER_CASE_BASE_INCREMENT = LETTER_WIDTH + 5;
+
 
     public AbstractSvgGenerator(int w, int h) {
         this.WIDTH = w;
@@ -70,5 +90,43 @@ public abstract class AbstractSvgGenerator {
     }
 
     public abstract String getSvg();
+
+    protected String getBaseColorFromChar(String b) {
+        switch (b) {
+            case "A":
+                return A_COLOR;
+            case "C":
+                return C_COLOR;
+            case "G":
+                return G_COLOR;
+            case "T":
+                return T_COLOR;
+            default:
+                // should never happen
+                throw new VmvtRuntimeException("Unrecognized color: " + b);
+        }
+    }
+
+    /**
+     * Get the lower case character for this base
+     * @param b index (0,1,2,3)
+     * @return corresponding lower case character for the base (a,c,g,t)
+     */
+    protected String getBaseCharUC(int b) {
+        switch (b) {
+            case A_BASE:
+                return "A";
+            case C_BASE:
+                return "C";
+            case G_BASE:
+                return "G";
+            case T_BASE:
+                return "T";
+            default:
+                // should never happen
+                throw new VmvtRuntimeException("Unrecognized base: " + b);
+        }
+    }
+
 
 }
