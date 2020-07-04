@@ -1,0 +1,93 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+<!-- Created by vmvt -->
+<style>
+  text { font: 24px monospace; }
+  </style>
+<g>
+<rect x="50.000000" y="339.976959" width="5.882353" height="0.023041" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="55.882353" y="265.960061" width="5.882353" height="74.039939" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="61.764706" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="67.647059" y="321.589862" width="5.882353" height="18.410138" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="73.529412" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="79.411765" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="85.294118" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="91.176471" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="97.058824" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="102.941176" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="108.823529" y="321.866359" width="5.882353" height="18.133641" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="114.705882" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="120.588235" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="126.470588" y="321.098310" width="5.882353" height="18.901690" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="132.352941" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="138.235294" y="302.596006" width="5.882353" height="37.403994" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="144.117647" y="321.259601" width="5.882353" height="18.740399" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="150.000000" y="226.267281" width="5.882353" height="113.732719" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="155.882353" y="283.671275" width="5.882353" height="56.328725" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="161.764706" y="265.937020" width="5.882353" height="74.062980" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="167.647059" y="322.488479" width="5.882353" height="17.511521" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="173.529412" y="302.734255" width="5.882353" height="37.265745" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="179.411765" y="246.344086" width="5.882353" height="93.655914" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="185.294118" y="247.488479" width="5.882353" height="92.511521" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="191.176471" y="246.113671" width="5.882353" height="93.886329" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="197.058824" y="60.000000" width="5.882353" height="280.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="202.941176" y="136.344086" width="5.882353" height="203.655914" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="208.823529" y="245.806452" width="5.882353" height="94.193548" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="214.705882" y="246.682028" width="5.882353" height="93.317972" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="220.588235" y="247.127496" width="5.882353" height="92.872504" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="226.470588" y="302.127496" width="5.882353" height="37.872504" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="232.352941" y="322.196621" width="5.882353" height="17.803379" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="238.235294" y="265.399386" width="5.882353" height="74.600614" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="244.117647" y="284.070661" width="5.882353" height="55.929339" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="250.000000" y="228.302611" width="5.882353" height="111.697389" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="255.882353" y="321.013825" width="5.882353" height="18.986175" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="261.764706" y="302.626728" width="5.882353" height="37.373272" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="267.647059" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="273.529412" y="321.105991" width="5.882353" height="18.894009" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="279.411765" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="285.294118" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="291.176471" y="321.159754" width="5.882353" height="18.840246" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="297.058824" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="302.941176" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="308.823529" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="314.705882" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="320.588235" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="326.470588" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="332.352941" y="320.729647" width="5.882353" height="19.270353" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="338.235294" y="340.000000" width="5.882353" height="0.000000" rx="2" style="stroke:#006600; fill:#00A087" />
+<rect x="344.117647" y="266.520737" width="5.882353" height="73.479263" rx="2" style="stroke:#006600; fill:#00A087" />
+<line x1="55.882353" y1="340" x2="361.764706" y2="340" stroke="#e64b35"/>
+<line x1="55.882353" y1="340" x2="55.882353" y2="345" stroke="#e64b35"/>
+<g transform='translate(25,370)'><text>-10</text></g>
+<line x1="70.448179" y1="340" x2="70.448179" y2="345" stroke="#e64b35"/>
+<line x1="85.014006" y1="340" x2="85.014006" y2="345" stroke="#e64b35"/>
+<line x1="99.579832" y1="340" x2="99.579832" y2="345" stroke="#e64b35"/>
+<line x1="114.145658" y1="340" x2="114.145658" y2="345" stroke="#e64b35"/>
+<line x1="128.711485" y1="340" x2="128.711485" y2="345" stroke="#e64b35"/>
+<g transform='translate(108,370)'><text>-5</text></g>
+<line x1="143.277311" y1="340" x2="143.277311" y2="345" stroke="#e64b35"/>
+<line x1="157.843137" y1="340" x2="157.843137" y2="345" stroke="#e64b35"/>
+<line x1="172.408964" y1="340" x2="172.408964" y2="345" stroke="#e64b35"/>
+<line x1="186.974790" y1="340" x2="186.974790" y2="345" stroke="#e64b35"/>
+<line x1="201.540616" y1="340" x2="201.540616" y2="345" stroke="#e64b35"/>
+<g transform='translate(194,370)'><text>0</text></g>
+<line x1="216.106443" y1="340" x2="216.106443" y2="345" stroke="#e64b35"/>
+<line x1="230.672269" y1="340" x2="230.672269" y2="345" stroke="#e64b35"/>
+<line x1="245.238095" y1="340" x2="245.238095" y2="345" stroke="#e64b35"/>
+<line x1="259.803922" y1="340" x2="259.803922" y2="345" stroke="#e64b35"/>
+<line x1="274.369748" y1="340" x2="274.369748" y2="345" stroke="#e64b35"/>
+<g transform='translate(267,370)'><text>5</text></g>
+<line x1="288.935574" y1="340" x2="288.935574" y2="345" stroke="#e64b35"/>
+<line x1="303.501401" y1="340" x2="303.501401" y2="345" stroke="#e64b35"/>
+<line x1="318.067227" y1="340" x2="318.067227" y2="345" stroke="#e64b35"/>
+<line x1="332.633053" y1="340" x2="332.633053" y2="345" stroke="#e64b35"/>
+<line x1="347.198880" y1="340" x2="347.198880" y2="345" stroke="#e64b35"/>
+<g transform='translate(335,370)'><text>10</text></g>
+<text x="230" y="50" font-size="16">
+ΔR<tspan dy="3" font-size="12">i</tspan></text>
+<text x="268" y="50">: 8.96</text>
+<g fill="none" stroke="#790079" stroke-width="2">
+<path stroke-dasharray="2,2" d="M332 100 l0 240"/></g>
+<circle cx="332" cy="100" r="8" stroke="black" 
+ stroke-width="3" fill="#790079"/>
+</g>
+</svg>
