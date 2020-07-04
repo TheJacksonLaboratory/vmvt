@@ -55,7 +55,7 @@ See `doc_setup` on creating a local setup for building the documentation.
 Submit Feedback
 ===============
 
-The best way to send feedback is to file an issue at https://github.com/monarch-initiative/phenol/issues
+The best way to send feedback is to file an issue at https://github.com/TheJacksonLaboratory/vmvt/issues
 
 If you are proposing a feature:
 
@@ -133,10 +133,10 @@ Use the following steps for installing Sphinx and the dependencies for building 
     $ cd phenol/manual
     $ virtualenv -p python3 .venv
     $ source .venv/bin/activate
-    $ pip install --upgrade -r requirements.txt
+    $ pip install sphinx sphinx_rtd_theme
 
 Use the following for building the documentation.
-The first two lines is only required for loading the virtualenv.
+The first two lines are only required for loading the virtualenv.
 Afterwards, you can always use ``make html`` for building.
 
 .. code-block:: console
@@ -154,10 +154,10 @@ Get Started!
 Ready to contribute?
 First, create your Java/Documentation development setup as described in `install_from_source`/`doc_setup`.
 
-1. Fork the `phenol` repo on GitHub.
+1. Fork the `vmvt` repo on GitHub.
 2. Clone your fork locally::
 
-    $ git clone git@github.com:your_name_here/phenol.git
+    $ git clone git@github.com:your_name_here/vmvt.git
 
 3. Create a branch for local development::
 
@@ -191,4 +191,4 @@ Before you submit a pull request, check that it meets these guidelines:
 
 1. The pull request should include tests.
 2. If the pull request adds functionality, the docs should be updated.
-3. Describe your changes in the ``CHANGELOG.md`` file.
+3. Describe your changes in the ``CHANGELOG.rst`` file.

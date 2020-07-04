@@ -50,6 +50,7 @@ public abstract class AbstractSvgGenerator {
     protected final static int LETTER_BASE_HEIGHT = 12;
 
 
+
     protected final static int A_BASE = 0;
     protected final static int C_BASE = 1;
     protected final static int G_BASE = 2;
@@ -69,7 +70,9 @@ public abstract class AbstractSvgGenerator {
         this.HEIGHT = h;
     }
 
-    /** Write the header of the SVG */
+    /** Write the header of the SVG. Add
+     * style="border:1px solid black" to create a border around the SVG for testing.
+     */
     protected void writeHeader(Writer writer) throws IOException {
         writer.write("<svg width=\"" + this.WIDTH +"\" height=\""+ this.HEIGHT +"\" " +
                 "xmlns=\"http://www.w3.org/2000/svg\" " +

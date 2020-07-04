@@ -107,5 +107,10 @@ public class VmvtGenerator {
         return ese.getSvg();
     }
 
+    public String getDelta(String reference, String alternate) {
+        DeltaSvg svg = new DeltaSvg(reference, alternate);
+        return svg.getSvg();
+    }
+
 
 }

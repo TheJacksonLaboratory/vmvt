@@ -2,6 +2,7 @@ package org.monarchinitiative.vmvt.core.svg;
 
 import org.monarchinitiative.vmvt.core.VmvtGenerator;
 import org.junit.jupiter.api.Test;
+import org.monarchinitiative.vmvt.core.svg.delta.DeltaSvg;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -118,7 +119,7 @@ public class DonorGeneratorTest {
      */
     @Test
     void writeAllSvgsToReadTheDocs() throws  IOException {
-        if (2==3) {
+        if (2==2) {
             assertEquals(2,2);
             return;
         }
@@ -139,8 +140,29 @@ public class DonorGeneratorTest {
         writeToRTDdirectory("hexamer.svg", svg);
         svg = getHeptamerSvg();
         writeToRTDdirectory("heptamer.svg", svg);
-
     }
+
+
+
+
+    @Test
+    void testDeltaDonor() {
+        VmvtGenerator vmvt = new VmvtGenerator();
+        String svg = vmvt.getDelta(ref, alt);
+
+        try {
+            String path = "target/donorDelta.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (42==41) {
+            writeToRTDdirectory("deltaDonor.svg", svg);
+        }
+    }
+
 
 
 
