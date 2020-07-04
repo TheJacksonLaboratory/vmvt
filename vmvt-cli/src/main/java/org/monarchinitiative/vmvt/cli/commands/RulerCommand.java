@@ -11,7 +11,7 @@ import java.util.concurrent.Callable;
  * Print an SVG with the donor or acceptor ruler.
  * @author Peter N Robinson
  */
-@CommandLine.Command(name = "ruler", aliases = {"R"}, description = "Create sequence ruler")
+@CommandLine.Command(name = "ruler", aliases = {"R"}, mixinStandardHelpOptions = true, description = "Create sequence ruler")
 public class RulerCommand extends AbstractSequenceComparisonCommand implements Callable<Integer> {
 
 

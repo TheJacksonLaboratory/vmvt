@@ -12,7 +12,7 @@ import java.util.concurrent.Callable;
 /**
  * Create an SVG representing the distribution of ESE scores
  */
-@CommandLine.Command(name = "ese", aliases = {"E"}, description = "Create ESE svg")
+@CommandLine.Command(name = "ese", aliases = {"E"}, mixinStandardHelpOptions = true, description = "Create ESE svg")
 public class EseCommand extends AbstractSequenceComparisonCommand implements Callable<Integer> {
     /** Length, either 6 (hexamer) or 7 (heptameter) */
     @CommandLine.Option(names = {"-l", "--len"}, defaultValue = "6")

@@ -1,4 +1,5 @@
 .. _rstindex:
+
 ======================================
 Variant Motif Visualization Tool: vmvt
 ======================================
@@ -12,10 +13,7 @@ It can be used as a library or as a standalone app.
 Quick Example
 -------------
 
-The following snippet will load the ``hp.obo`` file (which can be downloaded from the
-`HPO website <https://hpo.jax.org/app/>`_) into an ``Ontology`` object. The HPO
-has multiple subontologies, and the following code extracts all of the terms
-of the `Phenotypic Abnormality <https://hpo.jax.org/app/browse/term/HP:0000118>`_ subontology.
+The following snippet will create a splice donor Sequence Walker (for details, see :ref:`rstwalker`).
 
   .. code-block:: java
 
@@ -43,13 +41,18 @@ Feedback
 
 The best place to leave feedback, ask questions, and report bugs is the `vmvt Issue Tracker <https://github.com/TheJacksonLaboratory/vmvt/issues>`_.
 
-.. toctree::
-   :caption: Installation & Tutorial
-   :name: tutorial
-   :maxdepth: 1
+..  toctree::
+    :caption: Tutorial
+    :name: tutorial
+    :maxdepth: 1
 
-   ruler
-   build
+    logo
+    ruler
+    walker
+    trekker
+    Exonic Splicing Enhancer Analysis<ese>
+    cli
+
 
 
 .. toctree::
@@ -61,4 +64,4 @@ The best place to leave feedback, ask questions, and report bugs is the `vmvt Is
     authors
     history
     license
-    release_howto
+    build

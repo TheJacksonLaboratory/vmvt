@@ -13,7 +13,7 @@ import java.util.concurrent.Callable;
  * Note that this only shows the wildtype sequence and so the user
  * does not need to pass sequences
  */
-@CommandLine.Command(name = "logo", aliases = {"L"}, description = "Create sequence logo")
+@CommandLine.Command(name = "logo", aliases = {"L"}, mixinStandardHelpOptions = true, description = "Create sequence logo")
 public class LogoCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-d","--donor"})
     boolean isDonor;

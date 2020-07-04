@@ -8,11 +8,16 @@
     <artifactId>vmvt-core</artifactId>
     <name>vmvt-core</name>
 
+
     <parent>
         <groupId>org.monarchinitiative.vmvt</groupId>
         <artifactId>vmvt</artifactId>
-        <version>0.7.5</version>
+        <version>0.8.1</version>
     </parent>
+
+    <properties>
+        <junit.version>5.6.1</junit.version>
+    </properties>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
@@ -21,6 +26,46 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-api</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>1.6.1</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>1.6.1</version>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
 
