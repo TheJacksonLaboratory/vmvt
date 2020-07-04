@@ -1,0 +1,101 @@
+<svg width="900" height="400" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+<!-- Created by vmvt -->
+<style>
+  text { font: 24px monospace; }
+  </style>
+<g>
+<line x1="70" y1="30" x2="70" y2="370" stroke="black"/>
+<line x1="65" y1="30.000000" x2="70" y2="30.000000" stroke="black"/>
+<g transform='translate(30,35.000000) scale(0.6,0.6)'><text>1.0</text></g>
+<line x1="65" y1="64.000000" x2="70" y2="64.000000" stroke="black"/>
+<g transform='translate(30,69.000000) scale(0.6,0.6)'><text>0.8</text></g>
+<line x1="65" y1="98.000000" x2="70" y2="98.000000" stroke="black"/>
+<g transform='translate(30,103.000000) scale(0.6,0.6)'><text>0.6</text></g>
+<line x1="65" y1="132.000000" x2="70" y2="132.000000" stroke="black"/>
+<g transform='translate(30,137.000000) scale(0.6,0.6)'><text>0.4</text></g>
+<line x1="65" y1="166.000000" x2="70" y2="166.000000" stroke="black"/>
+<g transform='translate(30,171.000000) scale(0.6,0.6)'><text>0.2</text></g>
+<line x1="65" y1="200.000000" x2="70" y2="200.000000" stroke="black"/>
+<g transform='translate(30,205.000000) scale(0.6,0.6)'><text>0.0</text></g>
+<line x1="65" y1="234.000000" x2="70" y2="234.000000" stroke="black"/>
+<g transform='translate(22,239.000000) scale(0.6,0.6)'><text>-0.2</text></g>
+<line x1="65" y1="268.000000" x2="70" y2="268.000000" stroke="black"/>
+<g transform='translate(22,273.000000) scale(0.6,0.6)'><text>-0.4</text></g>
+<line x1="65" y1="302.000000" x2="70" y2="302.000000" stroke="black"/>
+<g transform='translate(22,307.000000) scale(0.6,0.6)'><text>-0.6</text></g>
+<line x1="65" y1="336.000000" x2="70" y2="336.000000" stroke="black"/>
+<g transform='translate(22,341.000000) scale(0.6,0.6)'><text>-0.8</text></g>
+<line x1="65" y1="370.000000" x2="70" y2="370.000000" stroke="black"/>
+<g transform='translate(22,375.000000) scale(0.6,0.6)'><text>-1.0</text></g>
+<line x1="70" y1="200" x2="380" y2="200" stroke="black"/>
+<line x1="114.285714" y1="200" x2="114.285714" y2="205" stroke="black"/>
+<rect x="78.857143" y="173.667000" width="26.571429" height="26.333000" rx="2" style="stroke:#006600; fill: #00A087" />
+<g transform='translate(92.142857,220.000000) scale(0.6,0.6)'><text>1</text></g>
+<line x1="158.571429" y1="200" x2="158.571429" y2="205" stroke="black"/>
+<rect x="123.142857" y="124.333000" width="26.571429" height="75.667000" rx="2" style="stroke:#006600; fill: #00A087" />
+<g transform='translate(136.428571,220.000000) scale(0.6,0.6)'><text>2</text></g>
+<line x1="202.857143" y1="200" x2="202.857143" y2="205" stroke="black"/>
+<rect x="167.428571" y="200" width="26.571429" height="17.187000" rx="2" style="stroke:#006600; fill: #00A087" fill-opacity="0.4"/>
+<g transform='translate(180.714286,220.000000) scale(0.6,0.6)'><text>3</text></g>
+<line x1="247.142857" y1="200" x2="247.142857" y2="205" stroke="black"/>
+<rect x="211.714286" y="200" width="26.571429" height="16.813000" rx="2" style="stroke:#006600; fill: #00A087" fill-opacity="0.4"/>
+<g transform='translate(225.000000,220.000000) scale(0.6,0.6)'><text>4</text></g>
+<line x1="291.428571" y1="200" x2="291.428571" y2="205" stroke="black"/>
+<rect x="256.000000" y="200" width="26.571429" height="4.386000" rx="2" style="stroke:#006600; fill: #00A087" fill-opacity="0.4"/>
+<g transform='translate(269.285714,220.000000) scale(0.6,0.6)'><text>5</text></g>
+<line x1="335.714286" y1="200" x2="335.714286" y2="205" stroke="black"/>
+<g transform='translate(313.571429,220.000000) scale(0.6,0.6)'><text>6</text></g>
+<line x1="380.000000" y1="200" x2="380.000000" y2="205" stroke="black"/>
+<rect x="344.571429" y="200" width="26.571429" height="44.863000" rx="2" style="stroke:#006600; fill: #00A087" fill-opacity="0.4"/>
+<g transform='translate(357.857143,220.000000) scale(0.6,0.6)'><text>7</text></g>
+<line x1="70" y1="198" x2="380" y2="198" stroke="#e64b35"/>
+<line x1="570" y1="30" x2="570" y2="370" stroke="black"/>
+<line x1="565" y1="30.000000" x2="570" y2="30.000000" stroke="black"/>
+<g transform='translate(530,35.000000) scale(0.6,0.6)'><text>1.0</text></g>
+<line x1="565" y1="64.000000" x2="570" y2="64.000000" stroke="black"/>
+<g transform='translate(530,69.000000) scale(0.6,0.6)'><text>0.8</text></g>
+<line x1="565" y1="98.000000" x2="570" y2="98.000000" stroke="black"/>
+<g transform='translate(530,103.000000) scale(0.6,0.6)'><text>0.6</text></g>
+<line x1="565" y1="132.000000" x2="570" y2="132.000000" stroke="black"/>
+<g transform='translate(530,137.000000) scale(0.6,0.6)'><text>0.4</text></g>
+<line x1="565" y1="166.000000" x2="570" y2="166.000000" stroke="black"/>
+<g transform='translate(530,171.000000) scale(0.6,0.6)'><text>0.2</text></g>
+<line x1="565" y1="200.000000" x2="570" y2="200.000000" stroke="black"/>
+<g transform='translate(530,205.000000) scale(0.6,0.6)'><text>0.0</text></g>
+<line x1="565" y1="234.000000" x2="570" y2="234.000000" stroke="black"/>
+<g transform='translate(522,239.000000) scale(0.6,0.6)'><text>-0.2</text></g>
+<line x1="565" y1="268.000000" x2="570" y2="268.000000" stroke="black"/>
+<g transform='translate(522,273.000000) scale(0.6,0.6)'><text>-0.4</text></g>
+<line x1="565" y1="302.000000" x2="570" y2="302.000000" stroke="black"/>
+<g transform='translate(522,307.000000) scale(0.6,0.6)'><text>-0.6</text></g>
+<line x1="565" y1="336.000000" x2="570" y2="336.000000" stroke="black"/>
+<g transform='translate(522,341.000000) scale(0.6,0.6)'><text>-0.8</text></g>
+<line x1="565" y1="370.000000" x2="570" y2="370.000000" stroke="black"/>
+<g transform='translate(522,375.000000) scale(0.6,0.6)'><text>-1.0</text></g>
+<line x1="570" y1="200" x2="880" y2="200" stroke="black"/>
+<line x1="614.285714" y1="200" x2="614.285714" y2="205" stroke="black"/>
+<rect x="578.857143" y="173.616000" width="26.571429" height="26.384000" rx="2" style="stroke:#006600; fill: #00A087" />
+<g transform='translate(592.142857,220.000000) scale(0.6,0.6)'><text>1</text></g>
+<line x1="658.571429" y1="200" x2="658.571429" y2="205" stroke="black"/>
+<rect x="623.142857" y="165.762000" width="26.571429" height="34.238000" rx="2" style="stroke:#006600; fill: #00A087" />
+<g transform='translate(636.428571,220.000000) scale(0.6,0.6)'><text>2</text></g>
+<line x1="702.857143" y1="200" x2="702.857143" y2="205" stroke="black"/>
+<rect x="667.428571" y="200" width="26.571429" height="5.848000" rx="2" style="stroke:#006600; fill: #00A087" fill-opacity="0.4"/>
+<g transform='translate(680.714286,220.000000) scale(0.6,0.6)'><text>3</text></g>
+<line x1="747.142857" y1="200" x2="747.142857" y2="205" stroke="black"/>
+<rect x="711.714286" y="183.510000" width="26.571429" height="16.490000" rx="2" style="stroke:#006600; fill: #00A087" />
+<g transform='translate(725.000000,220.000000) scale(0.6,0.6)'><text>4</text></g>
+<line x1="791.428571" y1="200" x2="791.428571" y2="205" stroke="black"/>
+<rect x="756.000000" y="169.723000" width="26.571429" height="30.277000" rx="2" style="stroke:#006600; fill: #00A087" />
+<g transform='translate(769.285714,220.000000) scale(0.6,0.6)'><text>5</text></g>
+<line x1="835.714286" y1="200" x2="835.714286" y2="205" stroke="black"/>
+<rect x="800.285714" y="174.670000" width="26.571429" height="25.330000" rx="2" style="stroke:#006600; fill: #00A087" />
+<g transform='translate(813.571429,220.000000) scale(0.6,0.6)'><text>6</text></g>
+<line x1="880.000000" y1="200" x2="880.000000" y2="205" stroke="black"/>
+<rect x="844.571429" y="167.785000" width="26.571429" height="32.215000" rx="2" style="stroke:#006600; fill: #00A087" />
+<g transform='translate(857.857143,220.000000) scale(0.6,0.6)'><text>7</text></g>
+<line x1="570" y1="178" x2="880" y2="178" stroke="#e64b35"/>
+<line x1="380" x2="570" y1="198" y2="178" stroke="#e64b35" stroke-width="1"  stroke-dasharray="1, 3"/>
+<g transform='translate(399,98) scale(0.75,0.75)'><text font-size="smaller">ΔESE: 0.12</text></g>
+</g>
+</svg>
