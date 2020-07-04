@@ -4,10 +4,7 @@ package org.monarchinitiative.vmvt.cli;
  * Main entry point to the command-line interface of vmvt.
  */
 
-import org.monarchinitiative.vmvt.cli.commands.EseCommand;
-import org.monarchinitiative.vmvt.cli.commands.LogoCommand;
-import org.monarchinitiative.vmvt.cli.commands.RulerCommand;
-import org.monarchinitiative.vmvt.cli.commands.WalkerCommand;
+import org.monarchinitiative.vmvt.cli.commands.*;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -24,7 +21,8 @@ public class Main implements Callable<Integer> {
                 addSubcommand("logo", new LogoCommand()).
                 addSubcommand("ruler", new RulerCommand()).
                 addSubcommand("walker", new WalkerCommand()).
-                addSubcommand("ese", new EseCommand());
+                addSubcommand("ese", new EseCommand()).
+                addSubcommand("delta", new DeltaCommand());
         cline.setToggleBooleanFlags(false);
         int exitCode = cline.execute(args);
         System.exit(exitCode);

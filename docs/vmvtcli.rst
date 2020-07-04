@@ -5,7 +5,7 @@ vmvt command line interface
 ===========================
 
 vmvt has a core module intended to be used as a programming library as well as a command line interface (in the
-vmvt-cli module).  vmvt currently has four commands, which can be seen using the -h flag. ::
+vmvt-cli module).  vmvt currently has five commands, which can be seen using the -h flag. ::
 
     $ java -jar vmvt-cli/target/vmvt-cli.jar  -h
     Usage: vmvt [-hV] [COMMAND]
@@ -17,6 +17,7 @@ vmvt-cli module).  vmvt currently has four commands, which can be seen using the
         ruler, R   Create sequence ruler
         walker, W  Create sequence ruler
         ese, E     Create ESE svg
+        delta, D   Create Delta svg
 
 Each of the commands has its own help menu, e.g., ::
 

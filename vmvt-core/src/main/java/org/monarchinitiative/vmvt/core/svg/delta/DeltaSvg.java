@@ -35,11 +35,11 @@ public class DeltaSvg extends AbstractSvgGenerator {
     /** Counts of values in each of the bins. */
     private final int [] bins;
     /** Canvas width of the SVG. */
-    private final static int SVG_WIDTH = 400;
+    private final static int SVG_DELTA_WIDTH = 400;
     /** Canvas height of the SVG. */
-    private final static int SVG_HEIGHT = 400;
+    private final static int SVG_DELTA_HEIGHT = 400;
     /** Y position to start writing -- this will be the location of the X axis. */
-    private final static int START_Y = SVG_HEIGHT - 60;
+    private final static int START_Y = SVG_DELTA_HEIGHT - 60;
 
     private final static int X_LOC_DELTA_RI = 230;
     private final static int Y_LOC_DELTA_RI = 50;
@@ -58,7 +58,7 @@ public class DeltaSvg extends AbstractSvgGenerator {
      * @param alt alternate sequence
      */
     public DeltaSvg(String ref, String alt) {
-        super(SVG_WIDTH, SVG_HEIGHT);
+        super(SVG_DELTA_WIDTH, SVG_DELTA_HEIGHT);
         if (ref.length() != alt.length()) {
             throw new VmvtRuntimeException("Ref and alt must have the same length");
         }
@@ -94,7 +94,7 @@ public class DeltaSvg extends AbstractSvgGenerator {
      * @param alt alternate sequence
      */
     public DeltaSvg(String ref, String alt, DistributionCalculator dcal) {
-        super(SVG_WIDTH, SVG_HEIGHT);
+        super(SVG_DELTA_WIDTH, SVG_DELTA_HEIGHT);
         this.deltavals = dcal.getDeltas();
         this.min = deltavals.stream().mapToDouble(Double::doubleValue).min().orElseThrow();
         this.max = deltavals.stream().mapToDouble(Double::doubleValue).max().orElseThrow();
@@ -151,35 +151,36 @@ public class DeltaSvg extends AbstractSvgGenerator {
         double X = startX;
         int tickHeight = 5;
         int Y2 = START_Y + tickHeight;
+        int Y_INCREMENT = 25; // amount of space to "lower" the numbers on the X axixs
         for (int i=0;i<span;i++) {
             writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
                     X,START_Y,X,Y2, SvgColors.RED));
             // Write numbers under the tick marks. We use fudge factors to adjust for
             // different widths of the numbers (-10, -5, 0, 5, 10).
             if (i==0) {
-                int Y3 = Y2 + 15;
-                int X3 = (int)X - 10;
-                writer.write(String.format("<g transform='translate(%d,%d) scale(0.4,0.4)'><text>-10</text></g>\n", X3,Y3));
+                int Y3 = Y2 + Y_INCREMENT;
+                int X3 = (int)X - 30;
+                writer.write(String.format("<g transform='translate(%d,%d)'><text>-10</text></g>\n", X3,Y3));
             } else if (i==5) {
-                int Y3 = Y2 + 15;
-                int X3 = (int)X - 5;
-                writer.write(String.format("<g transform='translate(%d,%d) scale(0.4,0.4)'><text>-5</text></g>\n", X3,Y3));
+                int Y3 = Y2 + Y_INCREMENT;
+                int X3 = (int)X - 20;
+                writer.write(String.format("<g transform='translate(%d,%d)'><text>-5</text></g>\n", X3,Y3));
             } else if (i==10) {
-                int Y3 = Y2 + 15;
-                int X3 = (int)X - 2;
-                writer.write(String.format("<g transform='translate(%d,%d) scale(0.4,0.4)'><text>0</text></g>\n", X3,Y3));
+                int Y3 = Y2 + Y_INCREMENT;
+                int X3 = (int)X - 7;
+                writer.write(String.format("<g transform='translate(%d,%d)'><text>0</text></g>\n", X3,Y3));
             } else if (i==15) {
-                int Y3 = Y2 + 15;
-                int X3 = (int)X - 2;
-                writer.write(String.format("<g transform='translate(%d,%d) scale(0.4,0.4)'><text>5</text></g>\n", X3,Y3));
+                int Y3 = Y2 + Y_INCREMENT;
+                int X3 = (int)X - 7;
+                writer.write(String.format("<g transform='translate(%d,%d)'><text>5</text></g>\n", X3,Y3));
             } else if (i==20) {
-                int Y3 = Y2 + 15;
-                int X3 = (int)X - 5;
-                writer.write(String.format("<g transform='translate(%d,%d) scale(0.4,0.4)'><text>10</text></g>\n", X3,Y3));
+                int Y3 = Y2 + Y_INCREMENT;
+                int X3 = (int)X - 12;
+                writer.write(String.format("<g transform='translate(%d,%d)'><text>10</text></g>\n", X3,Y3));
             }
             X += increment;
         }
-
+        // the following should never happen
         if (delta>max) {
             throw new VmvtRuntimeException("Bad data -- measured delta greater than max");
         } else if (delta < min) {
@@ -210,7 +211,7 @@ public class DeltaSvg extends AbstractSvgGenerator {
                 "ΔR" +
                 "<tspan dy=\"3\" font-size=\"12\">i</tspan></text>\n" +
                 "<text x=\"%d\" y=\"%d\">: %.2f</text>\n",
-                X_LOC_DELTA_RI,Y_LOC_DELTA_RI,X_LOC_DELTA_RI+35,Y_LOC_DELTA_RI,this.delta);
+                X_LOC_DELTA_RI,Y_LOC_DELTA_RI,X_LOC_DELTA_RI+38,Y_LOC_DELTA_RI,this.delta);
         int lineheight = START_Y-100;
         String line2 = String.format("<g fill=\"none\" stroke=\"%s\" stroke-width=\"2\">\n" +
                 "<path stroke-dasharray=\"2,2\" d=\"M%d %d l0 %d\"/>" +
@@ -229,11 +230,11 @@ public class DeltaSvg extends AbstractSvgGenerator {
     @Override
     public String getSvg() {
         int startX = 50;
-        int maxHeight = SVG_HEIGHT - 120;
+        int maxHeight = SVG_DELTA_HEIGHT - 120;
         // maximum bin count should be maxHeight
         int maxCount = Arrays.stream(bins).max().orElseThrow();
         double heightFactor = (double)maxHeight/(double)maxCount;
-        double barWidth = (double)(SVG_WIDTH-2*startX)/(double)BIN_COUNT;
+        double barWidth = (double)(SVG_DELTA_WIDTH-2*startX)/(double)BIN_COUNT;
         StringWriter swriter = new StringWriter();
         try {
             writeHeader(swriter);
