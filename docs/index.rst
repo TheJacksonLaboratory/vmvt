@@ -51,6 +51,7 @@ The best place to leave feedback, ask questions, and report bugs is the `vmvt Is
     walker
     trekker
     Exonic Splicing Enhancer Analysis<ese>
+    cli
 
 
 

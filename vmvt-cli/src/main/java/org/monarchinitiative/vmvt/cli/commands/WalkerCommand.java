@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
-@CommandLine.Command(name = "ruler", aliases = {"W"}, description = "Create sequence ruler")
+@CommandLine.Command(name = "ruler", aliases = {"W"}, mixinStandardHelpOptions = true, description = "Create sequence ruler")
 public class WalkerCommand extends AbstractSequenceComparisonCommand implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
