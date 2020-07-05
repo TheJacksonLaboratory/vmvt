@@ -1,7 +1,7 @@
 <svg width="900" height="400" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
 <!-- Created by vmvt -->
 <style>
-  text { font: 24px monospace; }
+  text { font: 24px courier, monospace; }
   </style>
 <g>
 <line x1="70" y1="30" x2="70" y2="370" stroke="black"/>

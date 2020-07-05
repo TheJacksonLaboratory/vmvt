@@ -33,21 +33,10 @@ public class DonorTrekkerGenerator extends AbstractSvgGenerator {
 
     @Override
     public String getSvg() {
-        int startX = 20;
-        int startY = 60;
-
         StringWriter swriter = new StringWriter();
         try {
             writeHeader(swriter);
-            // WIDTH AND HEIGHT ARE FROM THE SUPERCLASS -- SET ABOVE IN THE CTOR
-            SvgSequenceLogo donorLogo =
-                    new DonorLogoGenerator(this.spliceHeightMatrix);
-            donorLogo.write(swriter);
-            startY += TREKKER_Y_INCREMENT;
-            AbstractSvgMotifGenerator donorWalker =
-                    new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT, startY);
-            donorWalker.write(swriter);
-            writeFooter(swriter);
+            write(swriter);
             return swriter.toString();
         } catch (IOException e) {
             return getSvgErrorMessage(e.getMessage());
@@ -55,7 +44,13 @@ public class DonorTrekkerGenerator extends AbstractSvgGenerator {
     }
 
     @Override
-    public void write(Writer writer) throws IOException {
-        throw new UnsupportedOperationException("todo");
+    public void write(Writer swriter) throws IOException {
+        SvgSequenceLogo donorLogo =
+                new DonorLogoGenerator(this.spliceHeightMatrix);
+        donorLogo.write(swriter);
+        AbstractSvgMotifGenerator donorWalker =
+                new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT, TREKKER_WALKER_START_Y);
+        donorWalker.write(swriter);
+        writeFooter(swriter);
     }
 }

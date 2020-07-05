@@ -24,9 +24,17 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
 
     private double maxIc = Double.MIN_VALUE;
 
+    /**
+     * When we write the grey box around the position of the mutation, we start here. Note that this position
+     * is different for an SVG that just contains the Walker as compared to an SVG that contains Logo+walker
+     * (i.e., Trekker).
+     */
+    private final int TOP_Y_COORDINATE_OF_BOX;
+
 
     /**
      * Create an Svg Walker for the donor or acceptor with representation of reference sequence and alt bases
+     * This constructor is used to create an SVG for JUST the walker (not a Trekker)
      * @param ref reference sequence
      * @param alt alternate (mutant) sequence
      * @param site Representation of the splice site (weight matrix)
@@ -34,16 +42,16 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
      * @param h height of the SVG canvas
      */
     public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h) {
-        this(ref,alt,site,w,h,SVG_WALKER_STARTY);
-//        super(ref,alt,site,w,h);
-//        this.XSTART = SVG_STARTX;
-//        this.YSTART = SVG_LOGO_STARTY;
-//        this.currentX = this.XSTART;
-//        this.currentY = this.YSTART;
+        super(ref,alt,site,w,h);
+        this.YSTART = SVG_WALKER_STARTY;
+        this.currentX = this.XSTART;
+        this.currentY =  this.YSTART;
+        this.TOP_Y_COORDINATE_OF_BOX = 15;
     }
 
     /**
      * Create an Svg Walker for the donor or acceptor with representation of reference sequence and alt bases
+     * This constructor is used to create an SVG for a Trekker (not just the walker)
      * @param ref reference sequence
      * @param alt alternate (mutant) sequence
      * @param site Representation of the splice site (weight matrix)
@@ -54,7 +62,8 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
         super(ref,alt,site,w,h);
         this.YSTART = ystart;
         this.currentX = this.XSTART;
-        this.currentY = ystart;
+        this.currentY = this.YSTART;
+        this.TOP_Y_COORDINATE_OF_BOX = 5;
     }
 
 
@@ -161,13 +170,12 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
             }
         }
         double X = this.XSTART + b*LOWER_CASE_BASE_INCREMENT;
-        int Y = 15;
-        int boxwidth = LOWER_CASE_BASE_INCREMENT;
-        int boxheight = YSTART + (int)(13*maxIc);
+        int boxwidth = LOWER_CASE_BASE_INCREMENT * (1+e-b);
+        int boxheight =  YSTART + (int)(VARIANT_BOX_SCALING_FACTOR*maxIc);
         writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"" +
                         " style=\"stroke-width:1; stroke:rgb(4, 12, 4);\"/>",
                 X,
-                Y,
+                this.TOP_Y_COORDINATE_OF_BOX,
                 boxwidth,
                 boxheight));
 

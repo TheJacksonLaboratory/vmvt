@@ -1,6 +1,8 @@
 package org.monarchinitiative.vmvt.core.svg;
 
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
+import org.monarchinitiative.vmvt.core.svg.fontprofile.CourierProfile;
+import org.monarchinitiative.vmvt.core.svg.fontprofile.FontProfile;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -41,8 +43,13 @@ public abstract class AbstractSvgGenerator {
     protected final double HALF_A_BASE = (double)LOWER_CASE_BASE_INCREMENT/2.0;
     /** Amount to shift down between ref and alt sequence lines */
     protected final static int Y_LINE_INCREMENT = 20;
-    /** Amount to shift between logo and walker for the Trekker view. */
-    protected final static int TREKKER_Y_INCREMENT = 20;
+    /** Y position to start off the Walker in the Trekker layout. */
+    protected final static int TREKKER_WALKER_START_Y = 80;
+
+
+
+
+
     protected final static int SVG_TREKKER_HEIGHT = 220;
     protected final static int SVG_TREKKER_ACCEPTOR_WIDTH = SVG_ACCEPTOR_WIDTH + 10;
     protected final static int SVG_TREKKER_DONOR_WIDTH = SVG_DONOR_WIDTH + 10;
@@ -64,10 +71,23 @@ public abstract class AbstractSvgGenerator {
     /** A red color for Thymine */
     protected final static String T_COLOR = SvgColors.RED;
 
+    /** This is a magic number that places the letters in the correct vertical position. Works with {@link #LOGO_COLUMN_HEIGHT}.*/
+    protected final double VERTICAL_SCALING_FACTOR;
+    /** Maximum height of the letters in the sequence logo. Needs to be adjusted together with {@link #VERTICAL_SCALING_FACTOR}.*/
+    protected final double LOGO_COLUMN_HEIGHT;
+
+    protected final int VARIANT_BOX_SCALING_FACTOR;
+    /** Fonts to be used for this SVG, e.g., 'Courier, monospace' */
+    private final String SVG_FONTS;
 
     public AbstractSvgGenerator(int w, int h) {
         this.WIDTH = w;
         this.HEIGHT = h;
+        FontProfile fprofile = new CourierProfile();
+        this.VERTICAL_SCALING_FACTOR = fprofile.verticalScalingFactor();
+        this.LOGO_COLUMN_HEIGHT = fprofile.logoColumnHeight();
+        this.SVG_FONTS = fprofile.fonts();
+        this.VARIANT_BOX_SCALING_FACTOR = fprofile.variantBoxScalingFactor();
     }
 
     /** Write the header of the SVG. Add
@@ -79,7 +99,7 @@ public abstract class AbstractSvgGenerator {
                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n");
         writer.write("<!-- Created by " + PROGRAM_NAME + " -->\n");
         writer.write("<style>\n" +
-                "  text { font: 24px monospace; }\n" +
+                "  text { font: 24px " + SVG_FONTS + "; }\n" +
                 "  </style>\n");
         writer.write("<g>\n");
     }
