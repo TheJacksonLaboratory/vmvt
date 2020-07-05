@@ -24,7 +24,7 @@ String donor = vmvt.getDonorLogoSvg(ref,alt);
 vmvt produces SVG visualizations of the predicted effects of splice variants.
 Here is an example variant at the +1 position of a donor sequence.
 
-![donor vmvt image](docs/img/vmvt-donor.png "VMVT Donor Variant")
+![donor vmvt image](docs/img/donorTrekker.svg "VMVT Donor Variant")
 
 
 
