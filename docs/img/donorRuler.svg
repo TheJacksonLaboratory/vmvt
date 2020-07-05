@@ -1,7 +1,7 @@
 <svg width="150" height="110" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
 <!-- Created by vmvt -->
 <style>
-  text { font: 24px monospace; }
+  text { font: 24px courier, monospace; }
   </style>
 <g>
 <g transform='translate(10,30) scale(0.4,0.4) '>

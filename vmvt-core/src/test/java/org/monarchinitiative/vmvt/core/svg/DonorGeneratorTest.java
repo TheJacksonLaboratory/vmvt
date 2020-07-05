@@ -69,6 +69,60 @@ public class DonorGeneratorTest {
         }
     }
 
+
+
+    @Test
+    void testWriteDonorTrekkerMinusOnePosition() {
+        final String ref = "AAGGTCAGA";
+        final String alt = "AACGTCAGA";
+        VmvtGenerator donor = new VmvtGenerator();
+        String svg = donor.getDonorTrekkerSvg(ref,alt);
+        assertNotNull(svg);
+        try {
+            String path = "target/donorTrekkerMinus1.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    void testWriteDonorTrekkerMinusTwoPosition() {
+        final String ref = "AAGGTCAGA";
+        final String alt = "ATGGTCAGA";
+        VmvtGenerator donor = new VmvtGenerator();
+        String svg = donor.getDonorTrekkerSvg(ref,alt);
+        assertNotNull(svg);
+        try {
+            String path = "target/donorTrekkerMinus2.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void testWriteDonorTrekker2NtVar() {
+        final String ref = "AAGGTCAGA";
+        final String alt = "ATCGTCAGA";
+        VmvtGenerator donor = new VmvtGenerator();
+        String svg = donor.getDonorTrekkerSvg(ref,alt);
+        assertNotNull(svg);
+        try {
+            String path = "target/donorTrekker2nt.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     void testGetDonorRuler(){
         VmvtGenerator donor = new VmvtGenerator();
@@ -118,17 +172,19 @@ public class DonorGeneratorTest {
      * we want to show for the documentation.
      */
     @Test
-    void writeAllSvgsToReadTheDocs() throws  IOException {
-        if (2==2) {
+    void writeAllSvgsToReadTheDocs() {
+        if (42==42) {
             assertEquals(2,2);
             return;
         }
         final String acceptorRef = "cctggctggcggcaccgggtgccagGT";
-        /** chr10-90768644-A-G, -2 position */
+        /* chr10-90768644-A-G, -2 position */
         final String acceptorAlt = "cctggctggcggcaccgggtgccggGT";
 
         VmvtGenerator vmvt = new VmvtGenerator();
-        String svg = vmvt.getDonorTrekkerSvg(ref,alt);
+        String svg = vmvt.getDonorSequenceRuler(ref,alt);
+        writeToRTDdirectory("donorRuler.svg" , svg);
+        svg = vmvt.getDonorTrekkerSvg(ref,alt);
         writeToRTDdirectory("donorTrekker.svg" , svg);
         svg = vmvt.getDonorLogoSvg();
         writeToRTDdirectory("donorLogo.svg" , svg);
@@ -140,6 +196,8 @@ public class DonorGeneratorTest {
         writeToRTDdirectory("hexamer.svg", svg);
         svg = getHeptamerSvg();
         writeToRTDdirectory("heptamer.svg", svg);
+        svg = vmvt.getDelta(ref, alt);
+        writeToRTDdirectory("deltaDonor.svg", svg);
     }
 
 
@@ -157,9 +215,6 @@ public class DonorGeneratorTest {
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        if (42==41) {
-            writeToRTDdirectory("deltaDonor.svg", svg);
         }
     }
 

@@ -18,10 +18,6 @@ import java.util.Map;
  * @author Peter N Robinson
  */
 public abstract class SvgSequenceLogo extends AbstractSvgGenerator {
-    /** Maximum height of the letters in the sequence logo. Needs to be adjusted together with {@link #FUDGE_FACTOR}.*/
-    private final double LOGO_COLUMN_HEIGHT = 20.0;
-    /** This is a magic number that places the letters in the correct vertical position. Works with {@link #LOGO_COLUMN_HEIGHT}.*/
-    private final double FUDGE_FACTOR = 1.14;
     /** Position where we will start to write things from the left side of the SVG. */
     protected final int XSTART;
     /** Position where we will start to write things from the top of the SVG */
@@ -66,7 +62,7 @@ public abstract class SvgSequenceLogo extends AbstractSvgGenerator {
             writer.write("</g>");
             // The total ic should be 2.0
             // increment the Y value back up
-            ypos -= (ic/FUDGE_FACTOR) * LOGO_COLUMN_HEIGHT;
+            ypos -= (ic/ VERTICAL_SCALING_FACTOR) * LOGO_COLUMN_HEIGHT;
         }
     }
 
