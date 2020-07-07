@@ -47,7 +47,7 @@ the intron-exon boundary of a splice donor sequence. Sequences can be provided i
     VmvtGenerator vmvt = new VmvtGenerator();
     String svg = vmvt.getDonorWalkerSvg(ref,alt);
 
-A splice acceptor walker is created as follows. Input Strings must be 27 nucle0tides long.
+A splice acceptor walker is created as follows. Input Strings must be 27 nucleotides long.
 
 
 .. figure:: img/acceptorWalker.svg
@@ -57,7 +57,7 @@ A splice acceptor walker is created as follows. Input Strings must be 27 nucle0t
 
    Sequence Walker graphic for a +1G>A Acceptor variant.
 
-Vmvt will treat the string as corresponding to positions (-24,+3) of
+Vmvt will treat the string as corresponding to positions (-25,+2) of
 the intron-exon boundary of a splice acceptor sequence.
 Sequences can be provided in upper or lower case.
 
