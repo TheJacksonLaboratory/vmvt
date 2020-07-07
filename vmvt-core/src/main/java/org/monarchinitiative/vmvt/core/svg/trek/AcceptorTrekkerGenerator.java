@@ -36,7 +36,7 @@ public class AcceptorTrekkerGenerator extends AbstractSvgGenerator {
         StringWriter swriter = new StringWriter();
         try {
             writeHeader(swriter);
-
+            write(swriter);
             writeFooter(swriter);
             return swriter.toString();
         } catch (IOException e) {
