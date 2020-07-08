@@ -16,6 +16,9 @@ import java.io.Writer;
 public class SvgCanonicalCrypticGenerator extends AbstractSvgGenerator {
 
     private static final int  SVG_CANONICAL_CRYPTIC_HEIGHT = 340;
+    /** Add some extra width to write the R_i of the sequences. */
+    private static final int EXTRA_X_FOR_RI = 140;
+    private final int walkerWidth;
 
     private final String canonical;
     private final String cryptic;
@@ -23,7 +26,8 @@ public class SvgCanonicalCrypticGenerator extends AbstractSvgGenerator {
     private final boolean isDonor;
 
     private SvgCanonicalCrypticGenerator(int w, int h, String can, String crypt, DoubleMatrix site) {
-        super(w, h);
+        super(w+EXTRA_X_FOR_RI, h);
+        this.walkerWidth = w;
         this.canonical = can;
         this.cryptic = crypt;
         this.splicesite = site;
@@ -49,6 +53,21 @@ public class SvgCanonicalCrypticGenerator extends AbstractSvgGenerator {
         walker.writeRefWalker(writer);
     }
 
+    private void writeRi(Writer writer, double R_i, String category, int y) throws IOException {
+        int startx = walkerWidth + 10;
+        int y_increment = 20;
+        String RiString = String.format("<text x=\"%d\" y=\"%d\" font-size=\"16\">\n" +
+                        "R" +
+                        "<tspan dy=\"1\" font-size=\"12\">i</tspan></text>\n" +
+                        "<text x=\"%d\" y=\"%d\">: %.2f</text>\n",
+                startx,y,startx+20,y,R_i);
+        writer.write(RiString);
+        String categoryString = String.format("<text x=\"%d\" y=\"%d\" font-size=\"12\">\n" +category +"</text>\n",
+                startx,y+y_increment);
+        writer.write(categoryString);
+
+    }
+
 
     private void writeAcceptor(Writer writer) throws IOException {
         // Note the API of the WalkerGenerators requires ref and alt but for
@@ -57,9 +76,15 @@ public class SvgCanonicalCrypticGenerator extends AbstractSvgGenerator {
         int ystart = AbstractSvgGenerator.SVG_WALKER_STARTY;
         SvgSequenceWalker walker = SvgSequenceWalker.singleAcceptorWalker(this.canonical, this.splicesite, ystart);
         walker.writeRefWalker(writer);
-        ystart += SVG_WALKER_HEIGHT;
+        double R_i = splicesite.getIndividualSequenceInformation(this.canonical);
+        writeRi(writer, R_i, "canonical", ystart);
+        ystart += SVG_WALKER_HEIGHT/2;
+        walker.writeRefAltSeparation(writer, ystart);
+        ystart += SVG_WALKER_HEIGHT/2;
         walker = SvgSequenceWalker.singleAcceptorWalker(this.cryptic, this.splicesite, ystart);
         walker.writeRefWalker(writer);
+        R_i = splicesite.getIndividualSequenceInformation(this.cryptic);
+        writeRi(writer, R_i, "cryptic", ystart);
     }
 
 

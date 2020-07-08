@@ -84,7 +84,20 @@ public class AcceptorGeneratorTest {
         String svg = vmvt.getAcceptorCanonicalCryptic(canRef, crypticRef);
         assertNotNull(svg);
         try {
-            String path = "target/acceptorCanCrypt.svg";
+            String path = "target/acceptorCanCryptRef.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String canAlt = "gtgttttgtcatgtgtaAgctcaagGG";
+        String crypticAlt = "tttgttgtgttttgtcatgtgtaAgct";
+        svg = vmvt.getAcceptorCanonicalCryptic(canAlt, crypticAlt);
+        assertNotNull(svg);
+        try {
+            String path = "target/acceptorCanCryptAlt.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();

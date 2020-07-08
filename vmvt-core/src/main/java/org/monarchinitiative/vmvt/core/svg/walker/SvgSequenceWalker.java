@@ -132,9 +132,13 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
     }
 
     protected void writeRefAltSeparation(Writer writer) throws IOException {
+        writeRefAltSeparation(writer, currentY);
+    }
+
+    protected void writeRefAltSeparation(Writer writer, int startY) throws IOException {
         int endX = (1+this.seqlen) * LOWER_CASE_BASE_INCREMENT;
         writer.write("<g fill=\"none\" stroke=\"black\" stroke-width=\"1\">\n");
-        writer.write(String.format("<path stroke-dasharray=\"2,2\" d=\"M%d %d L%d %d\"/>\n", XSTART, currentY, endX, currentY));
+        writer.write(String.format("<path stroke-dasharray=\"2,2\" d=\"M%d %d L%d %d\"/>\n", XSTART, startY, endX, startY));
         writer.write("</g>\n");
     }
 
