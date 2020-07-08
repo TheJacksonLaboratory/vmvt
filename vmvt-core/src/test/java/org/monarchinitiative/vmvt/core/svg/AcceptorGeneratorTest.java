@@ -76,4 +76,21 @@ public class AcceptorGeneratorTest {
         }
     }
 
+    @Test
+    void testCanonicalCryptic() {
+        VmvtGenerator vmvt = new VmvtGenerator();
+        String canRef = "gtgttttgtcatgtgtaTgctcaagGG";
+        String crypticRef = "tttgttgtgttttgtcatgtgtaTgct";
+        String svg = vmvt.getAcceptorCanonicalCryptic(canRef, crypticRef);
+        assertNotNull(svg);
+        try {
+            String path = "target/acceptorCanCrypt.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

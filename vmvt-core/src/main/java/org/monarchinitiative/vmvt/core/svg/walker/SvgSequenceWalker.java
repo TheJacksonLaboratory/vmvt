@@ -203,4 +203,38 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
         writeBoxAroundMutation(writer);
     }
 
+
+    public static SvgSequenceWalker donor(String ref, String alt) {
+        return new SvgSequenceWalker(ref, alt, DoubleMatrix.donor(), SVG_DONOR_WIDTH,SVG_WALKER_HEIGHT);
+    }
+
+    /**
+     * Write a sequence writer for a splice donor site (showing ref/alt sequences)
+     * Note that the size of the SVG is set in the superclass constructor (w,h)
+     * @param ref Reference sequence
+     * @param alt Alternate (mutant) sequence
+     * @param donor Donor information content matrix
+     */
+    public static SvgSequenceWalker donor(String ref, String alt, DoubleMatrix donor) {
+        return new SvgSequenceWalker(ref, alt, donor, SVG_DONOR_WIDTH,SVG_WALKER_HEIGHT);
+    }
+
+    public static SvgSequenceWalker singleDonorWalker(String sequence, int ystart) {
+        return SvgSequenceWalker.singleDonorWalker(sequence, DoubleMatrix.donor(), ystart);
+    }
+
+    public static SvgSequenceWalker singleDonorWalker(String sequence, DoubleMatrix donor, int ystart) {
+        return new SvgSequenceWalker(sequence, sequence, donor, SVG_DONOR_WIDTH, SVG_WALKER_HEIGHT, ystart);
+    }
+
+    public static SvgSequenceWalker singleAcceptorWalker(String sequence, int ystart) {
+       return singleAcceptorWalker(sequence, DoubleMatrix.acceptor(), ystart);
+    }
+
+    public static SvgSequenceWalker singleAcceptorWalker(String sequence, DoubleMatrix acceptor, int ystart) {
+        return new SvgSequenceWalker(sequence, sequence, acceptor, SVG_ACCEPTOR_WIDTH, SVG_WALKER_HEIGHT, ystart);
+    }
+
+
+
 }
