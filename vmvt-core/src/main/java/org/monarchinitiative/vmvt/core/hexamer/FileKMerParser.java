@@ -1,14 +1,11 @@
 package org.monarchinitiative.vmvt.core.hexamer;
 
-import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -19,37 +16,44 @@ import java.util.function.Predicate;
 public class FileKMerParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileKMerParser.class);
-    /** Default location for this file is src/main/resources/org/monarchinitiative/vmvt/hexamer/hexamer-scores.tsv. */
-    private static final Path HEXAMER_TSV_PATH = Paths.get(FileKMerParser.class.getResource("hexamer-scores.tsv").getPath());
-    /** Default location for this file is src/main/resources/org/monarchinitiative/vmvt/hexamer/hexamer-scores.tsv. */
-    private static final Path HEPTAMER_TSV_PATH = Paths.get(FileKMerParser.class.getResource("heptamer-scores.tsv").getPath());
 
-    private final Map<String, Double> kmerMap;
+    /**
+     * Default location for this file is src/main/resources/org/monarchinitiative/vmvt/hexamer/hexamer-scores.tsv.
+     */
+    private static final Map<String, Double> HEXAMER_MAP = parseKmerTsvFile("hexamer-scores.tsv");
 
-    private FileKMerParser(Path kmerTsvPath) throws IOException {
-        kmerMap = parseKmerTsvFile(kmerTsvPath);
+    /**
+     * Default location for this file is src/main/resources/org/monarchinitiative/vmvt/hexamer/hexamer-scores.tsv.
+     */
+    private static final Map<String, Double> HEPTAMER_MAP = parseKmerTsvFile("heptamer-scores.tsv");
+
+    private FileKMerParser() {
     }
 
+    /**
+     * @return map with hexamer scores or an empty map if an error occurred when parsing the file
+     */
     public static Map<String, Double> hexamerMap() {
-        try {
-            return new FileKMerParser(HEXAMER_TSV_PATH).getKmerMap();
-        } catch (IOException e) {
-            throw new VmvtRuntimeException(String.format("Could not parse %s", HEXAMER_TSV_PATH.getFileName()));
-        }
+        return HEXAMER_MAP;
     }
 
+    /**
+     * @return map with heptamer scores or an empty map if an error occurred when parsing the file
+     */
     public static Map<String, Double> heptamerMap() {
-        try {
-            return new FileKMerParser(HEPTAMER_TSV_PATH).getKmerMap();
-        } catch (IOException e) {
-            throw new VmvtRuntimeException(String.format("Could not parse %s", HEPTAMER_TSV_PATH.getFileName()));
-        }
+        return HEPTAMER_MAP;
     }
 
 
-    private static Map<String, Double> parseKmerTsvFile(Path kmerTsvPath) throws IOException {
+    /**
+     * Read the TSV file with k-mer scores from TSV file bundled within the vmvt JAR.
+     *
+     * @param resourcePath path to TSV file with k-mer scores
+     * @return map with k-mer -> score, or an empty map if an error occurs during reading the file
+     */
+    private static Map<String, Double> parseKmerTsvFile(String resourcePath) {
         Map<String, Double> kmerMap = new HashMap<>();
-        try (BufferedReader reader = Files.newBufferedReader(kmerTsvPath)) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(FileKMerParser.class.getResourceAsStream(resourcePath)))) {
             reader.lines()
                     .filter(emptyLines()).filter(comments())
                     .forEach(line -> {
@@ -70,6 +74,9 @@ public class FileKMerParser {
                         kmerMap.put(seq, score);
                     });
 
+        } catch (IOException e) {
+            LOGGER.warn("Error parsing k-mer file:", e);
+            return Map.of();
         }
         return kmerMap;
     }
@@ -80,9 +87,5 @@ public class FileKMerParser {
 
     private static Predicate<? super String> emptyLines() {
         return line -> !line.isEmpty();
-    }
-
-    public Map<String, Double> getKmerMap() {
-        return kmerMap;
     }
 }
