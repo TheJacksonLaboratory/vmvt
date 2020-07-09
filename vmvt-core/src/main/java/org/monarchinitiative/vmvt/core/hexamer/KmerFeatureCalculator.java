@@ -1,18 +1,19 @@
 package org.monarchinitiative.vmvt.core.hexamer;
 
-import com.google.common.collect.ImmutableMap;
 
 
+
+import java.util.Collections;
 import java.util.Map;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public abstract class KmerFeatureCalculator {
 
-    protected final ImmutableMap<String, Double> kmerMap;
+    protected final Map<String, Double> kmerMap;
 
     protected KmerFeatureCalculator(Map<String, Double> kmerMap) {
-        this.kmerMap = ImmutableMap.copyOf(kmerMap);
+        this.kmerMap = Collections.unmodifiableMap(kmerMap);
     }
 
     /**

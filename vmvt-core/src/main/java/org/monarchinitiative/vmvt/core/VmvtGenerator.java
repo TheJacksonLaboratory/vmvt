@@ -113,6 +113,11 @@ public class VmvtGenerator {
         return svg.getSvg();
     }
 
+    public String getDonorCanonicalCryptic(String canonical, String cryptic) {
+        SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.acceptor(canonical, cryptic, donor);
+        return gen.getSvg();
+    }
+
     public String getAcceptorCanonicalCryptic(String canonical, String cryptic) {
         SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.acceptor(canonical, cryptic, acceptor);
         return gen.getSvg();

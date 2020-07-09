@@ -1,7 +1,8 @@
 package org.monarchinitiative.vmvt.core.hexamer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +16,6 @@ import java.util.function.Predicate;
  */
 public class FileKMerParser {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileKMerParser.class);
 
     /**
      * Default location for this file is src/main/resources/org/monarchinitiative/vmvt/hexamer/hexamer-scores.tsv.
@@ -59,7 +59,7 @@ public class FileKMerParser {
                     .forEach(line -> {
                         final String[] tokens = line.split("\t");
                         if (tokens.length != 2) {
-                            LOGGER.warn("Invalid line {}", line);
+                            System.err.printf("Invalid line %s in Kmer TSV.\n", line);
                             return;
                         }
                         final String seq = tokens[0].toUpperCase();
@@ -68,15 +68,14 @@ public class FileKMerParser {
                         try {
                             score = Double.parseDouble(tokens[1]);
                         } catch (NumberFormatException e) {
-                            LOGGER.warn("Invalid score {} in line {}", tokens[1], line);
+                            System.err.printf("Invalid score %s in line %s", tokens[1], line);
                             return;
                         }
                         kmerMap.put(seq, score);
                     });
 
         } catch (IOException e) {
-            LOGGER.warn("Error parsing k-mer file:", e);
-            return Map.of();
+            throw new VmvtRuntimeException("Error parsing k-mer file:" +e.getMessage());
         }
         return kmerMap;
     }

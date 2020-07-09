@@ -1,8 +1,7 @@
 module org.monarchinitiative.vmvt.core {
     exports org.monarchinitiative.vmvt.core;
 
-    requires slf4j.api;
-    requires com.google.common;
+    //requires slf4j.api;
 
     opens org.monarchinitiative.vmvt.core;
     opens org.monarchinitiative.vmvt.core.pssm;

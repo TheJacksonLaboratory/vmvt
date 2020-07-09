@@ -45,8 +45,9 @@ public abstract class EseSvg extends AbstractSvgGenerator {
 
     private final double [] ESEscoresRef;
     private final double [] ESEscoresAlt;
-    private final double meanESEref;
-    private final double meanESEalt;
+    /** Sum of the 6/7-mer scores for each position (reference). */
+    private final double sumESEref;
+    private final double sumESEalt;
 
     public EseSvg(KmerFeatureCalculator calc, String ref, String alt) {
         super(SVG_WIDTH, SVG_HEIGHT);
@@ -64,8 +65,8 @@ public abstract class EseSvg extends AbstractSvgGenerator {
         }
         ESEscoresRef = calc.kmerScoreArray(this.reference);
         ESEscoresAlt = calc.kmerScoreArray(this.alternate);
-        meanESEref = Arrays.stream(ESEscoresRef).average().orElseThrow();
-        meanESEalt = Arrays.stream(ESEscoresAlt).average().orElseThrow();
+        sumESEref = Arrays.stream(ESEscoresRef).sum();
+        sumESEalt = Arrays.stream(ESEscoresAlt).sum();
     }
 
     private void writeYaxis(Writer writer) throws IOException {
@@ -148,11 +149,11 @@ public abstract class EseSvg extends AbstractSvgGenerator {
 
 
     private void plotInterplotLine(Writer writer) throws IOException {
-        double deltaESE = meanESEalt - meanESEref;
+        double deltaESE = sumESEalt - sumESEref;
         int x1 = KMER_PLOT_WIDTH - 20;
         int x2 = 570; // TODO -- fragile, make this more robust
-        int y1 =  X_AXIS_BASELINE - (int) (meanESEref * YSCALE);
-        int y2 =  X_AXIS_BASELINE - (int) (meanESEalt * YSCALE);
+        int y1 =  X_AXIS_BASELINE - (int) (sumESEref * YSCALE);
+        int y2 =  X_AXIS_BASELINE - (int) (sumESEalt * YSCALE);
         int maxY = Math.max(y1, y2);
         int midX = (int)(0.9*x1+0.1*x2);
         String line = String.format("<line x1=\"%d\" x2=\"%d\" y1=\"%d\" y2=\"%d\" " +
