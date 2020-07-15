@@ -69,6 +69,21 @@ public class DonorGeneratorTest {
         }
     }
 
+    @Test
+    void testWriteDonorTrekkerBack() {
+        VmvtGenerator donor = new VmvtGenerator();
+        String svg = donor.getDonorTrekkerSvg(alt,ref);
+        assertNotNull(svg);
+        try {
+            String path = "target/donorTrekkerBack.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     @Test
@@ -137,6 +152,35 @@ public class DonorGeneratorTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    void testHexamer(){
+        String svg = getHexamerSvg();
+        assertNotNull(svg);
+        try {
+            String path = "target/hexamer.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void testHeptamer(){
+        String svg = getHeptamerSvg();
+        assertNotNull(svg);
+        try {
+            String path = "target/heptamer.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private String getHexamerSvg() {
         String ref = "CCTGGAGGGGA";

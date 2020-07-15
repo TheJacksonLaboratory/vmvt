@@ -132,9 +132,13 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
     }
 
     protected void writeRefAltSeparation(Writer writer) throws IOException {
+        writeRefAltSeparation(writer, currentY);
+    }
+
+    protected void writeRefAltSeparation(Writer writer, int startY) throws IOException {
         int endX = (1+this.seqlen) * LOWER_CASE_BASE_INCREMENT;
         writer.write("<g fill=\"none\" stroke=\"black\" stroke-width=\"1\">\n");
-        writer.write(String.format("<path stroke-dasharray=\"2,2\" d=\"M%d %d L%d %d\"/>\n", XSTART, currentY, endX, currentY));
+        writer.write(String.format("<path stroke-dasharray=\"2,2\" d=\"M%d %d L%d %d\"/>\n", XSTART, startY, endX, startY));
         writer.write("</g>\n");
     }
 
@@ -163,10 +167,14 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
         // get location of first and last index with mutated bases
         int b = Integer.MAX_VALUE;
         int e = Integer.MIN_VALUE;
+        double maxIc = Double.MIN_VALUE;
         for (int i=0; i<refidx.length; i++) {
             if (refidx[i] != altidx[i]) {
                 if (i<b) b = i;
                 if (i>e) e = i;
+                double refIc =  Math.abs(this.splicesite.get(refidx[i] , i));
+                double altIc = Math.abs(this.splicesite.get(altidx[i] , i));
+                maxIc = Math.max(maxIc, Math.max(refIc, altIc));
             }
         }
         double X = this.XSTART + b*LOWER_CASE_BASE_INCREMENT;
@@ -202,5 +210,39 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
         writeRefAltSeparation(writer);
         writeBoxAroundMutation(writer);
     }
+
+
+    public static SvgSequenceWalker donor(String ref, String alt) {
+        return new SvgSequenceWalker(ref, alt, DoubleMatrix.donor(), SVG_DONOR_WIDTH,SVG_WALKER_HEIGHT);
+    }
+
+    /**
+     * Write a sequence writer for a splice donor site (showing ref/alt sequences)
+     * Note that the size of the SVG is set in the superclass constructor (w,h)
+     * @param ref Reference sequence
+     * @param alt Alternate (mutant) sequence
+     * @param donor Donor information content matrix
+     */
+    public static SvgSequenceWalker donor(String ref, String alt, DoubleMatrix donor) {
+        return new SvgSequenceWalker(ref, alt, donor, SVG_DONOR_WIDTH,SVG_WALKER_HEIGHT);
+    }
+
+    public static SvgSequenceWalker singleDonorWalker(String sequence, int ystart) {
+        return SvgSequenceWalker.singleDonorWalker(sequence, DoubleMatrix.donor(), ystart);
+    }
+
+    public static SvgSequenceWalker singleDonorWalker(String sequence, DoubleMatrix donor, int ystart) {
+        return new SvgSequenceWalker(sequence, sequence, donor, SVG_DONOR_WIDTH, SVG_WALKER_HEIGHT, ystart);
+    }
+
+    public static SvgSequenceWalker singleAcceptorWalker(String sequence, int ystart) {
+       return singleAcceptorWalker(sequence, DoubleMatrix.acceptor(), ystart);
+    }
+
+    public static SvgSequenceWalker singleAcceptorWalker(String sequence, DoubleMatrix acceptor, int ystart) {
+        return new SvgSequenceWalker(sequence, sequence, acceptor, SVG_ACCEPTOR_WIDTH, SVG_WALKER_HEIGHT, ystart);
+    }
+
+
 
 }

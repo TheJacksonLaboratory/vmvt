@@ -16,7 +16,8 @@ import org.monarchinitiative.vmvt.core.svg.ruler.AcceptorRuler;
 import org.monarchinitiative.vmvt.core.svg.ruler.DonorRuler;
 import org.monarchinitiative.vmvt.core.svg.ruler.SvgSequenceRuler;
 import org.monarchinitiative.vmvt.core.svg.walker.AcceptorWalkerGenerator;
-import org.monarchinitiative.vmvt.core.svg.walker.DonorWalkerGenerator;
+import org.monarchinitiative.vmvt.core.svg.walker.SvgCanonicalCrypticGenerator;
+import org.monarchinitiative.vmvt.core.svg.walker.SvgSequenceWalker;
 
 /**
  * Public interface to VMVT: Variant-Motif Visualization Tool. For all functions listed here, there
@@ -56,7 +57,7 @@ public class VmvtGenerator {
 
 
     public String getDonorWalkerSvg(String reference, String alternate) {
-        AbstractSvgGenerator svgGenerator = new DonorWalkerGenerator(reference, alternate, donor);
+        AbstractSvgGenerator svgGenerator = SvgSequenceWalker.donor(reference, alternate, donor);
         return svgGenerator.getSvg();
     }
 
@@ -110,6 +111,16 @@ public class VmvtGenerator {
     public String getDelta(String reference, String alternate) {
         DeltaSvg svg = new DeltaSvg(reference, alternate);
         return svg.getSvg();
+    }
+
+    public String getDonorCanonicalCryptic(String canonical, String cryptic) {
+        SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.acceptor(canonical, cryptic, donor);
+        return gen.getSvg();
+    }
+
+    public String getAcceptorCanonicalCryptic(String canonical, String cryptic) {
+        SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.acceptor(canonical, cryptic, acceptor);
+        return gen.getSvg();
     }
 
 

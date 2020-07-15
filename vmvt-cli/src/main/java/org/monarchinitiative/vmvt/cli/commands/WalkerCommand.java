@@ -12,7 +12,7 @@ import java.util.concurrent.Callable;
 @CommandLine.Command(name = "ruler", aliases = {"W"}, mixinStandardHelpOptions = true, description = "Create sequence ruler")
 public class WalkerCommand extends AbstractSequenceComparisonCommand implements Callable<Integer> {
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         VmvtGenerator vmvt = new VmvtGenerator();
         String svg="";
         initSequences();
