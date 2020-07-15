@@ -12,7 +12,7 @@ import java.util.concurrent.Callable;
 @CommandLine.Command(name = "trek", aliases = {"T"}, mixinStandardHelpOptions = true, description = "Create sequence trekker")
 public class TrekCommand extends AbstractSequenceComparisonCommand implements Callable<Integer> {
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         VmvtGenerator vmvt = new VmvtGenerator();
         String svg="";
         initSequences();

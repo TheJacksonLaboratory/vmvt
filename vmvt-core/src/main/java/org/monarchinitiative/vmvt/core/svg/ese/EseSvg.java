@@ -92,8 +92,8 @@ public abstract class EseSvg extends AbstractSvgGenerator {
 
     /**
      * Writes the Y axis for reference or alternate.
-     * @param writer
-     * @throws IOException
+     * @param writer file handle
+     * @throws IOException if we cannot write
      */
     private void writeYaxis(Writer writer, int xstart) throws IOException {
         writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"black\"/>\n",
@@ -149,7 +149,6 @@ public abstract class EseSvg extends AbstractSvgGenerator {
         double xposForBoxes = xstart - 0.8 * Xincrement;
         double y3 = y + 20.0;
         int y2 = y + 5; // height of tick on X axis
-        System.out.println("REF STAET = " + x);
         for (int i = 0; i < kmerLen; i++) {
             x += Xincrement;
             xposForNumbers += Xincrement;
@@ -173,8 +172,6 @@ public abstract class EseSvg extends AbstractSvgGenerator {
             writer.write(String.format("<g transform='translate(%f,%d) scale(0.75,0.75)'><text>%d</text></g>\n",
                     xposForNumbers, YBOTTOM, (1 + i)));
         }
-        System.out.println("REF X end = " + x);
-
         if (meanEseScore == 0) {
             return; // no need to draw line
         } else if (meanEseScore < 0) {
@@ -208,10 +205,8 @@ public abstract class EseSvg extends AbstractSvgGenerator {
         // Position to place the Delta-Ri value
         int X = KMER_PLOT_WIDTH - 40;
         int Y =  45;//Math.max(20, maxY - 100);
-        String smallerText = String.format("<g transform='translate(%d,%d)'>%s</g>\n",
-                X, Y, eseText);
-        smallerText = String.format("<g>%s%s</g>", blueRect, eseText);
-        writer.write(smallerText);
+
+        writer.write(String.format("%s%s", blueRect, eseText));
     }
 
 
@@ -241,7 +236,7 @@ public abstract class EseSvg extends AbstractSvgGenerator {
     }
 
     @Override
-    public void write(Writer writer) throws IOException {
+    public void write(Writer writer) {
         throw new UnsupportedOperationException("todo");
     }
 }

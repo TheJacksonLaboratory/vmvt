@@ -15,7 +15,7 @@ public class DeltaCommand extends AbstractSequenceComparisonCommand implements C
 
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         VmvtGenerator vmvt = new VmvtGenerator();
         String svg="";
         if (this.infile != null && this.reference==null && this.alternate==null) {
