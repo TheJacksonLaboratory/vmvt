@@ -5,20 +5,19 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>vmvt-cli</artifactId>
-    <groupId>org.monarchinitiative.vmvt</groupId>
     <name>vmvt-cli</name>
 
     <parent>
         <groupId>org.monarchinitiative.vmvt</groupId>
         <artifactId>vmvt</artifactId>
-        <version>0.8.1</version>
+        <version>0.8.2</version>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>org.monarchinitiative.vmvt</groupId>
             <artifactId>vmvt-core</artifactId>
-            <version>0.8.1</version>
+            <version>${parent.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/info.picocli/picocli-jpms-module -->

@@ -138,6 +138,35 @@ public class DonorGeneratorTest {
         }
     }
 
+    @Test
+    void testHexamer(){
+        String svg = getHexamerSvg();
+        assertNotNull(svg);
+        try {
+            String path = "target/hexamer.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void testHeptamer(){
+        String svg = getHeptamerSvg();
+        assertNotNull(svg);
+        try {
+            String path = "target/heptamer.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private String getHexamerSvg() {
         String ref = "CCTGGAGGGGA";
         String alt = "CCTGGCGGGGA";

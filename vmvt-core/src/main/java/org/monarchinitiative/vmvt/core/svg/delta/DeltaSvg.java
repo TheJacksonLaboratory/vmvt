@@ -129,15 +129,12 @@ public class DeltaSvg extends AbstractSvgGenerator {
     }
 
 
-
-
-
     /**
      *   Write an axis from -10 to +10
      */
     private void writeTicks(Writer writer, double startX, double endX) throws IOException {
         writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
-                startX,START_Y,endX,START_Y, SvgColors.RED));
+                startX,START_Y,endX,START_Y, SvgColors.BLACK));
         // for both donor and acceptor the biggest change is nearly 10/-10 startX is -10 and startY is 10
         if (Math.round(this.min) != -10) {
             // should never happen
@@ -151,10 +148,16 @@ public class DeltaSvg extends AbstractSvgGenerator {
         double X = startX;
         int tickHeight = 5;
         int Y2 = START_Y + tickHeight;
+        int YmajorTick = START_Y + 10;
         int Y_INCREMENT = 25; // amount of space to "lower" the numbers on the X axixs
         for (int i=0;i<span;i++) {
-            writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
-                    X,START_Y,X,Y2, SvgColors.RED));
+            if (i%5==0) {
+                writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
+                        X, START_Y, X, YmajorTick, SvgColors.BLACK));
+            } else {
+                writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
+                        X, START_Y, X, Y2, SvgColors.BLACK));
+            }
             // Write numbers under the tick marks. We use fudge factors to adjust for
             // different widths of the numbers (-10, -5, 0, 5, 10).
             if (i==0) {
@@ -229,29 +232,10 @@ public class DeltaSvg extends AbstractSvgGenerator {
 
     @Override
     public String getSvg() {
-        int startX = 50;
-        int maxHeight = SVG_DELTA_HEIGHT - 120;
-        // maximum bin count should be maxHeight
-        int maxCount = Arrays.stream(bins).max().orElseThrow();
-        double heightFactor = (double)maxHeight/(double)maxCount;
-        double barWidth = (double)(SVG_DELTA_WIDTH-2*startX)/(double)BIN_COUNT;
         StringWriter swriter = new StringWriter();
         try {
             writeHeader(swriter);
-            double X = startX;
-            for (int bin : bins) {
-                double barHeight = heightFactor * bin;
-                // the "y" of a rect is the upper left hand corner
-                double Y = START_Y - barHeight;
-                String rect = String.format("<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" rx=\"2\" " +
-                                "style=\"stroke:#006600; fill:%s\" />\n",
-                        X, Y, barWidth, barHeight, SvgColors.GREEN);
-                swriter.write(rect);
-                X += barWidth;
-            }
-            double X1 = startX + barWidth;
-            double X2 = X + 2*barWidth;
-            writeTicks(swriter, X1, X2);
+            write(swriter);
             writeFooter(swriter);
         } catch (IOException e) {
             return getSvgErrorMessage(e.getMessage());
@@ -260,7 +244,26 @@ public class DeltaSvg extends AbstractSvgGenerator {
     }
 
     @Override
-    public void write(Writer writer) throws IOException {
-        throw new UnsupportedOperationException("todo");
+    public void write(Writer swriter) throws IOException {
+        int startX = 50;
+        int maxHeight = SVG_DELTA_HEIGHT - 120;
+        // maximum bin count should be maxHeight
+        int maxCount = Arrays.stream(bins).max().orElseThrow();
+        double heightFactor = (double)maxHeight/(double)maxCount;
+        double barWidth = (double)(SVG_DELTA_WIDTH-2*startX)/(double)BIN_COUNT;
+        double X = startX;
+        for (int bin : bins) {
+            double barHeight = heightFactor * bin;
+            // the "y" of a rect is the upper left hand corner
+            double Y = START_Y - barHeight;
+            String rect = String.format("<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" rx=\"2\" " +
+                            "style=\"stroke:#006600; fill:%s\" />\n",
+                    X, Y, barWidth, barHeight, SvgColors.GREEN);
+            swriter.write(rect);
+            X += barWidth;
+        }
+        double X1 = startX + barWidth;
+        double X2 = X + 2*barWidth;
+        writeTicks(swriter, X1, X2);
     }
 }
