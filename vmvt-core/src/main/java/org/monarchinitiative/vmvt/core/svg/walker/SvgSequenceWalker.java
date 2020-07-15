@@ -167,10 +167,14 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
         // get location of first and last index with mutated bases
         int b = Integer.MAX_VALUE;
         int e = Integer.MIN_VALUE;
+        double maxIc = Double.MIN_VALUE;
         for (int i=0; i<refidx.length; i++) {
             if (refidx[i] != altidx[i]) {
                 if (i<b) b = i;
                 if (i>e) e = i;
+                double refIc =  Math.abs(this.splicesite.get(refidx[i] , i));
+                double altIc = Math.abs(this.splicesite.get(altidx[i] , i));
+                maxIc = Math.max(maxIc, Math.max(refIc, altIc));
             }
         }
         double X = this.XSTART + b*LOWER_CASE_BASE_INCREMENT;

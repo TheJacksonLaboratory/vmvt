@@ -69,6 +69,21 @@ public class DonorGeneratorTest {
         }
     }
 
+    @Test
+    void testWriteDonorTrekkerBack() {
+        VmvtGenerator donor = new VmvtGenerator();
+        String svg = donor.getDonorTrekkerSvg(alt,ref);
+        assertNotNull(svg);
+        try {
+            String path = "target/donorTrekkerBack.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     @Test

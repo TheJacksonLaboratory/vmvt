@@ -63,6 +63,8 @@ public abstract class EseSvg extends AbstractSvgGenerator {
     private final double meanESEref;
     /** Mean of the 6/7-mer scores for each position (reference). */
     private final double meanESEalt;
+    /** Difference between the sum of ESE scores for reference and alt. */
+    private final double deltaESE;
 
 
     public EseSvg(KmerFeatureCalculator calc, String ref, String alt) {
@@ -83,6 +85,7 @@ public abstract class EseSvg extends AbstractSvgGenerator {
         ESEscoresAlt = calc.kmerScoreArray(this.alternate);
         sumESEref = Arrays.stream(ESEscoresRef).sum();
         sumESEalt = Arrays.stream(ESEscoresAlt).sum();
+        deltaESE = sumESEalt - sumESEref;
         meanESEref = Arrays.stream(ESEscoresRef).average().orElse(0);
         meanESEalt = Arrays.stream(ESEscoresAlt).average().orElse(0);
     }
@@ -190,7 +193,6 @@ public abstract class EseSvg extends AbstractSvgGenerator {
      * @throws IOException if we cannot write the SVG
      */
     private void plotInterplotLine(Writer writer) throws IOException {
-        double deltaESE = sumESEalt - sumESEref;
         int x1 = XEND_REF_PLOT - 20;
         int x2 = XSTART_ALT_PLOT; // TODO -- fragile, make this more robust
         int y1 = X_AXIS_BASELINE - (int) (meanESEref * YSCALE);
