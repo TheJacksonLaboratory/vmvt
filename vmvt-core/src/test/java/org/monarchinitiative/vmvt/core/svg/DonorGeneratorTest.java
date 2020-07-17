@@ -244,7 +244,35 @@ public class DonorGeneratorTest {
         writeToRTDdirectory("deltaDonor.svg", svg);
     }
 
+    @Test
+    void testCanonicalCryptic() {
+        VmvtGenerator vmvt = new VmvtGenerator();
+        String canRef = "caggttggt";
+        String crypticRef = "tgggcaggt";
+        String svg = vmvt.getDonorCanonicalCryptic(canRef, crypticRef);
+        assertNotNull(svg);
+        try {
+            String path = "target/donorCanCryptRef.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        String canAlt = "taggttggt";
+        String crypticAlt = "tgggtaggt";
+        svg = vmvt.getDonorCanonicalCryptic(canAlt, crypticAlt);
+        assertNotNull(svg);
+        try {
+            String path = "target/donorCanCryptAlt.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @Test

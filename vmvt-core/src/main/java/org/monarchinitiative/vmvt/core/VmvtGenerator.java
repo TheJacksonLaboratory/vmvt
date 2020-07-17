@@ -114,7 +114,7 @@ public class VmvtGenerator {
     }
 
     public String getDonorCanonicalCryptic(String canonical, String cryptic) {
-        SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.acceptor(canonical, cryptic, donor);
+        SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.donor(canonical, cryptic, donor);
         return gen.getSvg();
     }
 
