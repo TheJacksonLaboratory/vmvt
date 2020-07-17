@@ -35,6 +35,7 @@ public abstract class AbstractSvgGenerator {
 
 
     protected final static int SVG_WALKER_STARTY = 50;
+    protected final static int SVG_CANCRYPT_STARTY = 30;
     protected final static int SVG_WALKER_HEIGHT = 180;
     protected final static int LETTER_WIDTH = 10;
     /** Amount of horizontal space to be taken up by one base character. */
@@ -101,6 +102,7 @@ public abstract class AbstractSvgGenerator {
         writer.write("<!-- Created by " + PROGRAM_NAME + " -->\n");
         writer.write("<style>\n" +
                 "  text { font: 24px " + SVG_FONTS + "; }\n" +
+                "  text.t20 { font: 20px " + SVG_FONTS + "; }\n" +
                 "  </style>\n");
         writer.write("<g>\n");
     }

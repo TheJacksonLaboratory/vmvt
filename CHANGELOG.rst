@@ -2,10 +2,12 @@
 Changelog
 =========
 
+
 ------
 v0.8.5
 ------
 - Added sequence delta output documentation and cli.
+- Added graphic for showing cryptic/canonical sites with Ri
 
 ------
 v0.8.0
