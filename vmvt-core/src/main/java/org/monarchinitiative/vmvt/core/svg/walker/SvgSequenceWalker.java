@@ -22,6 +22,8 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
     protected int currentX;
     protected int currentY;
 
+    private final int boxMidPointY;
+
     private double maxIc = Double.MIN_VALUE;
 
     /**
@@ -46,6 +48,7 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
         this.YSTART = SVG_WALKER_STARTY;
         this.currentX = this.XSTART;
         this.currentY =  this.YSTART;
+        this.boxMidPointY = this.currentY;
         this.TOP_Y_COORDINATE_OF_BOX = 15;
     }
 
@@ -57,13 +60,16 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
      * @param site Representation of the splice site (weight matrix)
      * @param w width of the SVG canvas
      * @param h height of the SVG canvas
+     * @param ystart Used to indicate the position to start for a composite SVG
      */
     public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h, int ystart) {
         super(ref,alt,site,w,h);
         this.YSTART = ystart;
         this.currentX = this.XSTART;
         this.currentY = this.YSTART;
-        this.TOP_Y_COORDINATE_OF_BOX = 5;
+        this.boxMidPointY = this.currentY;
+        this.TOP_Y_COORDINATE_OF_BOX = ystart;
+
     }
 
 
@@ -163,7 +169,7 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
      * @param writer handle
      * @throws IOException if we cannot write the Box
      */
-    private void writeBoxAroundMutation(Writer writer) throws IOException {
+    private void writeBoxAroundMutationOld(Writer writer) throws IOException {
         // get location of first and last index with mutated bases
         int b = Integer.MAX_VALUE;
         int e = Integer.MIN_VALUE;
@@ -179,7 +185,7 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
         }
         double X = this.XSTART + b*LOWER_CASE_BASE_INCREMENT;
         int boxwidth = LOWER_CASE_BASE_INCREMENT * (1+e-b);
-        int boxheight =  YSTART + (int)(VARIANT_BOX_SCALING_FACTOR*maxIc);
+        int boxheight =  SVG_WALKER_STARTY + (int)(VARIANT_BOX_SCALING_FACTOR*maxIc);
         writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"" +
                         " style=\"stroke-width:1; stroke:rgb(4, 12, 4);\"/>",
                 X,
@@ -188,6 +194,58 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
                 boxheight));
 
     }
+
+    /**
+     * Write a grey box around the mutation, using heuristics to find the Y positions that cover
+     * both the sequence logo and the sequence walker (here we use maxIc, because the height of
+     * the walker bases depends on the maximum IC).
+     * @param writer handle
+     * @throws IOException if we cannot write the Box
+     */
+    private void writeBoxAroundMutation(Writer writer) throws IOException {
+        // get location of first and last index with mutated bases
+        int b = Integer.MAX_VALUE;
+        int e = Integer.MIN_VALUE;
+        double maxPosIc = Double.MIN_VALUE;
+        double minPosIc = Double.MAX_VALUE;
+        double maxIc = Double.MIN_VALUE;
+        for (int i=0; i<refidx.length; i++) {
+            if (refidx[i] != altidx[i]) {
+                if (i<b) b = i;
+                if (i>e) e = i;
+                double refIc =  Math.abs(this.splicesite.get(refidx[i] , i));
+                double altIc = Math.abs(this.splicesite.get(altidx[i] , i));
+                maxIc = Math.max(maxIc, Math.max(refIc, altIc));
+                refIc =  this.splicesite.get(refidx[i] , i);
+                if (refIc > 0 && refIc > maxPosIc) {
+                    maxPosIc = refIc;
+                } else if (refIc < 0 && refIc < minPosIc) {
+                    minPosIc = refIc;
+                }
+                altIc = this.splicesite.get(altidx[i] , i);
+                if (altIc > 0 && altIc > maxPosIc) {
+                    maxPosIc = altIc;
+                } else if (altIc < 0 && altIc < minPosIc) {
+                    minPosIc = altIc;
+                }
+            }
+        }
+        double icRange = maxPosIc - minPosIc;
+        int SCALING_FACTOR = 12;
+        int boxStartY = this.boxMidPointY - 2*(int)Math.abs(maxPosIc)*SCALING_FACTOR;
+        double X = this.XSTART + b*LOWER_CASE_BASE_INCREMENT;
+        int boxwidth = LOWER_CASE_BASE_INCREMENT * (1+e-b);
+        int boxheight =   (int)(SCALING_FACTOR*icRange);
+
+        writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"" +
+                        " style=\"stroke-width:1; stroke:rgb(4, 12, 4);\"/>",
+                X,
+                boxStartY,
+                boxwidth,
+                boxheight));
+
+    }
+
 
 
     @Override

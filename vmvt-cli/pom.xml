@@ -19,21 +19,17 @@
             <artifactId>vmvt-core</artifactId>
             <version>${parent.version}</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/info.picocli/picocli-jpms-module -->
         <dependency>
             <groupId>info.picocli</groupId>
             <artifactId>picocli-jpms-module</artifactId>
             <version>4.0.0-alpha-3</version>
         </dependency>
-
     </dependencies>
 
     <build>
         <finalName>vmvt-cli</finalName>
 
         <plugins>
-            <!-- More JAR building -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -65,7 +61,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
                 <configuration>
                     <archive>
                         <manifest>

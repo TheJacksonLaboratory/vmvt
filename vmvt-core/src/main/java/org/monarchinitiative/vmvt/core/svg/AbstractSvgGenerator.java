@@ -96,13 +96,14 @@ public abstract class AbstractSvgGenerator {
      */
     protected void writeHeader(Writer writer) throws IOException {
         writer.write("<svg width=\"" + this.WIDTH +"\" height=\""+ this.HEIGHT +"\" " +
-                   //  "style=\"border:1px solid black\" " +
+                    "style=\"border:1px solid black\" " +
                 "xmlns=\"http://www.w3.org/2000/svg\" " +
                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n");
         writer.write("<!-- Created by " + PROGRAM_NAME + " -->\n");
         writer.write("<style>\n" +
                 "  text { font: 24px " + SVG_FONTS + "; }\n" +
                 "  text.t20 { font: 20px " + SVG_FONTS + "; }\n" +
+                "  text.t14 { font: 14px " + SVG_FONTS + "; }\n" +
                 "  </style>\n");
         writer.write("<g>\n");
     }
