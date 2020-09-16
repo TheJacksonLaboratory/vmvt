@@ -1,10 +1,7 @@
 package org.monarchinitiative.vmvt.core.jaspar;
 
-import org.monarchinitiative.vmvt.core.except.VmvtException;
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
-import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,12 +16,12 @@ public class JasparMatrix {
         if (nameLine ==null || nameLine.isEmpty()) {
             throw new VmvtRuntimeException("Malformed JASPAR name line (empty/null)");
         } else if (!nameLine.startsWith(">")) {
-            throw new VmvtRuntimeException("Malformed JASPAR name line (did not start with \'>\'): " + nameLine);
+            throw new VmvtRuntimeException("Malformed JASPAR name line (did not start with '>'): " + nameLine);
         }
         // remove the '>' character and split into two fields
         String [] fields = nameLine.substring(1).split("\t");
         if (fields.length != 2) {
-            throw new VmvtRuntimeException("Malformed JASPAR name line (did not start with \'>\'): " + nameLine);
+            throw new VmvtRuntimeException("Malformed JASPAR name line (did not start with '>'): " + nameLine);
         }
         jasparId = fields[0];
         jasparName = fields[1];

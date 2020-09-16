@@ -4,7 +4,6 @@ import org.monarchinitiative.vmvt.core.VmvtGenerator;
 import picocli.CommandLine;
 
 import java.io.*;
-import java.util.List;
 import java.util.concurrent.Callable;
 
 /**

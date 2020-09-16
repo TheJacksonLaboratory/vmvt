@@ -2,7 +2,6 @@ package org.monarchinitiative.vmvt.core.svg;
 
 import org.monarchinitiative.vmvt.core.VmvtGenerator;
 import org.junit.jupiter.api.Test;
-import org.monarchinitiative.vmvt.core.svg.delta.DeltaSvg;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -282,6 +281,21 @@ public class DonorGeneratorTest {
 
         try {
             String path = "target/donorDelta.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testDonorWithRi() {
+        VmvtGenerator vmvt = new VmvtGenerator();
+        String svg = vmvt.getDonorWithRi(ref, alt);
+
+        try {
+            String path = "target/donorWithRi.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();
