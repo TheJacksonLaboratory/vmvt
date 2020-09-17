@@ -4,10 +4,6 @@ package org.monarchinitiative.vmvt.core.svg.trek;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
 import org.monarchinitiative.vmvt.core.svg.SvgColors;
-import org.monarchinitiative.vmvt.core.svg.logo.DonorLogoGenerator;
-import org.monarchinitiative.vmvt.core.svg.logo.SvgSequenceLogo;
-import org.monarchinitiative.vmvt.core.svg.ruler.DonorRuler;
-import org.monarchinitiative.vmvt.core.svg.walker.SvgSequenceWalker;
 
 import java.io.IOException;
 import java.io.StringWriter;
