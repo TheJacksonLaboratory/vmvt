@@ -41,6 +41,22 @@ public abstract class SvgSequenceLogo extends AbstractSvgGenerator {
         this.YSTART = SVG_LOGO_STARTY; // Note that the logo is relatively high, so we want to start lower down!
    }
 
+    /**
+     * Create an Svg Logo for the donor or acceptor with representation of reference sequence and alt bases
+     * This constructor should be used to create compositve SVGs with multiple subelements, whereby
+     * the LOGO is started at y=startY
+     * @param site Representation of the splice site (height matrix)
+     * @param w width of the SVG canvas
+     * @param h height of the SVG canvas
+     * @param startY Used to start drawing at a particular Y position in composite SVGs.
+     */
+    public SvgSequenceLogo(DoubleMatrix site, int w, int h, int startY) {
+        super(w, h);
+        splicesite = site;
+        this.XSTART = SVG_STARTX;
+        this.YSTART = SVG_LOGO_STARTY + startY; // Note that the logo is relatively high, so we want to start lower down!
+    }
+
 
 
 

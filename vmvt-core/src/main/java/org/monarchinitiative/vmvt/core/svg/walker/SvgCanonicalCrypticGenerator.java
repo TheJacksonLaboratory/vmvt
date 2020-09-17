@@ -138,10 +138,11 @@ public class SvgCanonicalCrypticGenerator extends AbstractSvgGenerator {
     }
 
 
+
+
+
     public static SvgCanonicalCrypticGenerator donor(String can, String crypt, DoubleMatrix donor) {
-        SvgCanonicalCrypticGenerator generator =
-                new SvgCanonicalCrypticGenerator(SVG_DONOR_WIDTH, SVG_CANONICAL_CRYPTIC_HEIGHT, can, crypt,donor);
-        return generator;
+        return new SvgCanonicalCrypticGenerator(SVG_DONOR_WIDTH, SVG_CANONICAL_CRYPTIC_HEIGHT, can, crypt,donor);
     }
 
     public static SvgCanonicalCrypticGenerator acceptor(String can, String crypt, DoubleMatrix acceptor) {

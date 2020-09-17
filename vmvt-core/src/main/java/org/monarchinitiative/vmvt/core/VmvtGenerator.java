@@ -3,7 +3,9 @@ package org.monarchinitiative.vmvt.core;
 import org.monarchinitiative.vmvt.core.dist.DistributionCalculator;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
+import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
 import org.monarchinitiative.vmvt.core.svg.trek.AcceptorTrekkerGenerator;
+import org.monarchinitiative.vmvt.core.svg.trek.AcceptorTrekkerWithRiGenerator;
 import org.monarchinitiative.vmvt.core.svg.trek.DonorTrekkerGenerator;
 import org.monarchinitiative.vmvt.core.svg.delta.DeltaSvg;
 import org.monarchinitiative.vmvt.core.svg.ese.EseSvg;
@@ -15,6 +17,7 @@ import org.monarchinitiative.vmvt.core.svg.logo.SvgSequenceLogo;
 import org.monarchinitiative.vmvt.core.svg.ruler.AcceptorRuler;
 import org.monarchinitiative.vmvt.core.svg.ruler.DonorRuler;
 import org.monarchinitiative.vmvt.core.svg.ruler.SvgSequenceRuler;
+import org.monarchinitiative.vmvt.core.svg.trek.DonorTrekkerWithRiGenerator;
 import org.monarchinitiative.vmvt.core.svg.walker.AcceptorWalkerGenerator;
 import org.monarchinitiative.vmvt.core.svg.walker.SvgCanonicalCrypticGenerator;
 import org.monarchinitiative.vmvt.core.svg.walker.SvgSequenceWalker;
@@ -122,6 +125,16 @@ public class VmvtGenerator {
         SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.acceptor(canonical, cryptic, acceptor);
         return gen.getSvg();
     }
+
+    public String getAcceptorWithRi(String reference, String alternate) {
+        AbstractSvgMotifGenerator gen = AcceptorTrekkerWithRiGenerator.acceptor(reference, alternate, acceptor);
+        return gen.getSvg();
+    }
+    public String getDonorWithRi(String reference, String alternate) {
+        AbstractSvgMotifGenerator gen = DonorTrekkerWithRiGenerator.donor(reference, alternate, donor);
+        return gen.getSvg();
+    }
+
 
 
 }
