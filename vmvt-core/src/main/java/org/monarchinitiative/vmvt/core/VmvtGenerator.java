@@ -5,6 +5,7 @@ import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
 import org.monarchinitiative.vmvt.core.svg.trek.AcceptorTrekkerGenerator;
+import org.monarchinitiative.vmvt.core.svg.trek.AcceptorTrekkerWithRiGenerator;
 import org.monarchinitiative.vmvt.core.svg.trek.DonorTrekkerGenerator;
 import org.monarchinitiative.vmvt.core.svg.delta.DeltaSvg;
 import org.monarchinitiative.vmvt.core.svg.ese.EseSvg;
@@ -125,7 +126,10 @@ public class VmvtGenerator {
         return gen.getSvg();
     }
 
-
+    public String getAcceptorWithRi(String reference, String alternate) {
+        AbstractSvgMotifGenerator gen = AcceptorTrekkerWithRiGenerator.acceptor(reference, alternate, acceptor);
+        return gen.getSvg();
+    }
     public String getDonorWithRi(String reference, String alternate) {
         AbstractSvgMotifGenerator gen = DonorTrekkerWithRiGenerator.donor(reference, alternate, donor);
         return gen.getSvg();
