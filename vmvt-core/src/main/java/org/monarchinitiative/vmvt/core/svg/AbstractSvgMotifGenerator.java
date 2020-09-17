@@ -3,9 +3,6 @@ package org.monarchinitiative.vmvt.core.svg;
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 
-import java.io.IOException;
-import java.io.Writer;
-
 public abstract class AbstractSvgMotifGenerator extends AbstractSvgGenerator {
     /** Representation of the Splice donor/acceptor IC matrix. */
     protected final DoubleMatrix splicesite;

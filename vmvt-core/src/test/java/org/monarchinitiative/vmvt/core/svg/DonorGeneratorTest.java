@@ -2,7 +2,6 @@ package org.monarchinitiative.vmvt.core.svg;
 
 import org.monarchinitiative.vmvt.core.VmvtGenerator;
 import org.junit.jupiter.api.Test;
-import org.monarchinitiative.vmvt.core.svg.delta.DeltaSvg;
 
 import java.io.BufferedWriter;
 import java.io.File;

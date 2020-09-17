@@ -2,6 +2,11 @@
 Changelog
 =========
 
+------
+v0.9.0
+------
+- New SVG graphic for cryptic sites overlapping with canonical splice sites
+- Jaspar parser
 
 ------
 v0.8.5
