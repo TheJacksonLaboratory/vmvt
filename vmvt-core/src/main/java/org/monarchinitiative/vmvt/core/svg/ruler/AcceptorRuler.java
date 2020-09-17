@@ -1,11 +1,9 @@
 package org.monarchinitiative.vmvt.core.svg.ruler;
 
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
-import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
 import org.monarchinitiative.vmvt.core.svg.SvgColors;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 
 public class AcceptorRuler extends SvgSequenceRuler {

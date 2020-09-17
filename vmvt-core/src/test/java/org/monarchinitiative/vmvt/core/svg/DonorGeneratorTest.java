@@ -2,7 +2,6 @@ package org.monarchinitiative.vmvt.core.svg;
 
 import org.monarchinitiative.vmvt.core.VmvtGenerator;
 import org.junit.jupiter.api.Test;
-import org.monarchinitiative.vmvt.core.svg.delta.DeltaSvg;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -217,7 +216,7 @@ public class DonorGeneratorTest {
      */
     @Test
     void writeAllSvgsToReadTheDocs() {
-        if (42==42) {
+        if (42==2) {
             assertEquals(2,2);
             return;
         }
@@ -242,6 +241,16 @@ public class DonorGeneratorTest {
         writeToRTDdirectory("heptamer.svg", svg);
         svg = vmvt.getDelta(ref, alt);
         writeToRTDdirectory("deltaDonor.svg", svg);
+        final String ref = "CAGGTTGGT";
+        final String alt = "TAGGTTGGT";
+        vmvt = new VmvtGenerator();
+        svg = vmvt.getDonorWithRi(ref, alt);
+        writeToRTDdirectory("donorWithRi.svg", svg);
+        final String ref2 = "CTGGCAGGT";
+        final String alt2 = "CTGGTAGGT";
+        vmvt = new VmvtGenerator();
+        svg = vmvt.getDonorWithRi(ref2, alt2);
+        writeToRTDdirectory("donorWithRiCryptic.svg", svg);
     }
 
     @Test
@@ -282,6 +291,21 @@ public class DonorGeneratorTest {
 
         try {
             String path = "target/donorDelta.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testDonorWithRi() {
+        VmvtGenerator vmvt = new VmvtGenerator();
+        String svg = vmvt.getDonorWithRi(ref, alt);
+
+        try {
+            String path = "target/donorWithRi.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();

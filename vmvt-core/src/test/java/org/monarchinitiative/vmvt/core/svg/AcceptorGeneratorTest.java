@@ -106,4 +106,21 @@ public class AcceptorGeneratorTest {
         }
     }
 
+    @Test
+    void testAcceptorWithRi() {
+        VmvtGenerator vmvt = new VmvtGenerator();
+        String canRef =     "gtgttttgtcatgtgtaTgctcaagGG";
+        String crypticRef = "gtgttttgtcatgtgtaAgctcaagGG";
+        String svg = vmvt.getAcceptorWithRi(canRef, crypticRef);
+        assertNotNull(svg);
+        try {
+            String path = "target/acceptorWithRi.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

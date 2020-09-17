@@ -2,6 +2,8 @@
 <!-- Created by vmvt -->
 <style>
   text { font: 24px courier, monospace; }
+  text.t20 { font: 20px courier, monospace; }
+  text.t14 { font: 14px courier, monospace; }
   </style>
 <g>
 <g transform='translate(70.000000,51)  scale(1,6.965784)  rotate(180)'>
@@ -30,5 +32,5 @@
 <g fill="none" stroke="black" stroke-width="1">
 <path stroke-dasharray="2,2" d="M10 50 L150 50"/>
 </g>
-<rect x="55.000000" y="15" width="15" height="133" rx="2" fill-opacity="0.1" style="stroke-width:1; stroke:rgb(4, 12, 4);"/></g>
+<rect x="55.000000" y="26" width="15" height="107" rx="2" fill-opacity="0.1" style="stroke-width:1; stroke:rgb(4, 12, 4);"/></g>
 </svg>
