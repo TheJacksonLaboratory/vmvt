@@ -1,15 +1,13 @@
 package org.monarchinitiative.vmvt.cli;
 
-/**
- * Main entry point to the command-line interface of vmvt.
- */
-
 import org.monarchinitiative.vmvt.cli.commands.*;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 import java.util.concurrent.Callable;
-
+/**
+ * Main entry point to the command-line interface of vmvt.
+ */
 @Command(name = "vmvt", mixinStandardHelpOptions = true, version = "vmvt 0.8.0",
         description = "Variant-motif visualization tool.")
 public class Main implements Callable<Integer> {

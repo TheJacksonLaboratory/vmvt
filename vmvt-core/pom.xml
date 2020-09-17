@@ -8,7 +8,6 @@
     <artifactId>vmvt-core</artifactId>
     <name>vmvt-core</name>
 
-
     <parent>
         <groupId>org.monarchinitiative.vmvt</groupId>
         <artifactId>vmvt</artifactId>
@@ -16,7 +15,8 @@
     </parent>
 
     <properties>
-        <junit.version>5.6.1</junit.version>
+        <junit.version>5.6.2</junit.version>
+        <junit-platform-version>1.7.0</junit-platform-version>
     </properties>
 
     <dependencies>
@@ -36,19 +36,18 @@
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
-            <version>1.6.1</version>
+            <version>${junit-platform-version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-runner</artifactId>
-            <version>1.6.1</version>
+            <version>${junit-platform-version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -58,8 +57,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
         </plugins>
-
     </build>
 
 </project>

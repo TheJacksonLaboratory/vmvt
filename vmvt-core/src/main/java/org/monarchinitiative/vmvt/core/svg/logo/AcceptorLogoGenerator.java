@@ -16,5 +16,9 @@ public class AcceptorLogoGenerator extends SvgSequenceLogo {
         super(acceptorHeight, SVG_ACCEPTOR_WIDTH, SVG_LOGO_HEIGHT);
     }
 
+    public AcceptorLogoGenerator(DoubleMatrix donorHeight, int startY) {
+        super(donorHeight, SVG_ACCEPTOR_WIDTH, SVG_LOGO_HEIGHT, startY);
+    }
+
 
 }

@@ -50,6 +50,7 @@ The best place to leave feedback, ask questions, and report bugs is the `vmvt Is
     ruler
     walker
     trekker
+    Ri Trekker<ritrekker>
     Exonic Splicing Enhancer Analysis<ese>
     delta
     Command Line App<vmvtcli>
