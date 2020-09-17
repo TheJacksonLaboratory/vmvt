@@ -8,12 +8,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class JasparParserTest {
+    private static List<JasparMatrix> matrixList;
 
-    static String abs;
     @BeforeAll
     static void init() throws IOException  {
         Path path = Paths.get("src","test", "resources","JASPAR2020_CORE_vertebrates_non-redundant_pfms_jaspar_HEAD.txt");
@@ -21,15 +23,15 @@ public class JasparParserTest {
         if (! f.exists()) {
             throw new FileNotFoundException("Could not find test JASPAR file");
         }
-        abs = f.getAbsolutePath();
-
-
+        String abs = f.getAbsolutePath();
+        JasparParser parser = new JasparParser(abs);
+        matrixList = parser.getMatrixList();
     }
 
     @Test
     void testCtor() {
-        JasparParser parser = new JasparParser(abs);
-        assertNotNull(abs);
+        int expectedMatrixCount = 7;
+        assertEquals(expectedMatrixCount, matrixList.size());
     }
 
 

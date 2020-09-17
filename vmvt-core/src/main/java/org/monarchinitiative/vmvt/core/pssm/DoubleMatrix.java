@@ -270,6 +270,12 @@ public class DoubleMatrix {
         return nCols;
     }
 
+
+    public static DoubleMatrix fromJaspar(List<List<Double>> vals) {
+        DoubleMatrix dm = DoubleMatrix.mapToDoubleMatrix(vals);
+        return DoubleMatrix.createICMatrix(dm);
+    }
+
     /**
      * @return A matrix representing the information content of the splice donor site
      */
