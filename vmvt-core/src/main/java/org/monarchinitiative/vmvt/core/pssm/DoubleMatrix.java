@@ -115,7 +115,8 @@ public class DoubleMatrix {
      * @return {@link Double} with information content value
      */
     private static double calculateIC(double freq) {
-        return 2d - (-Math.log(freq) / Math.log(2));
+        double ic = 2d - (-Math.log(freq) / Math.log(2));
+        return ic;
     }
 
     /**
@@ -201,7 +202,7 @@ public class DoubleMatrix {
             String base = getBase(j);
             double ic = get(j,i);
             if (ic < 0) {
-                throw new RuntimeException("IC="+ic);
+                throw new VmvtRuntimeException("Negative IC value="+ic);
             }
             unSortedMap.put(base, ic);
         }
