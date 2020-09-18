@@ -47,10 +47,15 @@ public class JasparMatrix {
         this.frequencyMatrix = DoubleMatrix.fromJaspar(frequencies);
     }
 
+    public String getJasparId() {
+        return jasparId;
+    }
 
+    public String getJasparName() {
+        return jasparName;
+    }
 
-
-
-
-
+    public DoubleMatrix getFrequencyMatrix() {
+        return frequencyMatrix;
+    }
 }
