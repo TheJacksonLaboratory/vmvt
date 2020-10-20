@@ -18,12 +18,12 @@ public abstract class EseSvg extends AbstractSvgGenerator {
     /** Width of one of the two kmer plots (ref/alt) this SVG will show. Needs to be less than half of {@link #SVG_WIDTH}*/
     private final static int KMER_PLOT_WIDTH = 350;
     /** Start to draw the first ESE plot here. */
-    private int XSTART_REF_PLOT = 80;
-    private int XEND_REF_PLOT = XSTART_REF_PLOT + KMER_PLOT_WIDTH;
-    private int INTERPLOT_GAP = 100;
+    private final int XSTART_REF_PLOT = 80;
+    private final int XEND_REF_PLOT = XSTART_REF_PLOT + KMER_PLOT_WIDTH;
+    private final int INTERPLOT_GAP = 100;
     /** x start position of the second plot. */
-    private int XSTART_ALT_PLOT = XEND_REF_PLOT + INTERPLOT_GAP;
-    private int XEND_ALT_PLOT = XSTART_ALT_PLOT + KMER_PLOT_WIDTH;
+    private final int XSTART_ALT_PLOT = XEND_REF_PLOT + INTERPLOT_GAP;
+    private final int XEND_ALT_PLOT = XSTART_ALT_PLOT + KMER_PLOT_WIDTH;
 
     /**
      * Reference to a hexa (6) or hepta (7) feature calculator.

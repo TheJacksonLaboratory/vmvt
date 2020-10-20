@@ -8,7 +8,7 @@ import java.io.Writer;
 
 public abstract class SvgSequenceRuler extends AbstractSvgMotifGenerator {
 
-    protected int startX = SVG_STARTX;
+    protected final int startX = SVG_STARTX;
     /** Height on the SVG canvas for Sequence rulers. */
     protected final static int SVG_RULER_HEIGHT = 110;
     protected final static int SVG_RULER_STARTY = 30;
