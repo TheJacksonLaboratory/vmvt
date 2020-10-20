@@ -1,6 +1,10 @@
 =========
 Changelog
 =========
+------
+v0.9.1
+------
+- Fixed bug in Delta SVG when R_i is larger than the maximum SNV change
 
 ------
 v0.9.0

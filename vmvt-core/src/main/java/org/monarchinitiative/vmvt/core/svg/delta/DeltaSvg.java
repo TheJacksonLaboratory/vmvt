@@ -29,7 +29,6 @@ public class DeltaSvg extends AbstractSvgGenerator {
     private final double min;
     /** Maximum R_i value for any sequence */
     private final double max;
-
     /** Number of bins to show in the histogram. */
     private static final int BIN_COUNT = 51;
     /** Counts of values in each of the bins. */
@@ -40,8 +39,9 @@ public class DeltaSvg extends AbstractSvgGenerator {
     private final static int SVG_DELTA_HEIGHT = 400;
     /** Y position to start writing -- this will be the location of the X axis. */
     private final static int START_Y = SVG_DELTA_HEIGHT - 60;
-
+    /** Where to write the text showing the delta-Ri (x). */
     private final static int X_LOC_DELTA_RI = 230;
+    /** Where to write the text showing the delta-Ri (y). */
     private final static int Y_LOC_DELTA_RI = 50;
     /** Representation of the information content matrix of a donor or acceptor splice site. */
     private final DoubleMatrix splicesite;
@@ -112,7 +112,6 @@ public class DeltaSvg extends AbstractSvgGenerator {
         this.ref_R_i = this.splicesite.getIndividualSequenceInformation(ref);
         this.alt_R_i = this.splicesite.getIndividualSequenceInformation(alt);
         this.delta = ref_R_i - alt_R_i;
-
     }
 
 
@@ -184,11 +183,11 @@ public class DeltaSvg extends AbstractSvgGenerator {
             X += increment;
         }
         // the following should never happen
-        if (delta>max) {
-            throw new VmvtRuntimeException("Bad data -- measured delta greater than max");
-        } else if (delta < min) {
-            throw new VmvtRuntimeException("Bad data -- measured delta smaller than min");
-        }
+//        if (delta>max) {
+//            throw new VmvtRuntimeException("Bad data -- measured delta greater than max");
+//        } else if (delta < min) {
+//            throw new VmvtRuntimeException("Bad data -- measured delta smaller than min");
+//        }
         double Xzero = (10.0*increment) + startX; // X position at ZERO of the graph
         if (delta > 0) {
             int x1 = (int)((delta*increment) + Xzero);
@@ -216,16 +215,36 @@ public class DeltaSvg extends AbstractSvgGenerator {
                 "<text x=\"%d\" y=\"%d\">: %.2f</text>\n",
                 X_LOC_DELTA_RI,Y_LOC_DELTA_RI,X_LOC_DELTA_RI+38,Y_LOC_DELTA_RI,this.delta);
         int lineheight = START_Y-100;
-        String line2 = String.format("<g fill=\"none\" stroke=\"%s\" stroke-width=\"2\">\n" +
-                "<path stroke-dasharray=\"2,2\" d=\"M%d %d l0 %d\"/>" +
-                "</g>\n", SvgColors.PURPLE, x,100,lineheight);
-
-        String circle = String.format("<circle cx=\"%d\" cy=\"%d\" r=\"8\" stroke=\"black\" \n" +
-                " stroke-width=\"3\" fill=\"%s\"/>\n",x,100, SvgColors.PURPLE);
-
         writer.write(deltaRi);
-        writer.write(line2);
-        writer.write(circle);
+        if (delta > max) {
+            // In this case, the delta-Ri is larger than the delta-Ri of any single nt mutation
+            // draw a red box around the delta Ri
+            int y_bottom = Y_LOC_DELTA_RI + 15;
+            int y_top = Y_LOC_DELTA_RI - 30;
+            int x_left = X_LOC_DELTA_RI - 10;
+            int x_right = X_LOC_DELTA_RI + 150;
+
+            writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\" stroke-width=\"3\"/>\n",
+                    x_left,y_bottom,x_right,y_bottom, SvgColors.RED));
+            writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\" stroke-width=\"3\"/>\n",
+                    x_left,y_top,x_right, y_top, SvgColors.RED));
+            writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\" stroke-width=\"3\"/>\n",
+                    x_left+1,y_bottom,x_left+1,y_top, SvgColors.RED));
+            writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\" stroke-width=\"3\"/>\n",
+                    x_right-1,y_bottom,x_right-1,y_top, SvgColors.RED));
+        } else {
+            // write a line with pinhead to show location of delta-Ri of the variant
+            String line2 = String.format("<g fill=\"none\" stroke=\"%s\" stroke-width=\"2\">\n" +
+                    "<path stroke-dasharray=\"2,2\" d=\"M%d %d l0 %d\"/>" +
+                    "</g>\n", SvgColors.PURPLE, x, 100, lineheight);
+            String circle = String.format("<circle cx=\"%d\" cy=\"%d\" r=\"8\" stroke=\"black\" \n" +
+                    " stroke-width=\"3\" fill=\"%s\"/>\n", x, 100, SvgColors.PURPLE);
+            writer.write(line2);
+            writer.write(circle);
+        }
+
+
+
 
     }
 

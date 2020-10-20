@@ -43,4 +43,14 @@ public class DoubleMatrixTest {
         double g_ic = icDonor.get(2,3); // G at position 4 (first intronic pos)
         assertEquals(2.0, g_ic, 0.01);
     }
+
+    @Test
+    void testIcCalculations() {
+        double ic = DoubleMatrix.calculateIC(1.0);
+        assertEquals(2.0, ic, EPSILON);
+        ic = DoubleMatrix.calculateIC(0.25);
+        assertEquals(0.0, ic, EPSILON);
+        ic = DoubleMatrix.calculateIC(0.05);
+        System.out.println(ic);
+    }
 }

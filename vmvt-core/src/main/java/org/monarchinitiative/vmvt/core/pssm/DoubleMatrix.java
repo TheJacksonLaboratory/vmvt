@@ -114,8 +114,9 @@ public class DoubleMatrix {
      * @param freq {@link Double} frequency of nucleotide occurence at its position from range <0, 1>
      * @return {@link Double} with information content value
      */
-    private static double calculateIC(double freq) {
-        double ic = 2d - (-Math.log(freq) / Math.log(2));
+    static double calculateIC(double freq) {
+        if (freq==0.0) return 0.0;
+        double ic = 2d - (-Math.log(freq) / LOG_TWO);
         return ic;
     }
 

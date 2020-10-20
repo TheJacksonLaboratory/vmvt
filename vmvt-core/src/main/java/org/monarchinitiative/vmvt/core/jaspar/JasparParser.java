@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class JasparParser {
 
-    List<JasparMatrix> matrixList;
+    final List<JasparMatrix> matrixList;
 
     /**
      * Build a list of {@link JasparMatrix} objects from the JASPAR input file
@@ -71,10 +71,9 @@ public class JasparParser {
         }
         String countsLine = line.substring(i+1, j).trim();
         String [] fields = countsLine.split("\\s+");
-        List<Integer> counts = Arrays.stream(fields)
+        return Arrays.stream(fields)
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
-        return counts;
     }
 
 

@@ -314,6 +314,20 @@ public class DonorGeneratorTest {
         }
     }
 
+    @Test
+    public void largeDeltaTest() {
+        VmvtGenerator vmvt = new VmvtGenerator();
+        final String svg = vmvt.getDonorDistributionSvg("TTAgtaagt", "TTAtaagtg");
+        try {
+            String path = "target/donorWith2Nucleotides.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
