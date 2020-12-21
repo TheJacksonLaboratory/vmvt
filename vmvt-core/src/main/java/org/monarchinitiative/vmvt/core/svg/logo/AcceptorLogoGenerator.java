@@ -12,12 +12,12 @@ public class AcceptorLogoGenerator extends SvgSequenceLogo {
      * Write a sequence logo for a splice donor site (showing ref/alt sequences)
      * Note that the size of the SVG is set in the superclass constructor (w,h)
      */
-    public AcceptorLogoGenerator(DoubleMatrix acceptorHeight) {
-        super(acceptorHeight, SVG_ACCEPTOR_WIDTH, SVG_LOGO_HEIGHT);
+    public AcceptorLogoGenerator(DoubleMatrix acceptorHeight, boolean framed) {
+        super(acceptorHeight, SVG_ACCEPTOR_WIDTH, SVG_LOGO_HEIGHT, framed);
     }
 
-    public AcceptorLogoGenerator(DoubleMatrix donorHeight, int startY) {
-        super(donorHeight, SVG_ACCEPTOR_WIDTH, SVG_LOGO_HEIGHT, startY);
+    public AcceptorLogoGenerator(DoubleMatrix donorHeight, int startY, boolean framed) {
+        super(donorHeight, SVG_ACCEPTOR_WIDTH, SVG_LOGO_HEIGHT, startY, framed);
     }
 
 

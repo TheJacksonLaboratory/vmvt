@@ -17,7 +17,7 @@ public class DeltaCommand extends AbstractSequenceComparisonCommand implements C
     @Override
     public Integer call() {
         VmvtGenerator vmvt = new VmvtGenerator();
-        String svg="";
+
         if (this.infile != null && this.reference==null && this.alternate==null) {
             readInputFile();
         }
@@ -29,7 +29,7 @@ public class DeltaCommand extends AbstractSequenceComparisonCommand implements C
             System.exit(1);
         }
         // same function for acceptor and donor, the Delta class figures out the length.
-        svg = vmvt.getDelta(reference, alternate);
+        String svg = vmvt.getDelta(reference, alternate);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outname))) {
             writer.write(svg);
         } catch (IOException e) {

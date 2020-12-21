@@ -57,8 +57,8 @@ public class DeltaSvg extends AbstractSvgGenerator {
      * @param ref reference sequence
      * @param alt alternate sequence
      */
-    public DeltaSvg(String ref, String alt) {
-        super(SVG_DELTA_WIDTH, SVG_DELTA_HEIGHT);
+    public DeltaSvg(String ref, String alt, boolean framed) {
+        super(SVG_DELTA_WIDTH, SVG_DELTA_HEIGHT, framed);
         if (ref.length() != alt.length()) {
             throw new VmvtRuntimeException("Ref and alt must have the same length");
         }
@@ -93,8 +93,8 @@ public class DeltaSvg extends AbstractSvgGenerator {
      * @param ref reference sequence
      * @param alt alternate sequence
      */
-    public DeltaSvg(String ref, String alt, DistributionCalculator dcal) {
-        super(SVG_DELTA_WIDTH, SVG_DELTA_HEIGHT);
+    public DeltaSvg(String ref, String alt, DistributionCalculator dcal, boolean framed) {
+        super(SVG_DELTA_WIDTH, SVG_DELTA_HEIGHT, framed);
         this.deltavals = dcal.getDeltas();
         this.min = deltavals.stream().mapToDouble(Double::doubleValue).min().orElseThrow();
         this.max = deltavals.stream().mapToDouble(Double::doubleValue).max().orElseThrow();

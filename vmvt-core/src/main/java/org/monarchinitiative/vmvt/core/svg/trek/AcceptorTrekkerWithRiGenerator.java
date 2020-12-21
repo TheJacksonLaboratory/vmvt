@@ -16,24 +16,27 @@ import java.io.Writer;
  */
 public class AcceptorTrekkerWithRiGenerator extends SvgTrekkerWithRi{
 
-    public AcceptorTrekkerWithRiGenerator(String ref, String alt, DoubleMatrix site) {
-        super(ref,alt,SVG_ACCEPTOR_WIDTH, site,DoubleMatrix.acceptorHeightMatrix());
+    private final boolean framed;
+
+    public AcceptorTrekkerWithRiGenerator(String ref, String alt, DoubleMatrix site, boolean framed) {
+        super(ref,alt,SVG_ACCEPTOR_WIDTH, site,DoubleMatrix.acceptorHeightMatrix(), framed);
+        this.framed = framed;
     }
 
-    public static AbstractSvgMotifGenerator acceptor(String ref, String alt, DoubleMatrix acceptor) {
-        return new AcceptorTrekkerWithRiGenerator(ref, alt, acceptor);
+    public static AbstractSvgMotifGenerator acceptor(String ref, String alt, DoubleMatrix acceptor,boolean framed) {
+        return new AcceptorTrekkerWithRiGenerator(ref, alt, acceptor, framed);
     }
 
 
     @Override
     public void write(Writer swriter) throws IOException {
-        AcceptorRuler ruler = new AcceptorRuler(this.ref, this.alt);
+        AcceptorRuler ruler = new AcceptorRuler(this.ref, this.alt, this.framed);
         ruler.write(swriter);
-        SvgSequenceLogo donorLogo = new AcceptorLogoGenerator(this.spliceHeightMatrix, SVG_DONOR_LOGO_START);
+        SvgSequenceLogo donorLogo = new AcceptorLogoGenerator(this.spliceHeightMatrix, SVG_DONOR_LOGO_START, this.framed);
         donorLogo.write(swriter);
         System.out.println("SVG_TREKKER_WALKER_START_Y: " + SVG_WALKER_START_Y);
         AbstractSvgMotifGenerator walker =
-                new SvgSequenceWalker(this.ref, this.alt, this.splicesite, WIDTH, HEIGHT, SVG_WALKER_START_Y);
+                new SvgSequenceWalker(this.ref, this.alt, this.splicesite, WIDTH, HEIGHT, SVG_WALKER_START_Y, this.framed);
         walker.write(swriter);
         // now show the Ri values
         double refR_i = splicesite.getIndividualSequenceInformation(this.ref);

@@ -17,7 +17,7 @@ public class RulerCommand extends AbstractSequenceComparisonCommand implements C
     @Override
     public Integer call() {
         VmvtGenerator vmvt = new VmvtGenerator();
-        String svg="";
+        String svg;
         initSequences();
         if (seqlen == 9) {
             // donor

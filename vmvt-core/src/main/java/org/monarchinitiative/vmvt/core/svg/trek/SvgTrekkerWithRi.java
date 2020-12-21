@@ -40,8 +40,8 @@ public abstract class SvgTrekkerWithRi extends AbstractSvgMotifGenerator {
     /** A representation of the height matrix. */
     protected final DoubleMatrix spliceHeightMatrix;
 
-    public SvgTrekkerWithRi(String ref, String alt, int w,  DoubleMatrix site, DoubleMatrix heightMatrix) {
-        super(ref,alt,w+EXTRA_X_FOR_RI, SVG_TREKKER_WITH_RI_HEIGHT);
+    public SvgTrekkerWithRi(String ref, String alt, int w,  DoubleMatrix site, DoubleMatrix heightMatrix, boolean framed) {
+        super(ref,alt,w+EXTRA_X_FOR_RI, SVG_TREKKER_WITH_RI_HEIGHT, framed);
         splicesite = site;
         this.spliceHeightMatrix = heightMatrix;
         int middle = w/2 + SVG_STARTX/2;

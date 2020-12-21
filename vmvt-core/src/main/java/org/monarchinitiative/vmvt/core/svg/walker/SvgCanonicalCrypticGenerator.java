@@ -34,8 +34,11 @@ public class SvgCanonicalCrypticGenerator extends AbstractSvgGenerator {
     private final DoubleMatrix splicesite;
     private final boolean isDonor;
 
-    private SvgCanonicalCrypticGenerator(int w, int h, String can, String crypt, DoubleMatrix site) {
-        super(w+EXTRA_X_FOR_RI, h);
+    private final boolean framed;
+
+    private SvgCanonicalCrypticGenerator(int w, int h, String can, String crypt, DoubleMatrix site, boolean framed) {
+        super(w+EXTRA_X_FOR_RI, h, framed);
+        this.framed = framed;
         this.walkerWidth = w;
         middle = w/2;
         blueBoxStart = middle - BLUE_BOX_WIDTH/2;
@@ -85,13 +88,13 @@ public class SvgCanonicalCrypticGenerator extends AbstractSvgGenerator {
         double R_i = splicesite.getIndividualSequenceInformation(this.canonical);
         writeRi(writer, R_i, "canonical", ystart);
         ystart += BLUE_BOX_HEIGHT + Y_INCREMENT;
-        SvgSequenceWalker walker = SvgSequenceWalker.singleDonorWalker(this.canonical, this.splicesite, ystart);
+        SvgSequenceWalker walker = SvgSequenceWalker.singleDonorWalker(this.canonical, this.splicesite, ystart, this.framed);
         walker.writeRefWalker(writer);
         R_i = splicesite.getIndividualSequenceInformation(this.cryptic);
         ystart += 80;
         writeRi(writer, R_i, "cryptic", ystart);
         ystart += BLUE_BOX_HEIGHT + Y_INCREMENT;
-        walker = SvgSequenceWalker.singleDonorWalker(this.cryptic, this.splicesite, ystart);
+        walker = SvgSequenceWalker.singleDonorWalker(this.cryptic, this.splicesite, ystart, this.framed);
         walker.writeRefWalker(writer);
     }
 
@@ -103,13 +106,13 @@ public class SvgCanonicalCrypticGenerator extends AbstractSvgGenerator {
         double R_i = splicesite.getIndividualSequenceInformation(this.canonical);
         writeRi(writer, R_i, "canonical", ystart);
         ystart += BLUE_BOX_HEIGHT + Y_INCREMENT;
-        SvgSequenceWalker walker = SvgSequenceWalker.singleAcceptorWalker(this.canonical, this.splicesite, ystart);
+        SvgSequenceWalker walker = SvgSequenceWalker.singleAcceptorWalker(this.canonical, this.splicesite, ystart, this.framed);
         walker.writeRefWalker(writer);
         ystart += 80;
         R_i = splicesite.getIndividualSequenceInformation(this.cryptic);
         writeRi(writer, R_i, "cryptic", ystart);
         ystart += BLUE_BOX_HEIGHT + Y_INCREMENT;
-        walker = SvgSequenceWalker.singleAcceptorWalker(this.cryptic, this.splicesite, ystart);
+        walker = SvgSequenceWalker.singleAcceptorWalker(this.cryptic, this.splicesite, ystart, this.framed);
         walker.writeRefWalker(writer);
 
     }
@@ -141,12 +144,12 @@ public class SvgCanonicalCrypticGenerator extends AbstractSvgGenerator {
 
 
 
-    public static SvgCanonicalCrypticGenerator donor(String can, String crypt, DoubleMatrix donor) {
-        return new SvgCanonicalCrypticGenerator(SVG_DONOR_WIDTH, SVG_CANONICAL_CRYPTIC_HEIGHT, can, crypt,donor);
+    public static SvgCanonicalCrypticGenerator donor(String can, String crypt, DoubleMatrix donor, boolean framed) {
+        return new SvgCanonicalCrypticGenerator(SVG_DONOR_WIDTH, SVG_CANONICAL_CRYPTIC_HEIGHT, can, crypt,donor, framed);
     }
 
-    public static SvgCanonicalCrypticGenerator acceptor(String can, String crypt, DoubleMatrix acceptor) {
-        return new SvgCanonicalCrypticGenerator(SVG_ACCEPTOR_WIDTH, SVG_CANONICAL_CRYPTIC_HEIGHT, can, crypt, acceptor);
+    public static SvgCanonicalCrypticGenerator acceptor(String can, String crypt, DoubleMatrix acceptor, boolean framed) {
+        return new SvgCanonicalCrypticGenerator(SVG_ACCEPTOR_WIDTH, SVG_CANONICAL_CRYPTIC_HEIGHT, can, crypt, acceptor, framed);
     }
 
 

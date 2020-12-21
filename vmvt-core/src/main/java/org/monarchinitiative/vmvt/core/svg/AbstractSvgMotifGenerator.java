@@ -36,12 +36,12 @@ public abstract class AbstractSvgMotifGenerator extends AbstractSvgGenerator {
      * @param w width of the SVG canvas
      * @param h height of the SVG canvas
      */
-    public AbstractSvgMotifGenerator(String ref, String alt,  int w, int h) {
-        this(ref,alt,null, w, h);
+    public AbstractSvgMotifGenerator(String ref, String alt,  int w, int h, boolean framed) {
+        this(ref,alt,null, w, h, framed);
     }
 
-    public AbstractSvgMotifGenerator(String ref, String alt, DoubleMatrix splicesite, int w, int h) {
-        super(w,h);
+    public AbstractSvgMotifGenerator(String ref, String alt, DoubleMatrix splicesite, int w, int h, boolean framed) {
+        super(w,h, framed);
         this.ref = ref;
         this.alt = alt;
         this.splicesite = splicesite;

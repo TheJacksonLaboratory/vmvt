@@ -34,8 +34,8 @@ public abstract class SvgSequenceLogo extends AbstractSvgGenerator {
      * @param w width of the SVG canvas
      * @param h height of the SVG canvas
      */
-    public SvgSequenceLogo(DoubleMatrix site, int w, int h) {
-        super(w, h);
+    public SvgSequenceLogo(DoubleMatrix site, int w, int h, boolean framed) {
+        super(w, h, framed);
         splicesite = site;
         this.XSTART = SVG_STARTX;
         this.YSTART = SVG_LOGO_STARTY; // Note that the logo is relatively high, so we want to start lower down!
@@ -50,8 +50,8 @@ public abstract class SvgSequenceLogo extends AbstractSvgGenerator {
      * @param h height of the SVG canvas
      * @param startY Used to start drawing at a particular Y position in composite SVGs.
      */
-    public SvgSequenceLogo(DoubleMatrix site, int w, int h, int startY) {
-        super(w, h);
+    public SvgSequenceLogo(DoubleMatrix site, int w, int h, int startY, boolean framed) {
+        super(w, h, framed);
         splicesite = site;
         this.XSTART = SVG_STARTX;
         this.YSTART = SVG_LOGO_STARTY + startY; // Note that the logo is relatively high, so we want to start lower down!

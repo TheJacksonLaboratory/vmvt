@@ -14,7 +14,7 @@ public class TrekCommand extends AbstractSequenceComparisonCommand implements Ca
     @Override
     public Integer call() {
         VmvtGenerator vmvt = new VmvtGenerator();
-        String svg="";
+        String svg;
         initSequences();
         if (seqlen == 9) {
             // donor

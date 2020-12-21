@@ -14,8 +14,8 @@ public class AcceptorWalkerGenerator extends SvgSequenceWalker {
      * @param ref Reference sequence
      * @param alt Alternate (mutant) sequence
      */
-    public AcceptorWalkerGenerator(String ref, String alt) {
-        super(ref, alt,DoubleMatrix.acceptor(),SVG_ACCEPTOR_WIDTH,SVG_WALKER_HEIGHT);
+    public AcceptorWalkerGenerator(String ref, String alt, boolean framed) {
+        super(ref, alt,DoubleMatrix.acceptor(),SVG_ACCEPTOR_WIDTH,SVG_WALKER_HEIGHT, framed);
     }
 
     /**
@@ -24,8 +24,8 @@ public class AcceptorWalkerGenerator extends SvgSequenceWalker {
      * @param ref Reference sequence
      * @param alt Alternate (mutant) sequence
      */
-    public AcceptorWalkerGenerator(String ref, String alt, DoubleMatrix acceptor) {
-        super(ref, alt, acceptor, SVG_ACCEPTOR_WIDTH,SVG_WALKER_HEIGHT);
+    public AcceptorWalkerGenerator(String ref, String alt, DoubleMatrix acceptor, boolean framed) {
+        super(ref, alt, acceptor, SVG_ACCEPTOR_WIDTH,SVG_WALKER_HEIGHT, framed);
     }
 
 }
