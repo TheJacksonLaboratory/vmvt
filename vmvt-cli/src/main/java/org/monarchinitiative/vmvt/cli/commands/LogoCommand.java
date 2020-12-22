@@ -16,11 +16,11 @@ import java.util.concurrent.Callable;
 @CommandLine.Command(name = "logo", aliases = {"L"}, mixinStandardHelpOptions = true, description = "Create sequence logo")
 public class LogoCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-d","--donor"})
-    boolean isDonor;
+    public boolean isDonor;
     @CommandLine.Option(names = {"-a","--acceptor"})
-    boolean isAcceptor;
+    public boolean isAcceptor;
     @CommandLine.Option(names = {"-o","--out"})
-    String outname = "logo.svg";
+    public String outname = "logo.svg";
 
     @Override
     public Integer call() {

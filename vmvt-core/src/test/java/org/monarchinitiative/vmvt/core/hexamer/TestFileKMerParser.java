@@ -1,6 +1,7 @@
 package org.monarchinitiative.vmvt.core.hexamer;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.monarchinitiative.vmvt.core.VmvtGenerator;
 
@@ -18,18 +19,18 @@ public class TestFileKMerParser {
     private static Map<String, Double> heptamerMap;
 
     @BeforeAll
-    static void init() {
+    public static void init() {
         hexamerMap = FileKMerParser.hexamerMap();
         heptamerMap = FileKMerParser.heptamerMap();
     }
 
     @Test
-    void testConstructor() {
+    public void testConstructor() {
         assertNotNull(hexamerMap);
     }
 
     @Test
-    void testHexamerSize() {
+    public void testHexamerSize() {
         int size = hexamerMap.size();
         // we expect 4 to the power of 6 kmers.
         int expected = (int) Math.pow(4, 6);
@@ -37,7 +38,7 @@ public class TestFileKMerParser {
     }
 
     @Test
-    void testHeptamerSize() {
+    public void testHeptamerSize() {
         int size = heptamerMap.size();
         // we expect 4 to the power of 7 kmers.
         int expected = (int) Math.pow(4, 7);
@@ -45,8 +46,9 @@ public class TestFileKMerParser {
     }
 
     // JUST FOR DEVELOPMENT, CAN BE DELETED
+    @Disabled
     @Test
-    void writeEseSvg() {
+    public void writeEseSvg() {
         String ref = "cctggctatat";
         String alt = "cctagctatat";
         VmvtGenerator vmvt = new VmvtGenerator();

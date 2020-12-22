@@ -18,13 +18,13 @@ public class DonorGeneratorTest {
 
 
     @Test
-    void testCtor() {
+    public void testCtor() {
         VmvtGenerator donor = new VmvtGenerator();
         assertNotNull(donor);
     }
 
     @Test
-    void testWriteDonorSvgWalker() {
+    public void testWriteDonorSvgWalker() {
         VmvtGenerator donor = new VmvtGenerator();
         String svg = donor.getDonorWalkerSvg(ref,alt);
         assertNotNull(svg);
@@ -39,7 +39,7 @@ public class DonorGeneratorTest {
     }
 
     @Test
-    void testWriteDonorSvgLogo() {
+    public void testWriteDonorSvgLogo() {
         VmvtGenerator donor = new VmvtGenerator();
         String svg = donor.getDonorLogoSvg();
         assertNotNull(svg);
@@ -54,7 +54,7 @@ public class DonorGeneratorTest {
     }
 
     @Test
-    void testWriteDonorTrekker() {
+    public void testWriteDonorTrekker() {
         VmvtGenerator donor = new VmvtGenerator();
         String svg = donor.getDonorTrekkerSvg(ref,alt);
         assertNotNull(svg);
@@ -69,7 +69,7 @@ public class DonorGeneratorTest {
     }
 
     @Test
-    void testWriteDonorTrekkerBack() {
+    public void testWriteDonorTrekkerBack() {
         VmvtGenerator donor = new VmvtGenerator();
         String svg = donor.getDonorTrekkerSvg(alt,ref);
         assertNotNull(svg);
@@ -86,7 +86,7 @@ public class DonorGeneratorTest {
 
 
     @Test
-    void testWriteDonorTrekkerMinusOnePosition() {
+    public void testWriteDonorTrekkerMinusOnePosition() {
         final String ref = "AAGGTCAGA";
         final String alt = "AACGTCAGA";
         VmvtGenerator donor = new VmvtGenerator();
@@ -104,7 +104,7 @@ public class DonorGeneratorTest {
 
 
     @Test
-    void testWriteDonorTrekkerMinusTwoPosition() {
+    public void testWriteDonorTrekkerMinusTwoPosition() {
         final String ref = "AAGGTCAGA";
         final String alt = "ATGGTCAGA";
         VmvtGenerator donor = new VmvtGenerator();
@@ -121,7 +121,7 @@ public class DonorGeneratorTest {
     }
 
     @Test
-    void testWriteDonorTrekker2NtVar() {
+    public void testWriteDonorTrekker2NtVar() {
         final String ref = "AAGGTCAGA";
         final String alt = "ATCGTCAGA";
         VmvtGenerator donor = new VmvtGenerator();
@@ -138,7 +138,7 @@ public class DonorGeneratorTest {
     }
 
     @Test
-    void testGetDonorRuler(){
+    public void testGetDonorRuler(){
         VmvtGenerator donor = new VmvtGenerator();
         String svg = donor.getDonorSequenceRuler(ref,alt);
         assertNotNull(svg);
@@ -153,7 +153,7 @@ public class DonorGeneratorTest {
     }
 
     @Test
-    void testHexamer(){
+    public void testHexamer(){
         String svg = getHexamerSvg();
         assertNotNull(svg);
         try {
@@ -167,7 +167,7 @@ public class DonorGeneratorTest {
     }
 
     @Test
-    void testHeptamer(){
+    public void testHeptamer(){
         String svg = getHeptamerSvg();
         assertNotNull(svg);
         try {
@@ -215,7 +215,7 @@ public class DonorGeneratorTest {
      * we want to show for the documentation.
      */
     @Test
-    void writeAllSvgsToReadTheDocs() {
+    public void writeAllSvgsToReadTheDocs() {
         if (42==2) {
             assertEquals(2,2);
             return;
@@ -254,7 +254,7 @@ public class DonorGeneratorTest {
     }
 
     @Test
-    void testCanonicalCryptic() {
+    public void testCanonicalCryptic() {
         VmvtGenerator vmvt = new VmvtGenerator();
         String canRef = "caggttggt";
         String crypticRef = "tgggcaggt";
@@ -285,7 +285,7 @@ public class DonorGeneratorTest {
 
 
     @Test
-    void testDeltaDonor() {
+    public void testDeltaDonor() {
         VmvtGenerator vmvt = new VmvtGenerator();
         String svg = vmvt.getDelta(ref, alt);
 
