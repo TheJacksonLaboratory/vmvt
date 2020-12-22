@@ -20,7 +20,7 @@ public class JasparGeneratorTest {
     private static List<JasparMatrix> matrixList;
 
     @BeforeAll
-    static void init() throws IOException {
+    public static void init() throws IOException {
         Path path = Paths.get("src","test", "resources","JASPAR2020_CORE_vertebrates_non-redundant_pfms_jaspar_HEAD.txt");
         File f = path.toFile();
         if (! f.exists()) {

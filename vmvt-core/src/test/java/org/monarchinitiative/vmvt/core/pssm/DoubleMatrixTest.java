@@ -26,7 +26,7 @@ public class DoubleMatrixTest {
      * Its probability should be very close to 1.0
      */
     @Test
-    void if_pos_1_is_G_then_ok() {
+    public void if_pos_1_is_G_then_ok() {
         DoubleMatrix donor  = DoubleMatrix.mapToDoubleMatrix(SpliceDonorMatrix.get());
         double g_prob = donor.get(2,3); // G at position 4 (first intronic pos)
         assertEquals(1.0, g_prob, 0.01);
@@ -37,7 +37,7 @@ public class DoubleMatrixTest {
      * Its IC should should be very close to 2.0
      */
     @Test
-    void if_IC_pos_1_is_G_then_ok() {
+    public void if_IC_pos_1_is_G_then_ok() {
         DoubleMatrix donor  = DoubleMatrix.mapToDoubleMatrix(SpliceDonorMatrix.get());
         DoubleMatrix icDonor = DoubleMatrix.createICMatrix(donor);
         double g_ic = icDonor.get(2,3); // G at position 4 (first intronic pos)
@@ -45,7 +45,7 @@ public class DoubleMatrixTest {
     }
 
     @Test
-    void testIcCalculations() {
+    public void testIcCalculations() {
         double ic = DoubleMatrix.calculateIC(1.0);
         assertEquals(2.0, ic, EPSILON);
         ic = DoubleMatrix.calculateIC(0.25);

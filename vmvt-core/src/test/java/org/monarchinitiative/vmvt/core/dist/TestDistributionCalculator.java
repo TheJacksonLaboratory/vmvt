@@ -17,7 +17,7 @@ public class TestDistributionCalculator {
     private final String alt = "AAGATCAGA";
 
     @Test
-    void testDonorDist() {
+    public void testDonorDist() {
         DistributionCalculator dcal = new DistributionCalculator(DoubleMatrix.donor());
         String donorOutfile = "target/donorvals.txt";
         String donorDeltasOutfile = "target/donordeltas.txt";
@@ -25,7 +25,7 @@ public class TestDistributionCalculator {
     }
 
     @Test
-    void testAcceptorDist() {
+    public void testAcceptorDist() {
         DistributionCalculator dcal = new DistributionCalculator(DoubleMatrix.acceptor());
         String acceptorOutfile = "target/acceptorvals.txt";
         String acceptorDeltasOutfile = "target/acceptordeltas.txt";
@@ -34,7 +34,7 @@ public class TestDistributionCalculator {
 
 
     @Test
-    void testDump() {
+    public void testDump() {
         VmvtGenerator vmvt = new VmvtGenerator();
         String svg = vmvt.getDonorDistributionSvg(ref, alt);
         assertNotNull(svg);
