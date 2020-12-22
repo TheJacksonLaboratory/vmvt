@@ -67,8 +67,8 @@ public abstract class EseSvg extends AbstractSvgGenerator {
     private final double deltaESE;
 
 
-    public EseSvg(KmerFeatureCalculator calc, String ref, String alt) {
-        super(SVG_WIDTH, SVG_HEIGHT);
+    public EseSvg(KmerFeatureCalculator calc, String ref, String alt, boolean framed) {
+        super(SVG_WIDTH, SVG_HEIGHT, framed);
         this.calculator = calc;
         this.reference = ref.toUpperCase();
         this.alternate = alt.toUpperCase();

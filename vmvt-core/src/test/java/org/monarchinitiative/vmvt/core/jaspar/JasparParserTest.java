@@ -11,13 +11,12 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class JasparParserTest {
     private static List<JasparMatrix> matrixList;
 
     @BeforeAll
-    static void init() throws IOException  {
+    public static void init() throws IOException  {
         Path path = Paths.get("src","test", "resources","JASPAR2020_CORE_vertebrates_non-redundant_pfms_jaspar_HEAD.txt");
         File f = path.toFile();
         if (! f.exists()) {
@@ -29,7 +28,7 @@ public class JasparParserTest {
     }
 
     @Test
-    void testCtor() {
+    public void testCtor() {
         int expectedMatrixCount = 7;
         assertEquals(expectedMatrixCount, matrixList.size());
     }

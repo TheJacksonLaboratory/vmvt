@@ -23,8 +23,11 @@ public class DonorTrekkerGenerator extends AbstractSvgGenerator {
     private final DoubleMatrix splicesite;
     private final DoubleMatrix spliceHeightMatrix;
 
-    public DonorTrekkerGenerator(String ref, String alt) {
-        super(SVG_TREKKER_DONOR_WIDTH,SVG_TREKKER_HEIGHT);
+    private final boolean framed;
+
+    public DonorTrekkerGenerator(String ref, String alt, boolean framed) {
+        super(SVG_TREKKER_DONOR_WIDTH,SVG_TREKKER_HEIGHT, framed);
+        this.framed = framed;
         this.reference = ref;
         this.alternate = alt;
         this.splicesite = DoubleMatrix.donor();
@@ -46,10 +49,10 @@ public class DonorTrekkerGenerator extends AbstractSvgGenerator {
     @Override
     public void write(Writer swriter) throws IOException {
         SvgSequenceLogo donorLogo =
-                new DonorLogoGenerator(this.spliceHeightMatrix);
+                new DonorLogoGenerator(this.spliceHeightMatrix, this.framed);
         donorLogo.write(swriter);
         AbstractSvgMotifGenerator donorWalker =
-                new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT, TREKKER_WALKER_START_Y);
+                new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT, TREKKER_WALKER_START_Y, this.framed);
         donorWalker.write(swriter);
         writeFooter(swriter);
     }

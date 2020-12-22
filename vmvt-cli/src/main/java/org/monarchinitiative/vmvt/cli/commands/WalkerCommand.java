@@ -14,7 +14,7 @@ public class WalkerCommand extends AbstractSequenceComparisonCommand implements 
     @Override
     public Integer call() {
         VmvtGenerator vmvt = new VmvtGenerator();
-        String svg="";
+        String svg;
         initSequences();
         if (seqlen == 9) {
             // donor

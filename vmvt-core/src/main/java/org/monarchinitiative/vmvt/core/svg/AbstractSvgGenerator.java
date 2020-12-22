@@ -81,9 +81,12 @@ public abstract class AbstractSvgGenerator {
     /** Fonts to be used for this SVG, e.g., 'Courier, monospace' */
     private final String SVG_FONTS;
 
-    public AbstractSvgGenerator(int w, int h) {
+    private final boolean framed;
+
+    public AbstractSvgGenerator(int w, int h, boolean framed) {
         this.WIDTH = w;
         this.HEIGHT = h;
+        this.framed = framed;
         FontProfile fprofile = new CourierProfile();
         this.VERTICAL_SCALING_FACTOR = fprofile.verticalScalingFactor();
         this.LOGO_COLUMN_HEIGHT = fprofile.logoColumnHeight();
@@ -95,9 +98,11 @@ public abstract class AbstractSvgGenerator {
      * style="border:1px solid black" to create a border around the SVG for testing.
      */
     protected void writeHeader(Writer writer) throws IOException {
-        writer.write("<svg width=\"" + this.WIDTH +"\" height=\""+ this.HEIGHT +"\" " +
-                   "style=\"border:1px solid black\" " +
-                "xmlns=\"http://www.w3.org/2000/svg\" " +
+        writer.write("<svg width=\"" + this.WIDTH +"\" height=\""+ this.HEIGHT +"\" ");
+        if (this.framed) {
+            writer.write(    "style=\"border:1px solid black\" ");
+        }
+        writer.write(  "xmlns=\"http://www.w3.org/2000/svg\" " +
                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n");
         writer.write("<!-- Created by " + PROGRAM_NAME + " -->\n");
         writer.write("<style>\n" +

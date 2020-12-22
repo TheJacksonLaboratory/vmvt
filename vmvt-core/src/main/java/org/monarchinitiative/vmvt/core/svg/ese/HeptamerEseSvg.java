@@ -8,8 +8,8 @@ public class HeptamerEseSvg extends EseSvg {
     private final static KmerFeatureCalculator heptaCalc = new HeptamerFeatureCalculator(FileKMerParser.heptamerMap());
 
 
-    public HeptamerEseSvg(String reference, String alternate) {
-        super(heptaCalc, reference, alternate);
+    public HeptamerEseSvg(String reference, String alternate, boolean framed) {
+        super(heptaCalc, reference, alternate, framed);
     }
 
 }

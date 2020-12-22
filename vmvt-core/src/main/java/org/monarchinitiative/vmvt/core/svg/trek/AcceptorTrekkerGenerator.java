@@ -22,9 +22,11 @@ public class AcceptorTrekkerGenerator extends AbstractSvgGenerator {
     private final String alternate;
     private final DoubleMatrix splicesite;
     private final DoubleMatrix spliceHeightMatrix;
+    private final boolean framed;
 
-    public AcceptorTrekkerGenerator(String ref, String alt) {
-        super(SVG_TREKKER_ACCEPTOR_WIDTH ,SVG_TREKKER_HEIGHT);
+    public AcceptorTrekkerGenerator(String ref, String alt, boolean framed) {
+        super(SVG_TREKKER_ACCEPTOR_WIDTH ,SVG_TREKKER_HEIGHT, framed);
+        this.framed = framed;
         this.reference = ref;
         this.alternate = alt;
         this.splicesite = DoubleMatrix.acceptor();
@@ -47,10 +49,10 @@ public class AcceptorTrekkerGenerator extends AbstractSvgGenerator {
     @Override
     public void write(Writer swriter) throws IOException {
         SvgSequenceLogo acceptorLogo =
-                new AcceptorLogoGenerator(this.spliceHeightMatrix);
+                new AcceptorLogoGenerator(this.spliceHeightMatrix, this.framed);
         acceptorLogo.write(swriter);
         AbstractSvgMotifGenerator acceptorWalker =
-                new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT,TREKKER_WALKER_START_Y);
+                new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT,TREKKER_WALKER_START_Y, this.framed);
         acceptorWalker.write(swriter);
     }
 }

@@ -8,8 +8,8 @@ import java.io.Writer;
 
 public class AcceptorRuler extends SvgSequenceRuler {
 
-    public AcceptorRuler(String ref, String alt) {
-        super(SVG_ACCEPTOR_WIDTH, SVG_RULER_HEIGHT, ref, alt);
+    public AcceptorRuler(String ref, String alt, boolean framed) {
+        super(SVG_ACCEPTOR_WIDTH, SVG_RULER_HEIGHT, ref, alt, framed);
         if (this.seqlen != ACCEPTOR_NT_LENGTH) {
             throw new VmvtRuntimeException(String.format("Sequence length must be %d for donor but was %d",
                     ACCEPTOR_NT_LENGTH, this.seqlen));

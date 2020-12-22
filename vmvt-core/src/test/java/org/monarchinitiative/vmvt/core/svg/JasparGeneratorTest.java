@@ -1,6 +1,7 @@
 package org.monarchinitiative.vmvt.core.svg;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.monarchinitiative.vmvt.core.jaspar.JasparMatrix;
 import org.monarchinitiative.vmvt.core.jaspar.JasparParser;
@@ -19,7 +20,7 @@ public class JasparGeneratorTest {
     private static List<JasparMatrix> matrixList;
 
     @BeforeAll
-    static void init() throws IOException {
+    public static void init() throws IOException {
         Path path = Paths.get("src","test", "resources","JASPAR2020_CORE_vertebrates_non-redundant_pfms_jaspar_HEAD.txt");
         File f = path.toFile();
         if (! f.exists()) {
@@ -30,12 +31,12 @@ public class JasparGeneratorTest {
         matrixList = parser.getMatrixList();
     }
 
-    @Test
+    @Test @Disabled
     public void testALX3() {
         JasparMatrix alx3 = matrixList.stream()
                 .filter(jm -> jm.getJasparName().equals("ALX3"))
                 .findAny().orElseThrow();
-        SvgSequenceLogo generator = JasparLogoGenerator.fromDoubleMatrix(alx3.getFrequencyMatrix());
+        SvgSequenceLogo generator = JasparLogoGenerator.fromDoubleMatrix(alx3.getFrequencyMatrix(), false);
         String svg = generator.getSvg();
         assertNotNull(svg);
         try {

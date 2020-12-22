@@ -43,8 +43,8 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
      * @param w width of the SVG canvas
      * @param h height of the SVG canvas
      */
-    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h) {
-        super(ref,alt,site,w,h);
+    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h, boolean framed) {
+        super(ref,alt,site,w,h, framed);
         this.YSTART = SVG_WALKER_STARTY;
         this.currentX = this.XSTART;
         this.currentY =  this.YSTART;
@@ -62,8 +62,8 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
      * @param h height of the SVG canvas
      * @param ystart Used to indicate the position to start for a composite SVG
      */
-    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h, int ystart) {
-        super(ref,alt,site,w,h);
+    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, int h, int ystart,boolean framed) {
+        super(ref,alt,site,w,h, framed);
         this.YSTART = ystart;
         this.currentX = this.XSTART;
         this.currentY = this.YSTART;
@@ -270,8 +270,8 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
     }
 
 
-    public static SvgSequenceWalker donor(String ref, String alt) {
-        return new SvgSequenceWalker(ref, alt, DoubleMatrix.donor(), SVG_DONOR_WIDTH,SVG_WALKER_HEIGHT);
+    public static SvgSequenceWalker donor(String ref, String alt, boolean framed) {
+        return new SvgSequenceWalker(ref, alt, DoubleMatrix.donor(), SVG_DONOR_WIDTH,SVG_WALKER_HEIGHT, framed);
     }
 
     /**
@@ -281,24 +281,24 @@ public class SvgSequenceWalker extends AbstractSvgMotifGenerator {
      * @param alt Alternate (mutant) sequence
      * @param donor Donor information content matrix
      */
-    public static SvgSequenceWalker donor(String ref, String alt, DoubleMatrix donor) {
-        return new SvgSequenceWalker(ref, alt, donor, SVG_DONOR_WIDTH,SVG_WALKER_HEIGHT);
+    public static SvgSequenceWalker donor(String ref, String alt, DoubleMatrix donor, boolean framed) {
+        return new SvgSequenceWalker(ref, alt, donor, SVG_DONOR_WIDTH,SVG_WALKER_HEIGHT, framed);
     }
 
-    public static SvgSequenceWalker singleDonorWalker(String sequence, int ystart) {
-        return SvgSequenceWalker.singleDonorWalker(sequence, DoubleMatrix.donor(), ystart);
+    public static SvgSequenceWalker singleDonorWalker(String sequence, int ystart, boolean framed) {
+        return SvgSequenceWalker.singleDonorWalker(sequence, DoubleMatrix.donor(), ystart, framed);
     }
 
-    public static SvgSequenceWalker singleDonorWalker(String sequence, DoubleMatrix donor, int ystart) {
-        return new SvgSequenceWalker(sequence, sequence, donor, SVG_DONOR_WIDTH, SVG_WALKER_HEIGHT, ystart);
+    public static SvgSequenceWalker singleDonorWalker(String sequence, DoubleMatrix donor, int ystart, boolean framed) {
+        return new SvgSequenceWalker(sequence, sequence, donor, SVG_DONOR_WIDTH, SVG_WALKER_HEIGHT, ystart, framed);
     }
 
-    public static SvgSequenceWalker singleAcceptorWalker(String sequence, int ystart) {
-       return singleAcceptorWalker(sequence, DoubleMatrix.acceptor(), ystart);
+    public static SvgSequenceWalker singleAcceptorWalker(String sequence, int ystart, boolean framed) {
+       return singleAcceptorWalker(sequence, DoubleMatrix.acceptor(), ystart, framed);
     }
 
-    public static SvgSequenceWalker singleAcceptorWalker(String sequence, DoubleMatrix acceptor, int ystart) {
-        return new SvgSequenceWalker(sequence, sequence, acceptor, SVG_ACCEPTOR_WIDTH, SVG_WALKER_HEIGHT, ystart);
+    public static SvgSequenceWalker singleAcceptorWalker(String sequence, DoubleMatrix acceptor, int ystart, boolean framed) {
+        return new SvgSequenceWalker(sequence, sequence, acceptor, SVG_ACCEPTOR_WIDTH, SVG_WALKER_HEIGHT, ystart,framed);
     }
 
 

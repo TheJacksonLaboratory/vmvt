@@ -18,7 +18,7 @@ public class JasparParser {
 
     /**
      * Build a list of {@link JasparMatrix} objects from the JASPAR input file
-     * @param absolutePath
+     * @param absolutePath path to the Jaspar input file
      */
     public JasparParser(String absolutePath) {
         Path path = Paths.get(absolutePath);

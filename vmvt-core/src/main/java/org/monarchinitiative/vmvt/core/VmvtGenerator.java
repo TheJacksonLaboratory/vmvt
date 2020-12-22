@@ -38,8 +38,15 @@ public class VmvtGenerator {
     private final DistributionCalculator donorDistribution;
     private final DistributionCalculator acceptorDistribution;
     private final static int NUM_SAMPLES = 250_000;
+    /** If true, draw a black frame around SVG graphics. */
+    private final boolean framed;
 
     public VmvtGenerator() {
+        this(false);
+    }
+
+    public VmvtGenerator(boolean framed) {
+        this.framed = framed;
         donor = DoubleMatrix.donor();
         acceptor = DoubleMatrix.acceptor();
         donorHeight = DoubleMatrix.donorHeightMatrix();
@@ -49,89 +56,89 @@ public class VmvtGenerator {
     }
 
     public String getDonorSequenceRuler(String reference, String alternate) {
-        SvgSequenceRuler ruler = new DonorRuler(reference, alternate);
+        SvgSequenceRuler ruler = new DonorRuler(reference, alternate, framed);
         return ruler.getSvg();
     }
 
     public String getAcceptorSequenceRuler(String reference, String alternate) {
-        SvgSequenceRuler ruler = new AcceptorRuler(reference, alternate);
+        SvgSequenceRuler ruler = new AcceptorRuler(reference, alternate, framed);
         return ruler.getSvg();
     }
 
 
     public String getDonorWalkerSvg(String reference, String alternate) {
-        AbstractSvgGenerator svgGenerator = SvgSequenceWalker.donor(reference, alternate, donor);
+        AbstractSvgGenerator svgGenerator = SvgSequenceWalker.donor(reference, alternate, donor, framed);
         return svgGenerator.getSvg();
     }
 
 
     public String getAcceptorWalkerSvg(String reference, String alternate) {
-        AbstractSvgGenerator svgGenerator = new AcceptorWalkerGenerator(reference, alternate, acceptor);
+        AbstractSvgGenerator svgGenerator = new AcceptorWalkerGenerator(reference, alternate, acceptor, framed);
         return svgGenerator.getSvg();
     }
 
 
     public String getDonorLogoSvg() {
-        SvgSequenceLogo svgwriter = new DonorLogoGenerator(donorHeight);
+        SvgSequenceLogo svgwriter = new DonorLogoGenerator(donorHeight, framed);
         return svgwriter.getSvg();
     }
 
     public String getAcceptorLogoSvg() {
-        AbstractSvgGenerator svgGenerator = new AcceptorLogoGenerator(acceptorHeight);
+        AbstractSvgGenerator svgGenerator = new AcceptorLogoGenerator(acceptorHeight, framed);
         return svgGenerator.getSvg();
     }
 
     public String getDonorTrekkerSvg(String reference, String alternate) {
-        AbstractSvgGenerator svgGenerator = new DonorTrekkerGenerator(reference, alternate);
+        AbstractSvgGenerator svgGenerator = new DonorTrekkerGenerator(reference, alternate, framed);
         return svgGenerator.getSvg();
     }
 
     public String getAcceptorTrekkerSvg(String reference, String alternate) {
-        AbstractSvgGenerator svgGenerator = new AcceptorTrekkerGenerator(reference, alternate);
+        AbstractSvgGenerator svgGenerator = new AcceptorTrekkerGenerator(reference, alternate, framed);
         return svgGenerator.getSvg();
     }
 
     public String getDonorDistributionSvg(String reference, String alternate) {
-        DeltaSvg dsvg = new DeltaSvg(reference, alternate, donorDistribution);
+        DeltaSvg dsvg = new DeltaSvg(reference, alternate, donorDistribution, framed);
         return dsvg.getSvg();
     }
 
     public String getAcceptorDistributionSvg(String reference, String alternate) {
-        DeltaSvg dsvg = new DeltaSvg(reference, alternate, acceptorDistribution);
+        DeltaSvg dsvg = new DeltaSvg(reference, alternate, acceptorDistribution, framed);
         return dsvg.getSvg();
     }
 
     public String getHexamerSvg(String reference, String alternate) {
-        EseSvg ese = new HexamerEseSvg(reference, alternate);
+        EseSvg ese = new HexamerEseSvg(reference, alternate, framed);
         return ese.getSvg();
     }
 
     public String getHeptamerSvg(String reference, String alternate) {
-        EseSvg ese = new HeptamerEseSvg(reference, alternate);
+        EseSvg ese = new HeptamerEseSvg(reference, alternate, framed);
         return ese.getSvg();
     }
 
     public String getDelta(String reference, String alternate) {
-        DeltaSvg svg = new DeltaSvg(reference, alternate);
+        DeltaSvg svg = new DeltaSvg(reference, alternate, framed);
         return svg.getSvg();
     }
 
     public String getDonorCanonicalCryptic(String canonical, String cryptic) {
-        SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.donor(canonical, cryptic, donor);
+        SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.donor(canonical, cryptic, donor, framed);
         return gen.getSvg();
     }
 
     public String getAcceptorCanonicalCryptic(String canonical, String cryptic) {
-        SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.acceptor(canonical, cryptic, acceptor);
+        SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.acceptor(canonical, cryptic, acceptor, framed);
         return gen.getSvg();
     }
 
     public String getAcceptorWithRi(String reference, String alternate) {
-        AbstractSvgMotifGenerator gen = AcceptorTrekkerWithRiGenerator.acceptor(reference, alternate, acceptor);
+        AbstractSvgMotifGenerator gen = AcceptorTrekkerWithRiGenerator.acceptor(reference, alternate, acceptor, framed);
         return gen.getSvg();
     }
     public String getDonorWithRi(String reference, String alternate) {
-        AbstractSvgMotifGenerator gen = DonorTrekkerWithRiGenerator.donor(reference, alternate, donor);
+        AbstractSvgMotifGenerator gen = DonorTrekkerWithRiGenerator.donor(reference, alternate, donor, framed);
         return gen.getSvg();
     }
 

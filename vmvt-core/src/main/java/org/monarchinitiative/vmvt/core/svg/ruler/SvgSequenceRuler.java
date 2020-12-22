@@ -16,10 +16,9 @@ public abstract class SvgSequenceRuler extends AbstractSvgMotifGenerator {
 
     private final static int SVG_RULER_POSITION_Y_INCREMENT = 40;
 
-    public SvgSequenceRuler(int w, int h, String ref, String alt) {
-        super(ref,alt, w, h);
+    public SvgSequenceRuler(int w, int h, String ref, String alt, boolean framed) {
+        super(ref,alt, w, h, framed);
     }
-
 
     abstract void writePositionRuler(Writer writer) throws IOException;
 
