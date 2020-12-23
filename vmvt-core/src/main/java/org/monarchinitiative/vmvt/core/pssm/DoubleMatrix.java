@@ -1,6 +1,7 @@
 package org.monarchinitiative.vmvt.core.pssm;
 
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
+import org.monarchinitiative.vmvt.core.svg.SvgConstants;
 
 import java.util.*;
 
@@ -15,6 +16,7 @@ public class DoubleMatrix {
     private final double[] vals;
     private final int nRows;
     private final int nCols;
+
 
     private final static double LOG_TWO = Math.log(2);
 

@@ -4,6 +4,7 @@ import org.monarchinitiative.vmvt.core.dist.DistributionCalculator;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
+import org.monarchinitiative.vmvt.core.svg.icbar.SvgIcBarchart;
 import org.monarchinitiative.vmvt.core.svg.trek.AcceptorTrekkerGenerator;
 import org.monarchinitiative.vmvt.core.svg.trek.AcceptorTrekkerWithRiGenerator;
 import org.monarchinitiative.vmvt.core.svg.trek.DonorTrekkerGenerator;
@@ -139,6 +140,16 @@ public class VmvtGenerator {
     }
     public String getDonorWithRi(String reference, String alternate) {
         AbstractSvgMotifGenerator gen = DonorTrekkerWithRiGenerator.donor(reference, alternate, donor, framed);
+        return gen.getSvg();
+    }
+
+    public String getDonorIcBars(String reference, String alternate) {
+        SvgIcBarchart gen = SvgIcBarchart.donorBarChart(reference, alternate, donor, true);
+        return gen.getSvg();
+    }
+
+    public String getAcceptorIcBars(String reference, String alternate) {
+        SvgIcBarchart gen = SvgIcBarchart.donorBarChart(reference, alternate, acceptor, true);
         return gen.getSvg();
     }
 
