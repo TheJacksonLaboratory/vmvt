@@ -1,7 +1,6 @@
 package org.monarchinitiative.vmvt.core.pssm;
 
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
-import org.monarchinitiative.vmvt.core.svg.SvgConstants;
 
 import java.util.*;
 

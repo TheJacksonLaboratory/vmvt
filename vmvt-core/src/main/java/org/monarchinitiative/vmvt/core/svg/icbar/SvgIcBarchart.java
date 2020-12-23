@@ -4,7 +4,6 @@ import org.monarchinitiative.vmvt.core.SvgInitializer;
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 
-import org.monarchinitiative.vmvt.core.svg.SvgColors;
 import org.monarchinitiative.vmvt.core.svg.SvgConstants;
 import org.monarchinitiative.vmvt.core.svg.SvgHeaderFooter;
 import org.monarchinitiative.vmvt.core.svg.SvgWriter;
