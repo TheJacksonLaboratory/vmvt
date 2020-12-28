@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.NEARLYBLACK;
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.RED;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
 
 
@@ -35,6 +37,9 @@ public class SvgIcBarchart implements SvgInitializer, SvgHeaderFooter, SvgWriter
     private final int [] altidx;
     private final DoubleMatrix splicesite;
     private final SvgConstants.MotifType mtype;
+
+    private final int ICBOX_WIDTH = LOWER_CASE_BASE_INCREMENT - 2;
+    private final int Y_JUMP = 2; // jump across the 'y axis' for IC +/1 zero
 
 
     private SvgIcBarchart(String ref, String alt, int width, int height, DoubleMatrix splicesite, boolean framed, SvgConstants.MotifType type){
@@ -75,10 +80,10 @@ public class SvgIcBarchart implements SvgInitializer, SvgHeaderFooter, SvgWriter
 
 
     protected void writeRefAltSeparation(Writer writer) throws IOException {
-        int endX = (1+this.seqlen) * LOWER_CASE_BASE_INCREMENT;
-        writer.write("<g fill=\"none\" stroke=\"black\" stroke-width=\"1\">\n");
-        writer.write(String.format("<path stroke-dasharray=\"2,2\" d=\"M%d %d L%d %d\"/>\n", SVG_STARTX, this.midbarYpos, endX, this.midbarYpos));
-        writer.write("</g>\n");
+        double endX = (0.6+this.seqlen) * LOWER_CASE_BASE_INCREMENT;
+        String line = String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
+                SVG_STARTX,this.midbarYpos, endX, this.midbarYpos, NEARLYBLACK);
+        writer.write(line);
     }
 
     /**
@@ -97,14 +102,14 @@ public class SvgIcBarchart implements SvgInitializer, SvgHeaderFooter, SvgWriter
         String rect;
         if (IC>0) {
             boxHeight = IC * BOX_HEIGHT_UNIT;
-            rect = String.format("<rect x=\"%d\" y=\"%f\" width=\"%d\" height=\"%f\" rx=\"2\" " +
-                            "style=\"stroke:#006600; fill:%s\" />\n",
-                    x, y-boxHeight, width, boxHeight, color);
+            rect = String.format("<rect x=\"%d\" y=\"%f\" width=\"%d\" height=\"%f\"  " +
+                            "style=\"fill:%s\" />\n",
+                    x, y-boxHeight, ICBOX_WIDTH, boxHeight, color);
         } else {
             boxHeight = -IC * BOX_HEIGHT_UNIT;
-            rect = String.format("<rect x=\"%d\" y=\"%f\" width=\"%d\" height=\"%f\" rx=\"2\" " +
-                            "style=\"stroke:#006600; fill:%s\" />\n",
-                    x, y, width, boxHeight, color);
+            rect = String.format("<rect x=\"%d\" y=\"%f\" width=\"%d\" height=\"%f\"  " +
+                            "style=\"fill:%s\" />\n",
+                    x, y+Y_JUMP, ICBOX_WIDTH, boxHeight, color);
         }
         writer.write(rect);
     }
@@ -122,32 +127,30 @@ public class SvgIcBarchart implements SvgInitializer, SvgHeaderFooter, SvgWriter
         String altcolor = getBaseColor(altbase);
         double ICref = this.splicesite.get(refbase, pos);
         double ICalt = this.splicesite.get(altbase, pos);
-        double width = 0.5*LOWER_CASE_BASE_INCREMENT;
         double BOX_HEIGHT_UNIT = 10;
         double refBoxHeight = ICref * BOX_HEIGHT_UNIT;
         String rect;
         if (ICref>0) {
-            rect = String.format("<rect x=\"%d\" y=\"%f\" width=\"%f\" height=\"%f\" rx=\"2\" " +
-                            "style=\"stroke:#006600; fill:%s\" />\n",
-                    x, y-refBoxHeight, width, refBoxHeight, refcolor);
+            rect = String.format("<rect x=\"%d\" y=\"%f\" width=\"%d\" height=\"%f\" " +
+                            "style=\"stroke:%s;stroke-width:1;fill:%s;fill-opacity:0.15\" />\n",
+                    x, y-refBoxHeight, ICBOX_WIDTH, refBoxHeight-1,  refcolor,refcolor);
         } else {
             refBoxHeight *= -1;
-            rect = String.format("<rect x=\"%d\" y=\"%f\" width=\"%f\" height=\"%f\" rx=\"2\" " +
-                            "style=\"stroke:#006600; fill:%s\" />\n",
-                    x, y, width, refBoxHeight, refcolor);
+            rect = String.format("<rect x=\"%d\" y=\"%f\" width=\"%d\" height=\"%f\"  " +
+                            "style=\"stroke:%s;stroke-width:1;fill:%s;fill-opacity:0.15\" />\n",
+                    x, y+1+Y_JUMP, ICBOX_WIDTH, refBoxHeight-1,  refcolor,refcolor);
         }
         writer.write(rect);
         double altBoxHeight = ICalt * BOX_HEIGHT_UNIT;
-        double x2 = x + width;
         if (ICalt>0) {
-            rect = String.format("<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" rx=\"2\" " +
-                            "style=\"stroke:#006600; fill:%s\" />\n",
-                    x2, y-altBoxHeight, width, altBoxHeight, altcolor);
+            rect = String.format("<rect x=\"%d\" y=\"%f\" width=\"%d\" height=\"%f\"  " +
+                            "style=\"fill:%s\"  />\n",
+                    x, y-altBoxHeight, ICBOX_WIDTH, altBoxHeight, altcolor);
         } else {
             altBoxHeight *= -1;
-            rect = String.format("<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" rx=\"2\" " +
-                            "style=\"stroke:#006600; fill:%s\" />\n",
-                    x2, y, width, altBoxHeight, altcolor);
+            rect = String.format("<rect x=\"%d\" y=\"%f\" width=\"%d\" height=\"%f\"  " +
+                            "style=\"fill:%s\" />\n",
+                    x, y+Y_JUMP, ICBOX_WIDTH, altBoxHeight, altcolor);
         }
         writer.write(rect);
     }
@@ -169,7 +172,6 @@ public class SvgIcBarchart implements SvgInitializer, SvgHeaderFooter, SvgWriter
 
     @Override
     public void write(Writer writer) throws IOException {
-        writeRefAltSeparation(writer);
         writeIcBars(writer, this.midbarYpos);
         SvgSequenceRuler ruler;
         if (mtype == SvgConstants.MotifType.DONOR) {
@@ -181,7 +183,7 @@ public class SvgIcBarchart implements SvgInitializer, SvgHeaderFooter, SvgWriter
             throw new VmvtRuntimeException("Only donor/acceptor supported");
         }
         ruler.write(writer);
-        writeRefAltSeparation(writer);
+       // writeRefAltSeparation(writer);
         writeIcBars(writer, this.midbarYpos);
 
     }
