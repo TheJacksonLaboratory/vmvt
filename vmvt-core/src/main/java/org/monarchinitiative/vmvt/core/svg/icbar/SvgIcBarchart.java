@@ -1,19 +1,16 @@
 package org.monarchinitiative.vmvt.core.svg.icbar;
 
-import org.monarchinitiative.vmvt.core.SvgInitializer;
+import org.monarchinitiative.vmvt.core.svg.SvgInitializer;
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 
 import org.monarchinitiative.vmvt.core.svg.SvgComponent;
 import org.monarchinitiative.vmvt.core.svg.SvgConstants;
-import org.monarchinitiative.vmvt.core.svg.SvgHeaderFooter;
-import org.monarchinitiative.vmvt.core.svg.SvgWriter;
 import org.monarchinitiative.vmvt.core.svg.ruler.AcceptorRuler;
 import org.monarchinitiative.vmvt.core.svg.ruler.DonorRuler;
 import org.monarchinitiative.vmvt.core.svg.ruler.SvgSequenceRuler;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.NEARLYBLACK;

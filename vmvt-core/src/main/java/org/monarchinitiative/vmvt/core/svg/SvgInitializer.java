@@ -1,4 +1,4 @@
-package org.monarchinitiative.vmvt.core;
+package org.monarchinitiative.vmvt.core.svg;
 
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
 

@@ -7,6 +7,7 @@ import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
 import org.monarchinitiative.vmvt.core.svg.SvgColors;
+import org.monarchinitiative.vmvt.core.svg.SvgComponent;
 
 
 import java.io.IOException;
@@ -15,6 +16,9 @@ import java.io.Writer;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Sequence.ACCEPTOR_NT_LENGTH;
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Sequence.DONOR_NT_LENGTH;
+
 
 /**
  * Write an SVG that shows the distribution of differences expected by a random single-nucleotide variant
@@ -22,7 +26,7 @@ import java.util.List;
  * or indel can be greater, but we will still display it in this graphic for simplicity.
  * @author Peter Robinson
  */
-public class DeltaSvg extends AbstractSvgGenerator {
+public class DeltaSvg implements SvgComponent {
     /** List of values for the change in R_i induced by random SNVs. */
     private final List<Double> deltavals;
     /** Minumum R_i value for any sequence */
@@ -42,7 +46,7 @@ public class DeltaSvg extends AbstractSvgGenerator {
     /** Where to write the text showing the delta-Ri (x). */
     private final static int X_LOC_DELTA_RI = 230;
     /** Where to write the text showing the delta-Ri (y). */
-    private final static int Y_LOC_DELTA_RI = 50;
+    //private final static int Y_LOC_DELTA_RI = 50;
     /** Representation of the information content matrix of a donor or acceptor splice site. */
     private final DoubleMatrix splicesite;
     /** Individual sequence information content of the reference sequence. */
@@ -57,8 +61,7 @@ public class DeltaSvg extends AbstractSvgGenerator {
      * @param ref reference sequence
      * @param alt alternate sequence
      */
-    public DeltaSvg(String ref, String alt, boolean framed) {
-        super(SVG_DELTA_WIDTH, SVG_DELTA_HEIGHT, framed);
+    public DeltaSvg(String ref, String alt) {
         if (ref.length() != alt.length()) {
             throw new VmvtRuntimeException("Ref and alt must have the same length");
         }
@@ -93,8 +96,7 @@ public class DeltaSvg extends AbstractSvgGenerator {
      * @param ref reference sequence
      * @param alt alternate sequence
      */
-    public DeltaSvg(String ref, String alt, DistributionCalculator dcal, boolean framed) {
-        super(SVG_DELTA_WIDTH, SVG_DELTA_HEIGHT, framed);
+    public DeltaSvg(String ref, String alt, DistributionCalculator dcal) {
         this.deltavals = dcal.getDeltas();
         this.min = deltavals.stream().mapToDouble(Double::doubleValue).min().orElseThrow();
         this.max = deltavals.stream().mapToDouble(Double::doubleValue).max().orElseThrow();
@@ -131,9 +133,9 @@ public class DeltaSvg extends AbstractSvgGenerator {
     /**
      *   Write an axis from -10 to +10
      */
-    private void writeTicks(Writer writer, double startX, double endX) throws IOException {
+    private void writeTicks(Writer writer, double startX, double endX, int ypos) throws IOException {
         writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
-                startX,START_Y,endX,START_Y, SvgColors.BLACK));
+                startX,ypos,endX,ypos, SvgColors.BLACK));
         // for both donor and acceptor the biggest change is nearly 10/-10 startX is -10 and startY is 10
         if (Math.round(this.min) != -10) {
             // should never happen
@@ -146,16 +148,16 @@ public class DeltaSvg extends AbstractSvgGenerator {
         double increment = (endX - startX)/(double)span;
         double X = startX;
         int tickHeight = 5;
-        int Y2 = START_Y + tickHeight;
-        int YmajorTick = START_Y + 10;
+        int Y2 = ypos + tickHeight;
+        int YmajorTick = ypos + 10;
         int Y_INCREMENT = 25; // amount of space to "lower" the numbers on the X axixs
         for (int i=0;i<span;i++) {
             if (i%5==0) {
                 writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
-                        X, START_Y, X, YmajorTick, SvgColors.BLACK));
+                        X, ypos, X, YmajorTick, SvgColors.BLACK));
             } else {
                 writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
-                        X, START_Y, X, Y2, SvgColors.BLACK));
+                        X, ypos, X, Y2, SvgColors.BLACK));
             }
             // Write numbers under the tick marks. We use fudge factors to adjust for
             // different widths of the numbers (-10, -5, 0, 5, 10).
@@ -191,10 +193,10 @@ public class DeltaSvg extends AbstractSvgGenerator {
         double Xzero = (10.0*increment) + startX; // X position at ZERO of the graph
         if (delta > 0) {
             int x1 = (int)((delta*increment) + Xzero);
-            writeDeltaInformation(writer,x1);
+            writeDeltaInformation(writer,x1, ypos);
         } else {
             int x1 = (int)((min*increment) + Xzero);
-            writeDeltaInformation(writer,x1);
+            writeDeltaInformation(writer,x1, ypos);
         }
     }
 
@@ -208,13 +210,15 @@ public class DeltaSvg extends AbstractSvgGenerator {
      * @throws IOException if there are problems writing the SVG elements
      */
 
-    private void writeDeltaInformation(Writer writer, int x) throws IOException {
+    private void writeDeltaInformation(Writer writer, int x, int ypos) throws IOException {
+        int Y_LOC_DELTA_RI = ypos-250;
         String deltaRi = String.format("<text x=\"%d\" y=\"%d\" font-size=\"16\">\n" +
                 "ΔR" +
                 "<tspan dy=\"3\" font-size=\"12\">i</tspan></text>\n" +
                 "<text x=\"%d\" y=\"%d\">: %.2f</text>\n",
                 X_LOC_DELTA_RI,Y_LOC_DELTA_RI,X_LOC_DELTA_RI+38,Y_LOC_DELTA_RI,this.delta);
-        int lineheight = START_Y-100;
+        int y_offset = 100;
+        int lineheight = ypos-y_offset;
         writer.write(deltaRi);
         if (delta > max) {
             // In this case, the delta-Ri is larger than the delta-Ri of any single nt mutation
@@ -236,34 +240,16 @@ public class DeltaSvg extends AbstractSvgGenerator {
             // write a line with pinhead to show location of delta-Ri of the variant
             String line2 = String.format("<g fill=\"none\" stroke=\"%s\" stroke-width=\"2\">\n" +
                     "<path stroke-dasharray=\"2,2\" d=\"M%d %d l0 %d\"/>" +
-                    "</g>\n", SvgColors.PURPLE, x, 100, lineheight);
+                    "</g>\n", SvgColors.PURPLE, x, y_offset, lineheight);
             String circle = String.format("<circle cx=\"%d\" cy=\"%d\" r=\"8\" stroke=\"black\" \n" +
-                    " stroke-width=\"3\" fill=\"%s\"/>\n", x, 100, SvgColors.PURPLE);
+                    " stroke-width=\"3\" fill=\"%s\"/>\n", x, y_offset, SvgColors.PURPLE);
             writer.write(line2);
             writer.write(circle);
         }
-
-
-
-
-    }
-
-
-    @Override
-    public String getSvg() {
-        StringWriter swriter = new StringWriter();
-        try {
-            writeHeader(swriter);
-            write(swriter);
-            writeFooter(swriter);
-        } catch (IOException e) {
-            return getSvgErrorMessage(e.getMessage());
-        }
-        return swriter.toString();
     }
 
     @Override
-    public void write(Writer swriter) throws IOException {
+    public void write(Writer writer, int ypos) throws IOException {
         int startX = 50;
         int maxHeight = SVG_DELTA_HEIGHT - 120;
         // maximum bin count should be maxHeight
@@ -271,18 +257,24 @@ public class DeltaSvg extends AbstractSvgGenerator {
         double heightFactor = (double)maxHeight/(double)maxCount;
         double barWidth = (double)(SVG_DELTA_WIDTH-2*startX)/(double)BIN_COUNT;
         double X = startX;
+        ypos += 300;
         for (int bin : bins) {
             double barHeight = heightFactor * bin;
             // the "y" of a rect is the upper left hand corner
-            double Y = START_Y - barHeight;
+            double Y = ypos - barHeight;
             String rect = String.format("<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" rx=\"2\" " +
                             "style=\"stroke:#006600; fill:%s\" />\n",
                     X, Y, barWidth, barHeight, SvgColors.GREEN);
-            swriter.write(rect);
+            writer.write(rect);
             X += barWidth;
         }
         double X1 = startX + barWidth;
         double X2 = X + 2*barWidth;
-        writeTicks(swriter, X1, X2);
+        writeTicks(writer, X1, X2, ypos);
+    }
+
+    @Override
+    public int height() {
+        return 350;
     }
 }

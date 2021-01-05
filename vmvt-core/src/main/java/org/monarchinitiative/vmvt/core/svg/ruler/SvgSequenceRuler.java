@@ -1,10 +1,9 @@
 package org.monarchinitiative.vmvt.core.svg.ruler;
 
-import org.monarchinitiative.vmvt.core.SvgInitializer;
+import org.monarchinitiative.vmvt.core.svg.SvgInitializer;
 import org.monarchinitiative.vmvt.core.svg.SvgComponent;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
@@ -39,7 +38,6 @@ public abstract class SvgSequenceRuler implements SvgComponent, SvgInitializer {
 
     protected void writeRefPlain(Writer writer, int ypos) throws IOException {
         int X = startX;
-        int Y = startY;
         for (int i=0; i<seqlen; i++) {
             writePlainBase(writer, X, ypos, refidx[i]);
             X += LOWER_CASE_BASE_INCREMENT;
@@ -80,18 +78,6 @@ public abstract class SvgSequenceRuler implements SvgComponent, SvgInitializer {
 
     }
 
-//    @Override
-//    public String getSvg() {
-//        StringWriter swriter = new StringWriter();
-//        try {
-//            writeHeader(swriter);
-//            write(swriter);
-//            writeFooter(swriter);
-//            return swriter.toString();
-//        } catch (IOException e) {
-//            return getSvgErrorMessage(e.getMessage());
-//        }
-//    }
 
     @Override
     public void write(Writer writer, int starty) throws IOException {
@@ -103,7 +89,6 @@ public abstract class SvgSequenceRuler implements SvgComponent, SvgInitializer {
         writeAltPlain(writer, ypos+Y_LINE_INCREMENT);
         writeBoxAroundMutation(writer,ypos);
     }
-
 
     public static SvgSequenceRuler donor(String ref, String alt) {
         return new DonorRuler(ref, alt);

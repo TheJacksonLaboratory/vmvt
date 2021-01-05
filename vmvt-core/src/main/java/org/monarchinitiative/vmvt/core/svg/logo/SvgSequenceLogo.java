@@ -17,10 +17,6 @@ import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
 public class SvgSequenceLogo implements SvgComponent {
     /** Position where we will start to write things from the left side of the SVG. */
     protected final int XSTART;
-
-    /** Width of the logo component */
- //   private final int componentWidth;
-
     /** Representation of the Splice donor/acceptor IC matrix. */
     protected final DoubleMatrix splicesite;
 

@@ -239,8 +239,8 @@ public class DonorGeneratorTest {
         writeToRTDdirectory("hexamer.svg", svg);
         svg = getHeptamerSvg();
         writeToRTDdirectory("heptamer.svg", svg);
-        svg = vmvt.getDelta(ref, alt);
-        writeToRTDdirectory("deltaDonor.svg", svg);
+//        svg = vmvt.getDelta(ref, alt);
+//        writeToRTDdirectory("deltaDonor.svg", svg);
         final String ref = "CAGGTTGGT";
         final String alt = "TAGGTTGGT";
         vmvt = new VmvtGenerator();

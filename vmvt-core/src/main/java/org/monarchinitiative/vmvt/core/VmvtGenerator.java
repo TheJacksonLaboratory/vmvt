@@ -3,6 +3,7 @@ package org.monarchinitiative.vmvt.core;
 import org.monarchinitiative.vmvt.core.dist.DistributionCalculator;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.*;
+import org.monarchinitiative.vmvt.core.svg.icbar.DeltaRiBox;
 import org.monarchinitiative.vmvt.core.svg.icbar.SvgIcBarchart;
 import org.monarchinitiative.vmvt.core.svg.delta.DeltaSvg;
 import org.monarchinitiative.vmvt.core.svg.ese.EseSvg;
@@ -79,7 +80,7 @@ public class VmvtGenerator {
 
 
     public String getAcceptorWalkerSvg(String reference, String alternate) {
-        SvgComponent acceptorWalker = SvgSequenceWalker.acceptorWalker(reference, alternate);
+        SvgComponent acceptorWalker = SvgSequenceWalker.acceptorWalker(reference, alternate, acceptor);
         return getAcceptorSvg(acceptorWalker);
     }
 
@@ -107,13 +108,13 @@ public class VmvtGenerator {
     }
 
     public String getDonorDistributionSvg(String reference, String alternate) {
-        DeltaSvg dsvg = new DeltaSvg(reference, alternate, donorDistribution, framed);
-        return dsvg.getSvg();
+        SvgComponent dsvg = new DeltaSvg(reference, alternate, donorDistribution);
+        return getSvg(ESE_SVG_WIDTH, dsvg);
     }
 
     public String getAcceptorDistributionSvg(String reference, String alternate) {
-        DeltaSvg dsvg = new DeltaSvg(reference, alternate, acceptorDistribution, framed);
-        return dsvg.getSvg();
+        SvgComponent dsvg = new DeltaSvg(reference, alternate, acceptorDistribution);
+        return getSvg(ESE_SVG_WIDTH, dsvg);
     }
 
     public String getHexamerSvg(String reference, String alternate) {
@@ -127,9 +128,9 @@ public class VmvtGenerator {
     }
 
     public String getDelta(String reference, String alternate) {
-        DeltaSvg svg = new DeltaSvg(reference, alternate, framed);
-        return svg.getSvg();
-    }
+        SvgComponent delta = new DeltaSvg(reference, alternate);
+        return getSvg(SvgConstants.Dimensions.ESE_SVG_WIDTH, delta);
+   }
 
     public String getDonorCanonicalCryptic(String canonical, String cryptic) {
         SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.donor(canonical, cryptic, donor, framed);
@@ -144,14 +145,16 @@ public class VmvtGenerator {
     public String getAcceptorTrekkerWithRi(String reference, String alternate) {
         SvgComponent acceptorRuler = SvgSequenceRuler.acceptor(reference, alternate);
         SvgComponent acceptorLogo = SvgSequenceLogo.acceptor(acceptorHeight);
-        SvgComponent acceptorWalkerWithRi = SvgSequenceWalker.acceptorWalkerWithRi(reference, alternate, acceptor);
-        return getAcceptorSvg(acceptorRuler, acceptorLogo, acceptorWalkerWithRi);
+        SvgComponent acceptorWalkerWithRi = SvgSequenceWalker.acceptorWalker(reference, alternate, acceptor);
+        SvgComponent deltaRi = DeltaRiBox.acceptor(reference, alternate, acceptor);
+        return getAcceptorSvg(acceptorRuler, acceptorLogo, acceptorWalkerWithRi, deltaRi);
     }
     public String getDonorTrekkerWithRi(String reference, String alternate) {
         SvgComponent donorRuler = SvgSequenceRuler.donor(reference, alternate);
         SvgComponent donorLogo = SvgSequenceLogo.donor(donorHeight);
-        SvgComponent donorWalkerWithRi = SvgSequenceWalker.donorWalkerWithRi(reference, alternate, donor);
-        return getDonorSvg(donorRuler, donorLogo, donorWalkerWithRi);
+        SvgComponent donorWalkerWithRi = SvgSequenceWalker.donorWalker(reference, alternate, donor);
+        SvgComponent deltaRi = DeltaRiBox.donor(reference, alternate, donor);
+        return getDonorSvg(donorRuler, donorLogo, donorWalkerWithRi, deltaRi);
     }
 
     public String getDonorIcBars(String reference, String alternate) {
@@ -159,9 +162,21 @@ public class VmvtGenerator {
         return getDonorSvg(donorBarChart);
     }
 
+    public String getDonorIcBarsWithRi(String reference, String alternate) {
+        SvgComponent donorBarChart = SvgIcBarchart.donorBarChart(reference, alternate, donor);
+        SvgComponent deltaRi = DeltaRiBox.donor(reference, alternate, donor);
+        return getDonorSvg(donorBarChart, deltaRi);
+    }
+
     public String getAcceptorIcBars(String reference, String alternate) {
         SvgComponent acceptorBarChart = SvgIcBarchart.acceptorBarChart(reference, alternate, donor);
         return getAcceptorSvg(acceptorBarChart);
+    }
+
+    public String getAcceptorIcBarsWithRi(String reference, String alternate) {
+        SvgComponent acceptorBarChart = SvgIcBarchart.acceptorBarChart(reference, alternate, acceptor);
+        SvgComponent deltaRi = DeltaRiBox.acceptor(reference, alternate, acceptor);
+        return getAcceptorSvg(acceptorBarChart, deltaRi);
     }
 
     /**

@@ -1,14 +1,11 @@
 package org.monarchinitiative.vmvt.core.svg.walker;
 
-import org.monarchinitiative.vmvt.core.SvgInitializer;
+import org.monarchinitiative.vmvt.core.svg.SvgInitializer;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
-import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
-import org.monarchinitiative.vmvt.core.svg.SvgColors;
 import org.monarchinitiative.vmvt.core.svg.SvgComponent;
 import org.monarchinitiative.vmvt.core.svg.SvgConstants;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
@@ -22,8 +19,6 @@ public class SvgSequenceWalker implements SvgComponent, SvgInitializer {
 
     /** Position where we will start to write things from the left side of the SVG. */
     protected final int XSTART = SVG_STARTX;
-    /** If true, write Ri change associated with the variant */
-    private final boolean writeRi;
     /** Maximum information content height of any base of the sequences. */
     private double maxIc = Double.MIN_VALUE;
 
@@ -48,7 +43,7 @@ public class SvgSequenceWalker implements SvgComponent, SvgInitializer {
      * @param site Representation of the splice site (weight matrix)
      * @param w width of the SVG canvas
      */
-    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w, boolean writeRi) {
+    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w) {
         this.width = w;
         this.splicesite = site;
         this.refidx = sequenceIndex(ref);
@@ -56,18 +51,8 @@ public class SvgSequenceWalker implements SvgComponent, SvgInitializer {
         this.seqlen = sequenceLength(ref, alt);
         this.reference = ref;
         this.alternate = alt;
-        this.writeRi = writeRi;
-        if (writeRi) {
-            this.componentHeight = SvgConstants.Dimensions.SVG_TREKKER_WITH_RI_HEIGHT;
-        } else {
-            this.componentHeight = SvgConstants.Dimensions.SVG_WALKER_HEIGHT;
-        }
+        this.componentHeight = SvgConstants.Dimensions.SVG_WALKER_HEIGHT;
     }
-
-    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w) {
-        this(ref, alt, site, w, false);
-    }
-
 
     /**
      * Write one lower case nucleotide (a, c, g, t) for the walker.
@@ -140,11 +125,6 @@ public class SvgSequenceWalker implements SvgComponent, SvgInitializer {
         }
     }
 
-
-//    protected void writeRefAltSeparation(Writer writer) throws IOException {
-//        writeRefAltSeparation(writer, currentY);
-//    }
-
     protected void writeRefAltSeparation(Writer writer, int startY) throws IOException {
         int endX = (1+this.seqlen) * LOWER_CASE_BASE_INCREMENT;
         writer.write("<g fill=\"none\" stroke=\"black\" stroke-width=\"1\">\n");
@@ -209,43 +189,9 @@ public class SvgSequenceWalker implements SvgComponent, SvgInitializer {
         writeRefWalker(writer, ypos);
         writeRefAltSeparation(writer, ypos);
         writeBoxAroundMutation(writer, ypos);
-        if (this.writeRi) {
-            writeRiChange(writer, ypos);
-        }
     }
 
 
-    /**
-     * Write text such as Ri :7.00 -> -1.96 to show the effect of a mutation
-     * on the individual information content of a splice sequence.
-     * @param writer file handle
-     * @param y vertical start position.
-     * @throws IOException if we cannot write to the handle
-     */
-    protected void writeRiChange(Writer writer, int y) throws IOException {
-        double refR_i = splicesite.getIndividualSequenceInformation(this.reference);
-        double altR_i = splicesite.getIndividualSequenceInformation(this.alternate);
-        int middle = this.width/2 + SVG_STARTX/2;
-        int blueBoxStart = middle - (int)(0.5*BLUE_BOX_WIDTH);
-        int startx = blueBoxStart+10;
-        int texty = y;
-        int blueBoxFudge = 20; // move back up by this amount to be in the right place
-        int x_increment = 0;
-
-        String blueRect = String.format("<rect x=\"%d\" y=\"%d\" rx=\"3\" ry=\"3\" width=\"%d\" height=\"%d\" style=\"stroke: none; fill: %s;fill-opacity: 0.1\"></rect>",
-                blueBoxStart,
-                y-blueBoxFudge,
-                BLUE_BOX_WIDTH,
-                BLUE_BOX_HEIGHT,
-                SvgColors.BLUE);
-        writer.write(blueRect);
-
-        String RiString = String.format("<text x=\"%d\" y=\"%d\" class=\"t20\">R" +
-                        "<tspan dy=\"1\" font-size=\"12\">i</tspan></text>\n" +
-                        "<text x=\"%d\" y=\"%d\" class=\"t14\">:%.2f &#129074; %.2f</text>\n",
-                startx+x_increment,texty,startx+18+x_increment,texty,refR_i, altR_i);
-        writer.write(RiString);
-    }
 
     public static SvgSequenceWalker singleDonorWalker(String sequence) {
         return SvgSequenceWalker.singleDonorWalker(sequence, DoubleMatrix.donor());
@@ -259,10 +205,6 @@ public class SvgSequenceWalker implements SvgComponent, SvgInitializer {
         return new SvgSequenceWalker(reference, alternate, donor, SVG_DONOR_WIDTH);
     }
 
-    public static SvgSequenceWalker donorWalkerWithRi(String reference, String alternate, DoubleMatrix donor) {
-        boolean showRi = true;
-        return new SvgSequenceWalker(reference, alternate, DoubleMatrix.donor(), SVG_DONOR_WIDTH, showRi);
-    }
 
     public static SvgSequenceWalker acceptorWalker(String reference, String alternate) {
         return new SvgSequenceWalker(reference, alternate, DoubleMatrix.acceptor(), SVG_ACCEPTOR_WIDTH);
@@ -272,10 +214,6 @@ public class SvgSequenceWalker implements SvgComponent, SvgInitializer {
         return new SvgSequenceWalker(reference, alternate, acceptor, SVG_ACCEPTOR_WIDTH);
     }
 
-    public static SvgSequenceWalker acceptorWalkerWithRi(String reference, String alternate, DoubleMatrix acceptor) {
-        boolean showRi = true;
-        return new SvgSequenceWalker(reference, alternate, acceptor, SVG_ACCEPTOR_WIDTH, showRi);
-    }
 
     public static SvgSequenceWalker singleAcceptorWalker(String sequence) {
        return singleAcceptorWalker(sequence, DoubleMatrix.acceptor());

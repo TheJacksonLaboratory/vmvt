@@ -99,6 +99,8 @@ public final class SvgConstants {
 
         public static final int ESE_SVG_WIDTH = 900;
 
+        public static final int SVG_RI_BOX_HEIGHT = 50;
+
     }
 
     public final static class Sequence {

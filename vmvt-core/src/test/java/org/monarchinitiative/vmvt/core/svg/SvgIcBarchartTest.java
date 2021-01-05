@@ -27,5 +27,20 @@ public class SvgIcBarchartTest {
         }
     }
 
+    @Test
+    public void testDeltaRiDonor() {
+        VmvtGenerator vmvt = new VmvtGenerator();
+        String svg = vmvt.getDonorIcBarsWithRi(ref, alt);
+
+        try {
+            String path = "target/donorIcBarRi.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
