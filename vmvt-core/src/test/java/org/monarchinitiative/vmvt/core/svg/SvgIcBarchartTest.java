@@ -14,7 +14,7 @@ public class SvgIcBarchartTest {
 
     @Test
     public void testDeltaDonor() {
-        VmvtGenerator vmvt = new VmvtGenerator();
+        VmvtGenerator vmvt = new VmvtGenerator(true);
         String svg = vmvt.getDonorIcBars(ref, alt);
 
         try {
@@ -29,7 +29,7 @@ public class SvgIcBarchartTest {
 
     @Test
     public void testDeltaRiDonor() {
-        VmvtGenerator vmvt = new VmvtGenerator();
+        VmvtGenerator vmvt = new VmvtGenerator(true);
         String svg = vmvt.getDonorIcBarsWithRi(ref, alt);
 
         try {

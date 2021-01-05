@@ -41,8 +41,8 @@ public class AcceptorRuler extends SvgSequenceRuler {
         }
         // Write a vertical line between intron and exon
         Xr = this.startX + 25 * LOWER_CASE_BASE_INCREMENT;
-        int Y1 = starty - 18;
-        int Y2 = starty + 10;
+        int Y1 = starty - 8;
+        int Y2 = starty + 4;
         writer.write(String.format("<line x1=\"%s\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\"/>\n", Xr, Y1, Xr, Y2, SvgColors.RED));
     }
 

@@ -158,25 +158,29 @@ public class VmvtGenerator {
     }
 
     public String getDonorIcBars(String reference, String alternate) {
+        SvgComponent donorRuler = SvgSequenceRuler.donor(reference, alternate);
         SvgComponent donorBarChart = SvgIcBarchart.donorBarChart(reference, alternate, donor);
-        return getDonorSvg(donorBarChart);
+        return getDonorSvg(donorRuler, donorBarChart);
     }
 
     public String getDonorIcBarsWithRi(String reference, String alternate) {
+        SvgComponent donorRuler = SvgSequenceRuler.donor(reference, alternate);
         SvgComponent donorBarChart = SvgIcBarchart.donorBarChart(reference, alternate, donor);
         SvgComponent deltaRi = DeltaRiBox.donor(reference, alternate, donor);
-        return getDonorSvg(donorBarChart, deltaRi);
+        return getDonorSvg(donorRuler,donorBarChart, deltaRi);
     }
 
     public String getAcceptorIcBars(String reference, String alternate) {
+        SvgComponent acceptorRuler = SvgSequenceRuler.acceptor(reference, alternate);
         SvgComponent acceptorBarChart = SvgIcBarchart.acceptorBarChart(reference, alternate, donor);
-        return getAcceptorSvg(acceptorBarChart);
+        return getAcceptorSvg(acceptorRuler, acceptorBarChart);
     }
 
     public String getAcceptorIcBarsWithRi(String reference, String alternate) {
+        SvgComponent acceptorRuler = SvgSequenceRuler.acceptor(reference, alternate);
         SvgComponent acceptorBarChart = SvgIcBarchart.acceptorBarChart(reference, alternate, acceptor);
         SvgComponent deltaRi = DeltaRiBox.acceptor(reference, alternate, acceptor);
-        return getAcceptorSvg(acceptorBarChart, deltaRi);
+        return getAcceptorSvg(acceptorRuler, acceptorBarChart, deltaRi);
     }
 
     /**

@@ -139,7 +139,7 @@ public class DonorGeneratorTest {
 
     @Test
     public void testGetDonorRuler(){
-        VmvtGenerator donor = new VmvtGenerator();
+        VmvtGenerator donor = new VmvtGenerator(true);
         String svg = donor.getDonorSequenceRuler(ref,alt);
         assertNotNull(svg);
         try {

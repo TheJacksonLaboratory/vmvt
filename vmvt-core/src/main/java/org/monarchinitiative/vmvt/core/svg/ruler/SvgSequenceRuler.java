@@ -25,7 +25,7 @@ public abstract class SvgSequenceRuler implements SvgComponent, SvgInitializer {
     private final int width;
 
 
-    private final static int SVG_RULER_POSITION_Y_INCREMENT = 40;
+    private final static int SVG_RULER_POSITION_Y_INCREMENT = 50;
 
     public SvgSequenceRuler(int w, int h, String ref, String alt) {
         this.seqlen = sequenceLength(ref, alt);
@@ -82,7 +82,7 @@ public abstract class SvgSequenceRuler implements SvgComponent, SvgInitializer {
     @Override
     public void write(Writer writer, int starty) throws IOException {
         int ypos = starty;
-        writePositionRuler(writer, ypos);
+        writePositionRuler(writer, ypos+10);
         ypos += SVG_RULER_POSITION_Y_INCREMENT;
         int Y_LINE_INCREMENT = 20;
         writeRefPlain(writer, ypos);

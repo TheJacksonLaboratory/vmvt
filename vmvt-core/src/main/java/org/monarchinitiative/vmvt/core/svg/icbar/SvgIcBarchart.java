@@ -150,19 +150,7 @@ public class SvgIcBarchart implements SvgInitializer, SvgComponent {
     @Override
     public void write(Writer writer, int starty) throws IOException {
         writeIcBars(writer, this.midbarYpos);
-        SvgSequenceRuler ruler;
-        if (mtype == SvgConstants.MotifType.DONOR) {
-            ruler = new DonorRuler(reference, alternate);
-        } else if (mtype == SvgConstants.MotifType.ACCEPTOR) {
-            ruler = new AcceptorRuler(reference, alternate);
-        } else {
-            // should not happen
-            throw new VmvtRuntimeException("Only donor/acceptor supported");
-        }
-        ruler.write(writer, SVG_Y_TOP_MARGIN);
-        // writeRefAltSeparation(writer);
-        writeIcBars(writer, this.midbarYpos);
-
+       // writeIcBars(writer, this.midbarYpos);
     }
 
     @Override
