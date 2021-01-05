@@ -2,36 +2,24 @@ package org.monarchinitiative.vmvt.core.svg.logo;
 
 
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
-import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
 import org.monarchinitiative.vmvt.core.svg.SvgComponent;
 import org.monarchinitiative.vmvt.core.svg.SvgConstants;
-import org.monarchinitiative.vmvt.core.svg.SvgWriter;
-import org.monarchinitiative.vmvt.core.svg.trek.AcceptorTrekkerGenerator;
-import org.monarchinitiative.vmvt.core.svg.trek.DonorTrekkerGenerator;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Map;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
 /**
  * This class writes a sequence logo as an SVG element (which needs to be included in a complete SVG, which is
- * done in {@link DonorLogoGenerator}, {@link AcceptorLogoGenerator}, {@link AcceptorTrekkerGenerator},
- * or {@link DonorTrekkerGenerator}.
+ * done in {@link DonorLogoGenerator}, {@link AcceptorLogoGenerator}
  * @author Peter N Robinson
  */
 public class SvgSequenceLogo implements SvgComponent {
     /** Position where we will start to write things from the left side of the SVG. */
     protected final int XSTART;
 
-    /** Amount to shift down after sequence logo */
-    private final static int Y_SKIP = 50;
-    /**
-     * Height of the sequence logo (by itself, the actual SVG will have additional margin).
-     */
-    private final int componentHeight;
     /** Width of the logo component */
-    private final int componentWidth;
+ //   private final int componentWidth;
 
     /** Representation of the Splice donor/acceptor IC matrix. */
     protected final DoubleMatrix splicesite;
@@ -42,12 +30,9 @@ public class SvgSequenceLogo implements SvgComponent {
      * the LOGO is started at y=startY
      * @param site Representation of the splice site (height matrix)
      * @param w width of the SVG canvas
-     * @param h height of the SVG canvas
      */
-    public SvgSequenceLogo(DoubleMatrix site, int w, int h) {
+    public SvgSequenceLogo(DoubleMatrix site, int w) {
         splicesite = site;
-        this.componentHeight = h;
-        this.componentWidth = w;
         this.XSTART = SvgConstants.Dimensions.SVG_STARTX;
     }
 
@@ -86,8 +71,9 @@ public class SvgSequenceLogo implements SvgComponent {
     public void write(Writer swriter, int starty) throws IOException {
         int X = this.XSTART;
         int seqlen = this.splicesite.getMotifLength();
+        int ypos = starty + SvgConstants.Dimensions.SVG_LOGO_STARTY;
         for (int i=0; i<seqlen; i++) {
-            writeLogoBaseColumn(swriter, X, starty, i);
+            writeLogoBaseColumn(swriter, X, ypos, i);
             X += LOWER_CASE_BASE_INCREMENT;
         }
     }
@@ -95,36 +81,16 @@ public class SvgSequenceLogo implements SvgComponent {
 
     @Override
     public int height() {
-        return this.componentHeight;
+        return SVG_LOGO_HEIGHT;
     }
 
 
 
     public static SvgSequenceLogo donor(DoubleMatrix donorHeight) {
-        return new SvgSequenceLogo(donorHeight, SVG_DONOR_WIDTH, SVG_LOGO_HEIGHT);
+        return new SvgSequenceLogo(donorHeight, SVG_DONOR_WIDTH);
     }
 
     public static SvgSequenceLogo acceptor(DoubleMatrix acceptorHeight) {
-        return new SvgSequenceLogo(acceptorHeight, SVG_ACCEPTOR_WIDTH, SVG_LOGO_HEIGHT);
+        return new SvgSequenceLogo(acceptorHeight, SVG_ACCEPTOR_WIDTH);
     }
-
-
-
-   /*
-    public String getSvg() {
-        StringWriter swriter = new StringWriter();
-        try {
-            writeHeader(swriter);
-            int X = this.XSTART;
-            int seqlen = this.splicesite.getMotifLength();
-            for (int i=0; i<seqlen; i++) {
-                writeLogoBaseColumn(swriter, X, this.YSTART, i);
-                X += LOWER_CASE_BASE_INCREMENT;
-            }
-            writeFooter(swriter);
-            return swriter.toString();
-        } catch (IOException e) {
-            return getSvgErrorMessage(e.getMessage());
-        }
-    }*/
 }

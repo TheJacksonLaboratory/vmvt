@@ -33,7 +33,7 @@ public class AcceptorGeneratorTest {
 
     @Test
     public void testWriteSvgAcceptorLogo() {
-        VmvtGenerator donor = new VmvtGenerator();
+        VmvtGenerator donor = new VmvtGenerator(true);
         String svg = donor.getAcceptorLogoSvg();
         assertNotNull(svg);
         try {
@@ -48,7 +48,7 @@ public class AcceptorGeneratorTest {
 
     @Test
     public void testWriteSvgAcceptorTrekker() {
-        VmvtGenerator donor = new VmvtGenerator();
+        VmvtGenerator donor = new VmvtGenerator(true);
         String svg = donor.getAcceptorTrekkerSvg(ref,alt);
         assertNotNull(svg);
         try {
@@ -111,7 +111,7 @@ public class AcceptorGeneratorTest {
         VmvtGenerator vmvt = new VmvtGenerator();
         String canRef =     "gtgttttgtcatgtgtaTgctcaagGG";
         String crypticRef = "gtgttttgtcatgtgtaAgctcaagGG";
-        String svg = vmvt.getAcceptorWithRi(canRef, crypticRef);
+        String svg = vmvt.getAcceptorTrekkerWithRi(canRef, crypticRef);
         assertNotNull(svg);
         try {
             String path = "target/acceptorWithRi.svg";

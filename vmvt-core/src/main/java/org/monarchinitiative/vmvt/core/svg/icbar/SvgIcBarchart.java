@@ -4,6 +4,7 @@ import org.monarchinitiative.vmvt.core.SvgInitializer;
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 
+import org.monarchinitiative.vmvt.core.svg.SvgComponent;
 import org.monarchinitiative.vmvt.core.svg.SvgConstants;
 import org.monarchinitiative.vmvt.core.svg.SvgHeaderFooter;
 import org.monarchinitiative.vmvt.core.svg.SvgWriter;
@@ -19,7 +20,7 @@ import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.NEARLYBLAC
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
 
 
-public class SvgIcBarchart implements SvgInitializer, SvgHeaderFooter, SvgWriter {
+public class SvgIcBarchart implements SvgInitializer, SvgComponent {
 
 
     private final int midbarYpos = 150;
@@ -27,9 +28,7 @@ public class SvgIcBarchart implements SvgInitializer, SvgHeaderFooter, SvgWriter
     private final String reference;
     private final String alternate;
     private final int width;
-    private final int height;
     private final int seqlen;
-    private final boolean framed;
     /** A coding of the String representing the reference sequence {@link #reference} using A=0,C=1,G=2,T=3. */
     private final int [] refidx;
     /** A coding of the String representing the alternate sequence {@link #alternate} using A=0,C=1,G=2,T=3. */
@@ -41,12 +40,10 @@ public class SvgIcBarchart implements SvgInitializer, SvgHeaderFooter, SvgWriter
     private final int Y_JUMP = 2; // jump across the 'y axis' for IC +/1 zero
 
 
-    private SvgIcBarchart(String ref, String alt, int width, int height, DoubleMatrix splicesite, boolean framed, SvgConstants.MotifType type){
+    private SvgIcBarchart(String ref, String alt, int width, DoubleMatrix splicesite, SvgConstants.MotifType type){
         this.reference = ref;
         this.alternate = alt;
         this.width = width;
-        this.height = height;
-        this.framed = framed;
         this.splicesite = splicesite;
         this.refidx = sequenceIndex(ref);
         this.altidx = sequenceIndex(alt);
@@ -55,28 +52,13 @@ public class SvgIcBarchart implements SvgInitializer, SvgHeaderFooter, SvgWriter
     }
 
 
-    public static SvgIcBarchart donorBarChart(String ref, String alt, DoubleMatrix splicesite, boolean framed) {
-        return new SvgIcBarchart(ref, alt, SVG_DONOR_WIDTH, SVG_BARCHART_HEIGHT, splicesite, framed, SvgConstants.MotifType.DONOR);
+    public static SvgIcBarchart donorBarChart(String ref, String alt, DoubleMatrix splicesite) {
+        return new SvgIcBarchart(ref, alt, SVG_DONOR_WIDTH, splicesite, SvgConstants.MotifType.DONOR);
     }
 
-    public static SvgIcBarchart acceptorBarChart(String ref, String alt, DoubleMatrix splicesite, boolean framed) {
-        return new SvgIcBarchart(ref, alt, SVG_ACCEPTOR_WIDTH, SVG_BARCHART_HEIGHT, splicesite, framed, SvgConstants.MotifType.ACCEPTOR);
+    public static SvgIcBarchart acceptorBarChart(String ref, String alt, DoubleMatrix splicesite) {
+        return new SvgIcBarchart(ref, alt, SVG_ACCEPTOR_WIDTH, splicesite, SvgConstants.MotifType.ACCEPTOR);
     }
-
-
-    public String getSvg() {
-        StringWriter swriter = new StringWriter();
-        try {
-            //(Writer writer, int width, int height, String SVG_FONTS, boolean framed)
-            writeHeader(swriter, this.width, this.height, this.framed);
-            write(swriter);
-            writeFooter(swriter);
-            return swriter.toString();
-        } catch (IOException e) {
-            return getSvgErrorMessage(e.getMessage());
-        }
-    }
-
 
     protected void writeRefAltSeparation(Writer writer) throws IOException {
         double endX = (0.6+this.seqlen) * LOWER_CASE_BASE_INCREMENT;
@@ -168,9 +150,8 @@ public class SvgIcBarchart implements SvgInitializer, SvgHeaderFooter, SvgWriter
     }
 
 
-
     @Override
-    public void write(Writer writer) throws IOException {
+    public void write(Writer writer, int starty) throws IOException {
         writeIcBars(writer, this.midbarYpos);
         SvgSequenceRuler ruler;
         if (mtype == SvgConstants.MotifType.DONOR) {
@@ -182,8 +163,13 @@ public class SvgIcBarchart implements SvgInitializer, SvgHeaderFooter, SvgWriter
             throw new VmvtRuntimeException("Only donor/acceptor supported");
         }
         ruler.write(writer, SVG_Y_TOP_MARGIN);
-       // writeRefAltSeparation(writer);
+        // writeRefAltSeparation(writer);
         writeIcBars(writer, this.midbarYpos);
 
+    }
+
+    @Override
+    public int height() {
+        return SVG_BARCHART_HEIGHT;
     }
 }

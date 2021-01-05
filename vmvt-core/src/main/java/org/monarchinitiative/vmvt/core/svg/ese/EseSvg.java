@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public abstract class EseSvg implements SvgComponent, SvgHeaderFooter {
     /** Canvas width of the SVG */
-    private final static int SVG_WIDTH = 900;
+    private final static int SVG_WIDTH = SvgConstants.Dimensions.ESE_SVG_WIDTH;
     /** Canvas height of the SVG.*/
     private final static int SVG_HEIGHT = 300;
     /** Width of one of the two kmer plots (ref/alt) this SVG will show. Needs to be less than half of {@link #SVG_WIDTH}*/
@@ -227,25 +227,11 @@ public abstract class EseSvg implements SvgComponent, SvgHeaderFooter {
         plotInterplotLine(writer);
         writeFooter(writer);
     }
-    public String getSvg() {
-        StringWriter swriter = new StringWriter();
-        try {
-            write(swriter, 10);
-        } catch (IOException e) {
-            return e.getLocalizedMessage();//getSvgErrorMessage(e.getMessage());
-        }
-        return swriter.toString();
-    }
+
 
     @Override
     public int height() {
         return SVG_HEIGHT;
     }
 
-
-
-//    @Override
-//    public void write(Writer writer) {
-//        throw new UnsupportedOperationException("todo");
-//    }
 }
