@@ -18,16 +18,13 @@ public abstract class SvgSequenceRuler implements SvgComponent, SvgInitializer {
     protected int startY = SVG_RULER_STARTY;
 
     protected final int seqlen;
-    /** A coding of the String representing the reference sequence {@link #reference} using A=0,C=1,G=2,T=3. */
+    /** A coding of the String representing the reference sequence using A=0,C=1,G=2,T=3. */
     private final int [] refidx;
-    /** A coding of the String representing the alternate sequence {@link #alternate} using A=0,C=1,G=2,T=3. */
+    /** A coding of the String representing the alternate sequence using A=0,C=1,G=2,T=3. */
     private final int [] altidx;
 
     private final int width;
 
-    private final String reference;
-
-    private final String alternate;
 
     private final static int SVG_RULER_POSITION_Y_INCREMENT = 40;
 
@@ -36,11 +33,9 @@ public abstract class SvgSequenceRuler implements SvgComponent, SvgInitializer {
         this.refidx = sequenceIndex(ref);
         this.altidx = sequenceIndex(alt);
         this.width = w;
-        this.reference = ref;
-        this.alternate = alt;
     }
 
-    abstract void writePositionRuler(Writer writer) throws IOException;
+    abstract void writePositionRuler(Writer writer, int starty) throws IOException;
 
     protected void writeRefPlain(Writer writer, int ypos) throws IOException {
         int X = startX;
@@ -62,7 +57,7 @@ public abstract class SvgSequenceRuler implements SvgComponent, SvgInitializer {
     }
 
 
-    protected void writeBoxAroundMutation(Writer writer) throws IOException {
+    protected void writeBoxAroundMutation(Writer writer, int ypos) throws IOException {
         // get location of first and last index with mutated bases
         int b = Integer.MAX_VALUE;
         int e = Integer.MIN_VALUE;
@@ -73,7 +68,7 @@ public abstract class SvgSequenceRuler implements SvgComponent, SvgInitializer {
             }
         }
         double X = this.startX + b*LOWER_CASE_BASE_INCREMENT;
-        int Y = (int)(this.startY - 1.6*LETTER_BASE_HEIGHT);
+        int Y = (int)(ypos - 1.6*LETTER_BASE_HEIGHT);
         int boxwidth = LOWER_CASE_BASE_INCREMENT;
         int boxheight = (int)(LETTER_BASE_HEIGHT*4.1);
         writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"" +
@@ -100,12 +95,13 @@ public abstract class SvgSequenceRuler implements SvgComponent, SvgInitializer {
 
     @Override
     public void write(Writer writer, int starty) throws IOException {
-        writePositionRuler(writer);
-        startY += SVG_RULER_POSITION_Y_INCREMENT;
+        int ypos = starty;
+        writePositionRuler(writer, ypos);
+        ypos += SVG_RULER_POSITION_Y_INCREMENT;
         int Y_LINE_INCREMENT = 20;
-        writeRefPlain(writer, starty);
-        writeAltPlain(writer, starty+Y_LINE_INCREMENT);
-        writeBoxAroundMutation(writer);
+        writeRefPlain(writer, ypos);
+        writeAltPlain(writer, ypos+Y_LINE_INCREMENT);
+        writeBoxAroundMutation(writer,ypos);
     }
 
 

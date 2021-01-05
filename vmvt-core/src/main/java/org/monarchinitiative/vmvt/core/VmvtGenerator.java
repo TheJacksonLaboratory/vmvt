@@ -61,17 +61,13 @@ public class VmvtGenerator {
     public String getDonorSequenceRuler(String reference, String alternate) {
 //        SvgSequenceRuler ruler = new DonorRuler(reference, alternate, framed);
 //        return ruler.getSvg();
-        SvgBuilder builder = new SvgBuilder().addComponent(SvgSequenceRuler.donor(reference, alternate));
-        SvgComponentWriter writer = new SvgComponentWriter();
-        return writer.getSvg(builder.build());
+        SvgComponentWriter writer = SvgComponentWriter.donorWriter();
+        return writer.getSvg(SvgSequenceRuler.donor(reference, alternate));
     }
 
     public String getAcceptorSequenceRuler(String reference, String alternate) {
-//        SvgSequenceRuler ruler = new AcceptorRuler(reference, alternate, framed);
-//        return ruler.getSvg();
-        SvgBuilder builder = new SvgBuilder().addComponent(SvgSequenceRuler.acceptor(reference, alternate));
-        SvgComponentWriter writer = new SvgComponentWriter();
-        return writer.getSvg(builder.build());
+        SvgComponentWriter writer = SvgComponentWriter.acceptorWriter();
+        return writer.getSvg(SvgSequenceRuler.acceptor(reference, alternate));
     }
 
 
@@ -88,19 +84,15 @@ public class VmvtGenerator {
 
 
     public String getDonorLogoSvg() {
-       // SvgSequenceLogo svgwriter = new DonorLogoGenerator(donorHeight, framed);
-        //return svgwriter.getSvg();
-        SvgBuilder builder = new SvgBuilder().addComponent(SvgSequenceLogo.donor(donorHeight));
-        SvgComponentWriter writer = new SvgComponentWriter();
-        return writer.getSvg(builder.build());
+        SvgComponentWriter writer = SvgComponentWriter.donorWriter();
+        return writer.getSvg(SvgSequenceLogo.donor(donorHeight));
     }
 
     public String getAcceptorLogoSvg() {
 //        AbstractSvgGenerator svgGenerator = new AcceptorLogoGenerator(acceptorHeight, framed);
 //        return svgGenerator.getSvg();
-        SvgBuilder builder = new SvgBuilder().addComponent(SvgSequenceLogo.donor(acceptorHeight));
-        SvgComponentWriter writer = new SvgComponentWriter();
-        return writer.getSvg(builder.build());
+        SvgComponentWriter writer = SvgComponentWriter.acceptorWriter();
+        return writer.getSvg(SvgSequenceLogo.donor(acceptorHeight));
     }
 
     public String getDonorTrekkerSvg(String reference, String alternate) {

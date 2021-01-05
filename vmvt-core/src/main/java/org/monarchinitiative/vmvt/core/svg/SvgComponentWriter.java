@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
@@ -31,7 +32,10 @@ public class SvgComponentWriter implements SvgHeaderFooter, SvgWriter {
 
     private final boolean framed;
 
-    public SvgComponentWriter(boolean framed) {
+    private final int svgWidth;
+
+    private SvgComponentWriter(int width, boolean framed) {
+        this.svgWidth = width;
         this.framed = framed;
         donor = DoubleMatrix.donor();
         acceptor = DoubleMatrix.acceptor();
@@ -41,16 +45,17 @@ public class SvgComponentWriter implements SvgHeaderFooter, SvgWriter {
         acceptorDistribution = new DistributionCalculator(acceptor,NUM_SAMPLES);
     }
 
-    /**
-     * Use this constructor to generate SVGs without a frame.
-     */
-    public SvgComponentWriter() {
-        this(false);
-    }
+
 
     @Deprecated
     public String getSvg(){
         throw new UnsupportedOperationException();
+    }
+
+    public String getSvg(SvgComponent... components) {
+        List<SvgComponent> comps = new ArrayList<>();
+        comps.addAll(Arrays.asList(components));
+        return getSvg(comps);
     }
 
     public String getSvg(List<SvgComponent> components) {
@@ -59,7 +64,7 @@ public class SvgComponentWriter implements SvgHeaderFooter, SvgWriter {
         int totalHeight = totalComponentHeight + totalIntercomponentHeight + SVG_Y_TOP_MARGIN + SVG_Y_BOTTOM_MARGIN;
         StringWriter swriter = new StringWriter();
         try {
-            writeHeader(swriter, totalHeight, totalHeight, this.framed);
+            writeHeader(swriter, this.svgWidth, totalHeight, this.framed);
             for (var c : components) {
                 c.write(swriter, SVG_Y_TOP_MARGIN);
             }
@@ -75,7 +80,21 @@ public class SvgComponentWriter implements SvgHeaderFooter, SvgWriter {
         throw new UnsupportedOperationException();
     }
 
+    public static SvgComponentWriter donorWriter(boolean framed) {
+        return new SvgComponentWriter(SVG_DONOR_WIDTH, framed);
+    }
 
+    public static SvgComponentWriter donorWriter() {
+        return new SvgComponentWriter(SVG_DONOR_WIDTH, false);
+    }
+
+    public static SvgComponentWriter acceptorWriter(boolean framed) {
+        return new SvgComponentWriter(SVG_ACCEPTOR_WIDTH, framed);
+    }
+
+    public static SvgComponentWriter acceptorWriter() {
+        return new SvgComponentWriter(SVG_ACCEPTOR_WIDTH, false);
+    }
 
 
 }
