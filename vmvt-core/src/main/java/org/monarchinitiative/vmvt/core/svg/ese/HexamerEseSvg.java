@@ -3,6 +3,9 @@ package org.monarchinitiative.vmvt.core.svg.ese;
 import org.monarchinitiative.vmvt.core.hexamer.FileKMerParser;
 import org.monarchinitiative.vmvt.core.hexamer.HexamerFeatureCalculator;
 
+import java.io.IOException;
+import java.io.Writer;
+
 public class HexamerEseSvg extends EseSvg {
 
     private final static HexamerFeatureCalculator hexaCalc = new HexamerFeatureCalculator(FileKMerParser.hexamerMap());
@@ -10,5 +13,6 @@ public class HexamerEseSvg extends EseSvg {
     public HexamerEseSvg(String reference, String alternate, boolean framed) {
         super(hexaCalc, reference, alternate, framed);
     }
+
 
 }

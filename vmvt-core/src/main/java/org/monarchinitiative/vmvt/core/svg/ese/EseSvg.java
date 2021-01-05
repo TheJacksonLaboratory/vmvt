@@ -2,15 +2,14 @@ package org.monarchinitiative.vmvt.core.svg.ese;
 
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
 import org.monarchinitiative.vmvt.core.hexamer.KmerFeatureCalculator;
-import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
-import org.monarchinitiative.vmvt.core.svg.SvgColors;
+import org.monarchinitiative.vmvt.core.svg.*;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Arrays;
 
-public abstract class EseSvg extends AbstractSvgGenerator {
+public abstract class EseSvg implements SvgComponent, SvgHeaderFooter {
     /** Canvas width of the SVG */
     private final static int SVG_WIDTH = 900;
     /** Canvas height of the SVG.*/
@@ -45,7 +44,7 @@ public abstract class EseSvg extends AbstractSvgGenerator {
 
 
     private final int YTOP = 100;
-    private final int YBOTTOM = HEIGHT - 20;
+    private final int YBOTTOM = SVG_HEIGHT - 20;
     /* This will convert the scores in {@link #ESEscoresRef} to the corresponding height. */
     private final double YSCALE = 0.5 * (YBOTTOM - YTOP);
     /**
@@ -68,7 +67,7 @@ public abstract class EseSvg extends AbstractSvgGenerator {
 
 
     public EseSvg(KmerFeatureCalculator calc, String ref, String alt, boolean framed) {
-        super(SVG_WIDTH, SVG_HEIGHT, framed);
+        //super(SVG_WIDTH, SVG_HEIGHT, framed);
         this.calculator = calc;
         this.reference = ref.toUpperCase();
         this.alternate = alt.toUpperCase();
@@ -220,23 +219,33 @@ public abstract class EseSvg extends AbstractSvgGenerator {
         writeEsePlot(writer, this.ESEscoresAlt, this.meanESEalt, XSTART_ALT_PLOT, XEND_ALT_PLOT);
     }
 
-
+    @Override
+    public void write(Writer writer, int starty) throws IOException {
+        writeHeader(writer, SVG_WIDTH, SVG_HEIGHT, false);
+        plotReference(writer);
+        plotAlternate(writer);
+        plotInterplotLine(writer);
+        writeFooter(writer);
+    }
     public String getSvg() {
         StringWriter swriter = new StringWriter();
         try {
-            writeHeader(swriter);
-            plotReference(swriter);
-            plotAlternate(swriter);
-            plotInterplotLine(swriter);
-            writeFooter(swriter);
+            write(swriter, 10);
         } catch (IOException e) {
-            return getSvgErrorMessage(e.getMessage());
+            return e.getLocalizedMessage();//getSvgErrorMessage(e.getMessage());
         }
         return swriter.toString();
     }
 
     @Override
-    public void write(Writer writer) {
-        throw new UnsupportedOperationException("todo");
+    public int height() {
+        return SVG_HEIGHT;
     }
+
+
+
+//    @Override
+//    public void write(Writer writer) {
+//        throw new UnsupportedOperationException("todo");
+//    }
 }
