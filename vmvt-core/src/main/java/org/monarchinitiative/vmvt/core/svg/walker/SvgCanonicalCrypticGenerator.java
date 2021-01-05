@@ -88,14 +88,14 @@ public class SvgCanonicalCrypticGenerator extends AbstractSvgGenerator {
         double R_i = splicesite.getIndividualSequenceInformation(this.canonical);
         writeRi(writer, R_i, "canonical", ystart);
         ystart += BLUE_BOX_HEIGHT + Y_INCREMENT;
-        SvgSequenceWalker walker = SvgSequenceWalker.singleDonorWalker(this.canonical, this.splicesite, ystart, this.framed);
-        walker.writeRefWalker(writer);
+        SvgSequenceWalker walker = SvgSequenceWalker.singleDonorWalker(this.canonical, this.splicesite);
+        walker.writeRefWalker(writer, ystart);
         R_i = splicesite.getIndividualSequenceInformation(this.cryptic);
         ystart += 80;
         writeRi(writer, R_i, "cryptic", ystart);
         ystart += BLUE_BOX_HEIGHT + Y_INCREMENT;
-        walker = SvgSequenceWalker.singleDonorWalker(this.cryptic, this.splicesite, ystart, this.framed);
-        walker.writeRefWalker(writer);
+        walker = SvgSequenceWalker.singleDonorWalker(this.cryptic, this.splicesite);
+        walker.writeRefWalker(writer, ystart);
     }
 
 
@@ -106,14 +106,14 @@ public class SvgCanonicalCrypticGenerator extends AbstractSvgGenerator {
         double R_i = splicesite.getIndividualSequenceInformation(this.canonical);
         writeRi(writer, R_i, "canonical", ystart);
         ystart += BLUE_BOX_HEIGHT + Y_INCREMENT;
-        SvgSequenceWalker walker = SvgSequenceWalker.singleAcceptorWalker(this.canonical, this.splicesite, ystart, this.framed);
-        walker.writeRefWalker(writer);
+        SvgSequenceWalker walker = SvgSequenceWalker.singleAcceptorWalker(this.canonical, this.splicesite);
+        walker.writeRefWalker(writer, ystart);
         ystart += 80;
         R_i = splicesite.getIndividualSequenceInformation(this.cryptic);
         writeRi(writer, R_i, "cryptic", ystart);
         ystart += BLUE_BOX_HEIGHT + Y_INCREMENT;
-        walker = SvgSequenceWalker.singleAcceptorWalker(this.cryptic, this.splicesite, ystart, this.framed);
-        walker.writeRefWalker(writer);
+        walker = SvgSequenceWalker.singleAcceptorWalker(this.cryptic, this.splicesite);
+        walker.writeRefWalker(writer, ystart);
 
     }
 

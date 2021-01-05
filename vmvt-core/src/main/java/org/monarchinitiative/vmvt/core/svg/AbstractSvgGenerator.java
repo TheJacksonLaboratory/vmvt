@@ -19,8 +19,7 @@ public abstract class AbstractSvgGenerator {
     protected final int WIDTH;
     /** Total height of the SVG canvas. */
     protected final int HEIGHT;
-    /** X Position on the SVG canvas to start drawing. */
-    protected final static int SVG_STARTX = 10;
+
     /** The width of the SVG canvas for all Donor figures. */
     protected final static int SVG_DONOR_WIDTH = 150;
     /** The width of the SVG canvas for all Acceptor figures. */
@@ -36,26 +35,13 @@ public abstract class AbstractSvgGenerator {
 
     protected final static int SVG_WALKER_STARTY = 50;
     protected final static int SVG_CANCRYPT_STARTY = 30;
-    protected final static int SVG_WALKER_HEIGHT = 180;
+
     protected final static int LETTER_WIDTH = 10;
     /** Amount of horizontal space to be taken up by one base character. */
     protected final int LOWER_CASE_BASE_INCREMENT = LETTER_WIDTH + 5;
 
-    protected final double HALF_A_BASE = (double)LOWER_CASE_BASE_INCREMENT/2.0;
-    /** Amount to shift down between ref and alt sequence lines */
-    protected final static int Y_LINE_INCREMENT = 20;
-    /** Y position to start off the Walker in the Trekker layout. */
-    protected final static int TREKKER_WALKER_START_Y = 80;
 
 
-
-
-
-    protected final static int SVG_TREKKER_HEIGHT = 220;
-    protected final static int SVG_TREKKER_ACCEPTOR_WIDTH = SVG_ACCEPTOR_WIDTH + 10;
-    protected final static int SVG_TREKKER_DONOR_WIDTH = SVG_DONOR_WIDTH + 10;
-    /** Height of a letter before scaling */
-    protected final static int LETTER_BASE_HEIGHT = 12;
 
 
 
@@ -135,21 +121,7 @@ public abstract class AbstractSvgGenerator {
     public abstract String getSvg();
     public abstract void write(Writer writer) throws IOException;
 
-    protected String getBaseColorFromChar(String b) {
-        switch (b) {
-            case "A":
-                return A_COLOR;
-            case "C":
-                return C_COLOR;
-            case "G":
-                return G_COLOR;
-            case "T":
-                return T_COLOR;
-            default:
-                // should never happen
-                throw new VmvtRuntimeException("Unrecognized color: " + b);
-        }
-    }
+
 
 
 

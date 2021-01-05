@@ -25,7 +25,7 @@ public class DonorGeneratorTest {
 
     @Test
     public void testWriteDonorSvgWalker() {
-        VmvtGenerator donor = new VmvtGenerator();
+        VmvtGenerator donor = new VmvtGenerator(true);
         String svg = donor.getDonorWalkerSvg(ref,alt);
         assertNotNull(svg);
         try {
@@ -40,7 +40,7 @@ public class DonorGeneratorTest {
 
     @Test
     public void testWriteDonorSvgLogo() {
-        VmvtGenerator donor = new VmvtGenerator();
+        VmvtGenerator donor = new VmvtGenerator(true);
         String svg = donor.getDonorLogoSvg();
         assertNotNull(svg);
         try {
@@ -139,7 +139,7 @@ public class DonorGeneratorTest {
 
     @Test
     public void testGetDonorRuler(){
-        VmvtGenerator donor = new VmvtGenerator();
+        VmvtGenerator donor = new VmvtGenerator(true);
         String svg = donor.getDonorSequenceRuler(ref,alt);
         assertNotNull(svg);
         try {
@@ -239,17 +239,17 @@ public class DonorGeneratorTest {
         writeToRTDdirectory("hexamer.svg", svg);
         svg = getHeptamerSvg();
         writeToRTDdirectory("heptamer.svg", svg);
-        svg = vmvt.getDelta(ref, alt);
-        writeToRTDdirectory("deltaDonor.svg", svg);
+//        svg = vmvt.getDelta(ref, alt);
+//        writeToRTDdirectory("deltaDonor.svg", svg);
         final String ref = "CAGGTTGGT";
         final String alt = "TAGGTTGGT";
         vmvt = new VmvtGenerator();
-        svg = vmvt.getDonorWithRi(ref, alt);
+        svg = vmvt.getDonorTrekkerWithRi(ref, alt);
         writeToRTDdirectory("donorWithRi.svg", svg);
         final String ref2 = "CTGGCAGGT";
         final String alt2 = "CTGGTAGGT";
         vmvt = new VmvtGenerator();
-        svg = vmvt.getDonorWithRi(ref2, alt2);
+        svg = vmvt.getDonorTrekkerWithRi(ref2, alt2);
         writeToRTDdirectory("donorWithRiCryptic.svg", svg);
     }
 
@@ -302,7 +302,7 @@ public class DonorGeneratorTest {
     @Test
     public void testDonorWithRi() {
         VmvtGenerator vmvt = new VmvtGenerator();
-        String svg = vmvt.getDonorWithRi(ref, alt);
+        String svg = vmvt.getDonorTrekkerWithRi(ref, alt);
 
         try {
             String path = "target/donorWithRi.svg";

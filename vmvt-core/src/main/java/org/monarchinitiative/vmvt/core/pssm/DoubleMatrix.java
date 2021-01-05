@@ -16,6 +16,7 @@ public class DoubleMatrix {
     private final int nRows;
     private final int nCols;
 
+
     private final static double LOG_TWO = Math.log(2);
 
     public DoubleMatrix(int nRows, int nCols) {

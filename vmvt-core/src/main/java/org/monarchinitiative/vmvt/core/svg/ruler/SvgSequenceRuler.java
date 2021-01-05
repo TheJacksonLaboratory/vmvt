@@ -1,12 +1,14 @@
 package org.monarchinitiative.vmvt.core.svg.ruler;
 
-import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
+import org.monarchinitiative.vmvt.core.svg.SvgInitializer;
+import org.monarchinitiative.vmvt.core.svg.SvgComponent;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 
-public abstract class SvgSequenceRuler extends AbstractSvgMotifGenerator {
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
+
+public abstract class SvgSequenceRuler implements SvgComponent, SvgInitializer {
 
     protected final int startX = SVG_STARTX;
     /** Height on the SVG canvas for Sequence rulers. */
@@ -14,42 +16,46 @@ public abstract class SvgSequenceRuler extends AbstractSvgMotifGenerator {
     protected final static int SVG_RULER_STARTY = 30;
     protected int startY = SVG_RULER_STARTY;
 
-    private final static int SVG_RULER_POSITION_Y_INCREMENT = 40;
+    protected final int seqlen;
+    /** A coding of the String representing the reference sequence using A=0,C=1,G=2,T=3. */
+    private final int [] refidx;
+    /** A coding of the String representing the alternate sequence using A=0,C=1,G=2,T=3. */
+    private final int [] altidx;
 
-    public SvgSequenceRuler(int w, int h, String ref, String alt, boolean framed) {
-        super(ref,alt, w, h, framed);
+    private final int width;
+
+
+    private final static int SVG_RULER_POSITION_Y_INCREMENT = 50;
+
+    public SvgSequenceRuler(int w, int h, String ref, String alt) {
+        this.seqlen = sequenceLength(ref, alt);
+        this.refidx = sequenceIndex(ref);
+        this.altidx = sequenceIndex(alt);
+        this.width = w;
     }
 
-    abstract void writePositionRuler(Writer writer) throws IOException;
+    abstract void writePositionRuler(Writer writer, int starty) throws IOException;
 
-    protected void writeRefPlain(Writer writer) throws IOException {
+    protected void writeRefPlain(Writer writer, int ypos) throws IOException {
         int X = startX;
-        int Y = startY;
         for (int i=0; i<seqlen; i++) {
-            writePlainBase(writer, X, Y, refidx[i]);
+            writePlainBase(writer, X, ypos, refidx[i]);
             X += LOWER_CASE_BASE_INCREMENT;
         }
-        // Reset (x,y) for next line
-        currentX = this.startX;
-        currentY = Y + Y_LINE_INCREMENT;
     }
 
-    protected void writeAltPlain(Writer writer) throws IOException {
-        int X = currentX;
-        int Y = currentY;
+    protected void writeAltPlain(Writer writer, int ypos) throws IOException {
+        int X = startX;
         for (int i=0; i<seqlen; i++) {
             if (refidx[i] != altidx[i]) {
-                writePlainBase(writer, X, Y, altidx[i]);
+                writePlainBase(writer, X, ypos, altidx[i]);
             }
             X += LOWER_CASE_BASE_INCREMENT;
         }
-        // Reset (x,y) for next line
-        currentX = startX;
-        currentY = Y + Y_LINE_INCREMENT;
     }
 
 
-    protected void writeBoxAroundMutation(Writer writer) throws IOException {
+    protected void writeBoxAroundMutation(Writer writer, int ypos) throws IOException {
         // get location of first and last index with mutated bases
         int b = Integer.MAX_VALUE;
         int e = Integer.MIN_VALUE;
@@ -60,7 +66,7 @@ public abstract class SvgSequenceRuler extends AbstractSvgMotifGenerator {
             }
         }
         double X = this.startX + b*LOWER_CASE_BASE_INCREMENT;
-        int Y = (int)(this.startY - 1.6*LETTER_BASE_HEIGHT);
+        int Y = (int)(ypos - 1.6*LETTER_BASE_HEIGHT);
         int boxwidth = LOWER_CASE_BASE_INCREMENT;
         int boxheight = (int)(LETTER_BASE_HEIGHT*4.1);
         writer.write(String.format("<rect x=\"%f\" y=\"%d\" width=\"%d\" height=\"%d\" rx=\"2\" fill-opacity=\"0.1\"" +
@@ -72,25 +78,23 @@ public abstract class SvgSequenceRuler extends AbstractSvgMotifGenerator {
 
     }
 
-    @Override
-    public String getSvg() {
-        StringWriter swriter = new StringWriter();
-        try {
-            writeHeader(swriter);
-            write(swriter);
-            writeFooter(swriter);
-            return swriter.toString();
-        } catch (IOException e) {
-            return getSvgErrorMessage(e.getMessage());
-        }
-    }
 
     @Override
-    public void write(Writer writer) throws IOException {
-        writePositionRuler(writer);
-        startY += SVG_RULER_POSITION_Y_INCREMENT;
-        writeRefPlain(writer);
-        writeAltPlain(writer);
-        writeBoxAroundMutation(writer);
+    public void write(Writer writer, int starty) throws IOException {
+        int ypos = starty;
+        writePositionRuler(writer, ypos+10);
+        ypos += SVG_RULER_POSITION_Y_INCREMENT;
+        int Y_LINE_INCREMENT = 20;
+        writeRefPlain(writer, ypos);
+        writeAltPlain(writer, ypos+Y_LINE_INCREMENT);
+        writeBoxAroundMutation(writer,ypos);
+    }
+
+    public static SvgSequenceRuler donor(String ref, String alt) {
+        return new DonorRuler(ref, alt);
+    }
+
+    public static SvgSequenceRuler acceptor(String ref, String alt) {
+        return new AcceptorRuler(ref, alt);
     }
 }
