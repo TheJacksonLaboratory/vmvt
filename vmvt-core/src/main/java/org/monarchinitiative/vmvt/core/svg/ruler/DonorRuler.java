@@ -2,14 +2,19 @@ package org.monarchinitiative.vmvt.core.svg.ruler;
 
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
 import org.monarchinitiative.vmvt.core.svg.SvgColors;
+import org.monarchinitiative.vmvt.core.svg.SvgConstants;
 
 import java.io.IOException;
 import java.io.Writer;
 
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.LOWER_CASE_BASE_INCREMENT;
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.SVG_DONOR_WIDTH;
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Sequence.DONOR_NT_LENGTH;
+
 public class DonorRuler  extends SvgSequenceRuler {
 
-    public DonorRuler(String ref, String alt, boolean framed) {
-        super(SVG_DONOR_WIDTH, SVG_RULER_HEIGHT, ref, alt, framed);
+    public DonorRuler(String ref, String alt) {
+        super(SVG_DONOR_WIDTH, SVG_RULER_HEIGHT, ref, alt);
         if (this.seqlen != DONOR_NT_LENGTH) {
             throw new VmvtRuntimeException(String.format("Sequence length must be %d for donor but was %d",
                     DONOR_NT_LENGTH, this.seqlen));
@@ -36,5 +41,10 @@ public class DonorRuler  extends SvgSequenceRuler {
         int Y1 = this.startY - 18;
         int Y2 = this.startY + 10;
         writer.write(String.format("<line x1=\"%s\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\"/>\n",Xr,Y1,Xr,Y2, SvgColors.RED));
+    }
+
+    @Override
+    public int height() {
+        return SvgConstants.Dimensions.SVG_RULER_HEIGHT;
     }
 }

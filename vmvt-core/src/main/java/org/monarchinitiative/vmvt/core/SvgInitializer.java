@@ -7,7 +7,7 @@ import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Sequence.*;
 public interface SvgInitializer {
 
 
-    default public int sequenceLength(String ref, String alt) {
+    default int sequenceLength(String ref, String alt) {
         if (ref.length() != alt.length()) {
             throw new VmvtRuntimeException(String.format("Ref (%s) and alt (%d) need to have the same length", ref, alt));
         }

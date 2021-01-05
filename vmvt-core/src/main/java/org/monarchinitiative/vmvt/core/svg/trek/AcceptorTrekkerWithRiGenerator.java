@@ -2,6 +2,7 @@ package org.monarchinitiative.vmvt.core.svg.trek;
 
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
+import org.monarchinitiative.vmvt.core.svg.SvgConstants;
 import org.monarchinitiative.vmvt.core.svg.logo.AcceptorLogoGenerator;
 import org.monarchinitiative.vmvt.core.svg.logo.SvgSequenceLogo;
 import org.monarchinitiative.vmvt.core.svg.ruler.AcceptorRuler;
@@ -30,10 +31,11 @@ public class AcceptorTrekkerWithRiGenerator extends SvgTrekkerWithRi{
 
     @Override
     public void write(Writer swriter) throws IOException {
-        AcceptorRuler ruler = new AcceptorRuler(this.ref, this.alt, this.framed);
-        ruler.write(swriter);
-        SvgSequenceLogo donorLogo = new AcceptorLogoGenerator(this.spliceHeightMatrix, SVG_DONOR_LOGO_START, this.framed);
-        donorLogo.write(swriter);
+        AcceptorRuler ruler = new AcceptorRuler(this.ref, this.alt);
+        ruler.write(swriter,SvgConstants.Dimensions.SVG_Y_TOP_MARGIN);
+        SvgSequenceLogo acceptorLogo = SvgSequenceLogo.acceptor(this.spliceHeightMatrix);
+        //   new AcceptorLogoGenerator(this.spliceHeightMatrix, this.framed);
+        acceptorLogo.write(swriter, SvgConstants.Dimensions.SVG_Y_TOP_MARGIN);
         System.out.println("SVG_TREKKER_WALKER_START_Y: " + SVG_WALKER_START_Y);
         AbstractSvgMotifGenerator walker =
                 new SvgSequenceWalker(this.ref, this.alt, this.splicesite, WIDTH, HEIGHT, SVG_WALKER_START_Y, this.framed);

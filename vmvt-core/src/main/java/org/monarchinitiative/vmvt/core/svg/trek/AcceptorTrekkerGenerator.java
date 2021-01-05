@@ -3,6 +3,8 @@ package org.monarchinitiative.vmvt.core.svg.trek;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
+import org.monarchinitiative.vmvt.core.svg.SvgComponent;
+import org.monarchinitiative.vmvt.core.svg.SvgConstants;
 import org.monarchinitiative.vmvt.core.svg.logo.AcceptorLogoGenerator;
 import org.monarchinitiative.vmvt.core.svg.logo.SvgSequenceLogo;
 import org.monarchinitiative.vmvt.core.svg.walker.SvgSequenceWalker;
@@ -48,9 +50,9 @@ public class AcceptorTrekkerGenerator extends AbstractSvgGenerator {
 
     @Override
     public void write(Writer swriter) throws IOException {
-        SvgSequenceLogo acceptorLogo =
-                new AcceptorLogoGenerator(this.spliceHeightMatrix, this.framed);
-        acceptorLogo.write(swriter);
+        SvgSequenceLogo acceptorLogo = SvgSequenceLogo.acceptor(this.spliceHeightMatrix);
+             //   new AcceptorLogoGenerator(this.spliceHeightMatrix, this.framed);
+        acceptorLogo.write(swriter, SvgConstants.Dimensions.SVG_Y_TOP_MARGIN);
         AbstractSvgMotifGenerator acceptorWalker =
                 new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT,TREKKER_WALKER_START_Y, this.framed);
         acceptorWalker.write(swriter);

@@ -48,9 +48,9 @@ public class DonorTrekkerGenerator extends AbstractSvgGenerator {
 
     @Override
     public void write(Writer swriter) throws IOException {
-        SvgSequenceLogo donorLogo =
-                new DonorLogoGenerator(this.spliceHeightMatrix, this.framed);
-        donorLogo.write(swriter);
+        SvgSequenceLogo donorLogo = SvgSequenceLogo.donor(this.spliceHeightMatrix);
+                //new DonorLogoGenerator(this.spliceHeightMatrix, this.framed);
+        donorLogo.write(swriter, 10);
         AbstractSvgMotifGenerator donorWalker =
                 new SvgSequenceWalker(reference, alternate, this.splicesite, WIDTH, HEIGHT, TREKKER_WALKER_START_Y, this.framed);
         donorWalker.write(swriter);

@@ -4,6 +4,8 @@ import org.monarchinitiative.vmvt.core.dist.DistributionCalculator;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgMotifGenerator;
+import org.monarchinitiative.vmvt.core.svg.SvgComponentWriter;
+import org.monarchinitiative.vmvt.core.svg.SvgWriter;
 import org.monarchinitiative.vmvt.core.svg.icbar.SvgIcBarchart;
 import org.monarchinitiative.vmvt.core.svg.trek.AcceptorTrekkerGenerator;
 import org.monarchinitiative.vmvt.core.svg.trek.AcceptorTrekkerWithRiGenerator;
@@ -57,13 +59,19 @@ public class VmvtGenerator {
     }
 
     public String getDonorSequenceRuler(String reference, String alternate) {
-        SvgSequenceRuler ruler = new DonorRuler(reference, alternate, framed);
-        return ruler.getSvg();
+//        SvgSequenceRuler ruler = new DonorRuler(reference, alternate, framed);
+//        return ruler.getSvg();
+        SvgBuilder builder = new SvgBuilder().addComponent(SvgSequenceRuler.donor(reference, alternate));
+        SvgComponentWriter writer = new SvgComponentWriter();
+        return writer.getSvg(builder.build());
     }
 
     public String getAcceptorSequenceRuler(String reference, String alternate) {
-        SvgSequenceRuler ruler = new AcceptorRuler(reference, alternate, framed);
-        return ruler.getSvg();
+//        SvgSequenceRuler ruler = new AcceptorRuler(reference, alternate, framed);
+//        return ruler.getSvg();
+        SvgBuilder builder = new SvgBuilder().addComponent(SvgSequenceRuler.acceptor(reference, alternate));
+        SvgComponentWriter writer = new SvgComponentWriter();
+        return writer.getSvg(builder.build());
     }
 
 
@@ -80,13 +88,19 @@ public class VmvtGenerator {
 
 
     public String getDonorLogoSvg() {
-        SvgSequenceLogo svgwriter = new DonorLogoGenerator(donorHeight, framed);
-        return svgwriter.getSvg();
+       // SvgSequenceLogo svgwriter = new DonorLogoGenerator(donorHeight, framed);
+        //return svgwriter.getSvg();
+        SvgBuilder builder = new SvgBuilder().addComponent(SvgSequenceLogo.donor(donorHeight));
+        SvgComponentWriter writer = new SvgComponentWriter();
+        return writer.getSvg(builder.build());
     }
 
     public String getAcceptorLogoSvg() {
-        AbstractSvgGenerator svgGenerator = new AcceptorLogoGenerator(acceptorHeight, framed);
-        return svgGenerator.getSvg();
+//        AbstractSvgGenerator svgGenerator = new AcceptorLogoGenerator(acceptorHeight, framed);
+//        return svgGenerator.getSvg();
+        SvgBuilder builder = new SvgBuilder().addComponent(SvgSequenceLogo.donor(acceptorHeight));
+        SvgComponentWriter writer = new SvgComponentWriter();
+        return writer.getSvg(builder.build());
     }
 
     public String getDonorTrekkerSvg(String reference, String alternate) {
@@ -144,12 +158,12 @@ public class VmvtGenerator {
     }
 
     public String getDonorIcBars(String reference, String alternate) {
-        SvgIcBarchart gen = SvgIcBarchart.donorBarChart(reference, alternate, donor, true);
+        SvgWriter gen = SvgIcBarchart.donorBarChart(reference, alternate, donor, true);
         return gen.getSvg();
     }
 
     public String getAcceptorIcBars(String reference, String alternate) {
-        SvgIcBarchart gen = SvgIcBarchart.donorBarChart(reference, alternate, acceptor, true);
+        SvgWriter gen = SvgIcBarchart.donorBarChart(reference, alternate, acceptor, true);
         return gen.getSvg();
     }
 

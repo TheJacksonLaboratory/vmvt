@@ -16,7 +16,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.NEARLYBLACK;
-import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.RED;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
 
 
@@ -175,14 +174,14 @@ public class SvgIcBarchart implements SvgInitializer, SvgHeaderFooter, SvgWriter
         writeIcBars(writer, this.midbarYpos);
         SvgSequenceRuler ruler;
         if (mtype == SvgConstants.MotifType.DONOR) {
-            ruler = new DonorRuler(reference, alternate, false);
+            ruler = new DonorRuler(reference, alternate);
         } else if (mtype == SvgConstants.MotifType.ACCEPTOR) {
-            ruler = new AcceptorRuler(reference, alternate, false);
+            ruler = new AcceptorRuler(reference, alternate);
         } else {
             // should not happen
             throw new VmvtRuntimeException("Only donor/acceptor supported");
         }
-        ruler.write(writer);
+        ruler.write(writer, SVG_Y_TOP_MARGIN);
        // writeRefAltSeparation(writer);
         writeIcBars(writer, this.midbarYpos);
 

@@ -9,7 +9,7 @@ import org.monarchinitiative.vmvt.core.svg.fontprofile.FontProfile;
 public final class SvgConstants {
 
     /**
-     * THis controls what fonts are used in the application. Courier is safe on essentially all machines,
+     * This controls what fonts are used in the application. Courier is safe on essentially all machines,
      * but other fonts might look better. To use another font, one would implement SvgHeaderFooter and
      * override the default writeHeader and use a different {@link FontProfile} implementation.
      */
@@ -70,6 +70,20 @@ public final class SvgConstants {
         public final static int LETTER_WIDTH = 10;
         /** Amount of horizontal space to be taken up by one base character. */
         public final static int LOWER_CASE_BASE_INCREMENT = LETTER_WIDTH + 5;
+
+        /** Y Position on the SVG canvas to start drawing Sequence logos. */
+        public final static int SVG_LOGO_STARTY = 60;
+        /** Height on the SVG canvas for Sequence logos. */
+        public final static int SVG_LOGO_HEIGHT = 50;
+
+        public final static int INTERCOMPONENT_VERTICAL_OFFSET = 30;
+
+        public final static int SVG_Y_TOP_MARGIN = 20;
+        public final static int SVG_Y_BOTTOM_MARGIN = 20;
+        /** Height of a letter before scaling */
+        public final static int LETTER_BASE_HEIGHT = 12;
+
+        public final static int SVG_RULER_HEIGHT = 80;
 
     }
 
