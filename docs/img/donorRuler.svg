@@ -1,4 +1,4 @@
-<svg width="150" height="120" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+<svg width="150" height="90" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
 <!-- Created by vmvt -->
 <style>
   text { font: 24px courier, monospace; }
@@ -6,43 +6,43 @@
   text.t14 { font: 14px courier, monospace; }
   </style>
 <g>
-<g transform='translate(10,20) scale(0.4,0.4) '>
+<g transform='translate(10,15) scale(0.4,0.4) '>
 <text x="0" y="0" fill="black">-3</text>
 </g>
-<g transform='translate(25,20) scale(0.4,0.4) '>
+<g transform='translate(25,15) scale(0.4,0.4) '>
 <text x="0" y="0" fill="black">-2</text>
 </g>
-<g transform='translate(40,20) scale(0.4,0.4) '>
+<g transform='translate(40,15) scale(0.4,0.4) '>
 <text x="0" y="0" fill="black">-1</text>
 </g>
-<g transform='translate(57,20) scale(0.4,0.4) '>
+<g transform='translate(57,15) scale(0.4,0.4) '>
 <text x="0" y="0" fill="black">1</text>
 </g>
-<g transform='translate(72,20) scale(0.4,0.4) '>
+<g transform='translate(72,15) scale(0.4,0.4) '>
 <text x="0" y="0" fill="black">2</text>
 </g>
-<g transform='translate(87,20) scale(0.4,0.4) '>
+<g transform='translate(87,15) scale(0.4,0.4) '>
 <text x="0" y="0" fill="black">3</text>
 </g>
-<g transform='translate(102,20) scale(0.4,0.4) '>
+<g transform='translate(102,15) scale(0.4,0.4) '>
 <text x="0" y="0" fill="black">4</text>
 </g>
-<g transform='translate(117,20) scale(0.4,0.4) '>
+<g transform='translate(117,15) scale(0.4,0.4) '>
 <text x="0" y="0" fill="black">5</text>
 </g>
-<g transform='translate(132,20) scale(0.4,0.4) '>
+<g transform='translate(132,15) scale(0.4,0.4) '>
 <text x="0" y="0" fill="black">6</text>
 </g>
-<line x1="55" y1="2" x2="55" y2="30" stroke="#e64b35"/>
-<text x="10" y="60" fill="#00A087">a</text>
-<text x="25" y="60" fill="#00A087">a</text>
-<text x="40" y="60" fill="#ff9900">g</text>
-<text x="55" y="60" fill="#ff9900">g</text>
-<text x="70" y="60" fill="#e64b35">t</text>
-<text x="85" y="60" fill="#4dbbd5">c</text>
-<text x="100" y="60" fill="#00A087">a</text>
-<text x="115" y="60" fill="#ff9900">g</text>
-<text x="130" y="60" fill="#00A087">a</text>
-<text x="55" y="80" fill="#00A087">a</text>
-<rect x="55.000000" y="40" width="15" height="49" rx="2" fill-opacity="0.1" style="stroke-width:1; stroke:rgb(4, 12, 4);"/></g>
+<line x1="55" y1="7" x2="55" y2="19" stroke="#e64b35"/>
+<text x="10" y="55" fill="#00A087">a</text>
+<text x="25" y="55" fill="#00A087">a</text>
+<text x="40" y="55" fill="#ff9900">g</text>
+<text x="55" y="55" fill="#ff9900">g</text>
+<text x="70" y="55" fill="#e64b35">t</text>
+<text x="85" y="55" fill="#4dbbd5">c</text>
+<text x="100" y="55" fill="#00A087">a</text>
+<text x="115" y="55" fill="#ff9900">g</text>
+<text x="130" y="55" fill="#00A087">a</text>
+<text x="55" y="75" fill="#00A087">a</text>
+<rect x="55.000000" y="35" width="15" height="49" rx="2" fill-opacity="0.1" style="stroke-width:1; stroke:rgb(4, 12, 4);"/></g>
 </svg>

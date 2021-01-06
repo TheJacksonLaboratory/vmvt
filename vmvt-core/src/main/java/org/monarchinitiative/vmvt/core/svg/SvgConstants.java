@@ -63,7 +63,7 @@ public final class SvgConstants {
         public final static int SVG_DONOR_WIDTH = 150;
         /** The width of the SVG canvas for all Acceptor figures. */
         public final static int SVG_ACCEPTOR_WIDTH = 420;
-        public final static int SVG_BARCHART_HEIGHT = 250;
+        public final static int SVG_BARCHART_HEIGHT = 170;
 
         /** X Position on the SVG canvas to start drawing. */
         public final static int SVG_STARTX = 10;
@@ -87,19 +87,14 @@ public final class SvgConstants {
         public final static int SVG_RULER_HEIGHT = 80;
         public final static int SVG_WALKER_HEIGHT = 130;
 
-        /** Y position to start off the Walker in the Trekker layout. */
-        public final static int TREKKER_WALKER_START_Y = 80;
         public final static int SVG_TREKKER_HEIGHT = 220;
-        public final static int SVG_TREKKER_WITH_RI_HEIGHT = SVG_TREKKER_HEIGHT + 80;
-        public final static int SVG_TREKKER_ACCEPTOR_WIDTH = SVG_ACCEPTOR_WIDTH + 10;
-        public final static int SVG_TREKKER_DONOR_WIDTH = SVG_DONOR_WIDTH + 10;
-        /** Width of the 'blue box', which is used as a background for the Ri text. */
+          /** Width of the 'blue box', which is used as a background for the Ri text. */
         public static final int BLUE_BOX_WIDTH = 150;
         public static final int BLUE_BOX_HEIGHT = 40;
 
         public static final int ESE_SVG_WIDTH = 900;
 
-        public static final int SVG_RI_BOX_HEIGHT = 50;
+        public static final int SVG_RI_BOX_HEIGHT = 10;
 
     }
 
