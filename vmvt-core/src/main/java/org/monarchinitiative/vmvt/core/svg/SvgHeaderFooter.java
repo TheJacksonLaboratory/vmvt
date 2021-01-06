@@ -34,6 +34,7 @@ public interface SvgHeaderFooter {
                 "  text { font: 24px " + SVG_FONTS + "; }\n" +
                 "  text.t20 { font: 20px " + SVG_FONTS + "; }\n" +
                 "  text.t14 { font: 14px " + SVG_FONTS + "; }\n" +
+                "  text.t12 { font: 12px " + SVG_FONTS + "; }\n" +
                 "  </style>\n");
         writer.write("<g>\n");
     }

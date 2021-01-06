@@ -89,12 +89,12 @@ public final class SvgConstants {
 
         public final static int SVG_TREKKER_HEIGHT = 220;
           /** Width of the 'blue box', which is used as a background for the Ri text. */
-        public static final int BLUE_BOX_WIDTH = 150;
+        public static final int BLUE_BOX_WIDTH = 130;
         public static final int BLUE_BOX_HEIGHT = 40;
 
         public static final int ESE_SVG_WIDTH = 900;
 
-        public static final int SVG_RI_BOX_HEIGHT = 10;
+        public static final int SVG_RI_BOX_HEIGHT = 5;
 
     }
 

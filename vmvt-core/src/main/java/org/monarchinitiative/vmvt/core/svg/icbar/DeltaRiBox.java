@@ -19,7 +19,7 @@ public class DeltaRiBox implements SvgInitializer, SvgComponent {
     public DeltaRiBox(String ref, String alt, DoubleMatrix splicesite, int width) {
         this.refR_i = splicesite.getIndividualSequenceInformation(ref);
         this.altR_i = splicesite.getIndividualSequenceInformation(alt);
-        this.middle = width/2 + SVG_STARTX/2;
+        this.middle = width/2 ;
     }
 
 
@@ -34,10 +34,9 @@ public class DeltaRiBox implements SvgInitializer, SvgComponent {
         int blueBoxStart = middle - (int)(0.5*BLUE_BOX_WIDTH);
         int startx = blueBoxStart+10;
         int texty = y;
-        int blueBoxFudge = 20; // move back up by this amount to be in the right place
-        int x_increment = 0;
+        int blueBoxFudge = 16; // move back up by this amount to be in the right place
 
-        String blueRect = String.format("<rect x=\"%d\" y=\"%d\" rx=\"3\" ry=\"3\" width=\"%d\" height=\"%d\" style=\"stroke: none; fill: %s;fill-opacity: 0.1\"></rect>",
+        String blueRect = String.format("<rect x=\"%d\" y=\"%d\" rx=\"3\" ry=\"3\" width=\"%d\" height=\"%d\" style=\"stroke: %s; fill: none;fill-opacity: 0.1\"></rect>",
                 blueBoxStart,
                 y-blueBoxFudge,
                 BLUE_BOX_WIDTH,
@@ -45,11 +44,12 @@ public class DeltaRiBox implements SvgInitializer, SvgComponent {
                 SvgColors.BLUE);
         writer.write(blueRect);
 
-        String RiString = String.format("<text x=\"%d\" y=\"%d\" class=\"t20\">R" +
-                        "<tspan dy=\"1\" font-size=\"12\">i</tspan></text>\n" +
-                        "<text x=\"%d\" y=\"%d\" class=\"t14\">:%.2f &#129074; %.2f</text>\n",
-                startx+x_increment,texty,startx+18+x_increment,texty,refR_i, altR_i);
-        writer.write(RiString);
+        String RefRiString = String.format("<text x=\"%d\" y=\"%d\" class=\"t12\">Ref: %.2f bits</text>\n",
+                startx,texty, refR_i);
+        String AltRiString = String.format("<text x=\"%d\" y=\"%d\" class=\"t12\">Alt: %.2f bits</text>\n",
+                startx,texty+15, altR_i);
+        writer.write(RefRiString);
+        writer.write(AltRiString);
     }
 
 

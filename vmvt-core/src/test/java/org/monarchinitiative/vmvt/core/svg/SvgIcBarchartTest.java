@@ -8,14 +8,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class SvgIcBarchartTest {
-    private final String ref = "AAGGTCAGA";
-    private final String alt = "AAGATCAGA";
+    private final String refDonor = "AAGGTCAGA";
+    private final String altDonor = "AAGATCAGA";
+
+    private final String refAcceptor = "cctggctggcggcaccgggtgccagGT";
+    /** chr10-90768644-A-G, -2 position */
+    private final String altAcceptor = "cctggctggcggcaccgggtgccggGT";
 
 
     @Test
     public void testDeltaDonor() {
         VmvtGenerator vmvt = new VmvtGenerator(true);
-        String svg = vmvt.getDonorIcBars(ref, alt);
+        String svg = vmvt.getDonorIcBars(refDonor, altDonor);
 
         try {
             String path = "target/donorIcBar.svg";
@@ -28,12 +32,42 @@ public class SvgIcBarchartTest {
     }
 
     @Test
+    public void testDeltaAcceptor() {
+        VmvtGenerator vmvt = new VmvtGenerator(true);
+        String svg = vmvt.getAcceptorIcBars(refAcceptor, altAcceptor);
+
+        try {
+            String path = "target/acceptorIcBar.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void testDeltaRiDonor() {
         VmvtGenerator vmvt = new VmvtGenerator(true);
-        String svg = vmvt.getDonorIcBarsWithRi(ref, alt);
+        String svg = vmvt.getDonorIcBarsWithRi(refDonor, altDonor);
 
         try {
             String path = "target/donorIcBarRi.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testDeltaRiAcceptor() {
+        VmvtGenerator vmvt = new VmvtGenerator(true);
+        String svg = vmvt.getAcceptorIcBarsWithRi(refAcceptor, altAcceptor);
+
+        try {
+            String path = "target/acceptorIcBarRi.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();

@@ -1,6 +1,9 @@
 package org.monarchinitiative.vmvt.core.svg.ese;
 
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
+import org.monarchinitiative.vmvt.core.hexamer.FileKMerParser;
+import org.monarchinitiative.vmvt.core.hexamer.HeptamerFeatureCalculator;
+import org.monarchinitiative.vmvt.core.hexamer.HexamerFeatureCalculator;
 import org.monarchinitiative.vmvt.core.hexamer.KmerFeatureCalculator;
 import org.monarchinitiative.vmvt.core.svg.*;
 
@@ -9,7 +12,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Arrays;
 
-public abstract class EseSvg implements SvgComponent, SvgHeaderFooter {
+public class EseSvg implements SvgComponent {
     /** Canvas width of the SVG */
     private final static int SVG_WIDTH = SvgConstants.Dimensions.ESE_SVG_WIDTH;
     /** Canvas height of the SVG.*/
@@ -66,8 +69,7 @@ public abstract class EseSvg implements SvgComponent, SvgHeaderFooter {
     private final double deltaESE;
 
 
-    public EseSvg(KmerFeatureCalculator calc, String ref, String alt, boolean framed) {
-        //super(SVG_WIDTH, SVG_HEIGHT, framed);
+    public EseSvg(KmerFeatureCalculator calc, String ref, String alt) {
         this.calculator = calc;
         this.reference = ref.toUpperCase();
         this.alternate = alt.toUpperCase();
@@ -219,19 +221,32 @@ public abstract class EseSvg implements SvgComponent, SvgHeaderFooter {
         writeEsePlot(writer, this.ESEscoresAlt, this.meanESEalt, XSTART_ALT_PLOT, XEND_ALT_PLOT);
     }
 
+
     @Override
     public void write(Writer writer, int starty) throws IOException {
-        writeHeader(writer, SVG_WIDTH, SVG_HEIGHT, false);
         plotReference(writer);
         plotAlternate(writer);
-        plotInterplotLine(writer);
-        writeFooter(writer);
     }
-
 
     @Override
     public int height() {
         return SVG_HEIGHT;
     }
+
+
+    private final static HexamerFeatureCalculator hexaCalc = new HexamerFeatureCalculator(FileKMerParser.hexamerMap());
+
+    public static EseSvg hexamer(String reference, String alternate) {
+        return new EseSvg(hexaCalc, reference, alternate);
+    }
+    private final static KmerFeatureCalculator heptaCalc = new HeptamerFeatureCalculator(FileKMerParser.heptamerMap());
+
+
+    public static EseSvg heptamer(String reference, String alternate) {
+        return new EseSvg(heptaCalc, reference, alternate);
+    }
+
+
+
 
 }

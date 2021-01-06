@@ -3,12 +3,10 @@ package org.monarchinitiative.vmvt.core;
 import org.monarchinitiative.vmvt.core.dist.DistributionCalculator;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.*;
+import org.monarchinitiative.vmvt.core.svg.ese.EseSvg;
 import org.monarchinitiative.vmvt.core.svg.icbar.DeltaRiBox;
 import org.monarchinitiative.vmvt.core.svg.icbar.SvgIcBarchart;
 import org.monarchinitiative.vmvt.core.svg.delta.DeltaSvg;
-import org.monarchinitiative.vmvt.core.svg.ese.EseSvg;
-import org.monarchinitiative.vmvt.core.svg.ese.HeptamerEseSvg;
-import org.monarchinitiative.vmvt.core.svg.ese.HexamerEseSvg;
 import org.monarchinitiative.vmvt.core.svg.logo.SvgSequenceLogo;
 import org.monarchinitiative.vmvt.core.svg.ruler.SvgSequenceRuler;
 import org.monarchinitiative.vmvt.core.svg.walker.SvgCanonicalCrypticGenerator;
@@ -118,12 +116,12 @@ public class VmvtGenerator {
     }
 
     public String getHexamerSvg(String reference, String alternate) {
-        SvgComponent ese = new HexamerEseSvg(reference, alternate, framed);
+        SvgComponent ese = EseSvg.hexamer(reference, alternate);
         return getSvg(SvgConstants.Dimensions.ESE_SVG_WIDTH, ese);
     }
 
     public String getHeptamerSvg(String reference, String alternate) {
-        SvgComponent ese = new HeptamerEseSvg(reference, alternate, framed);
+        SvgComponent ese = EseSvg.heptamer(reference, alternate);
         return getSvg(SvgConstants.Dimensions.ESE_SVG_WIDTH, ese);
     }
 
@@ -172,7 +170,7 @@ public class VmvtGenerator {
 
     public String getAcceptorIcBars(String reference, String alternate) {
         SvgComponent acceptorRuler = SvgSequenceRuler.acceptor(reference, alternate);
-        SvgComponent acceptorBarChart = SvgIcBarchart.acceptorBarChart(reference, alternate, donor);
+        SvgComponent acceptorBarChart = SvgIcBarchart.acceptorBarChart(reference, alternate, acceptor);
         return getAcceptorSvg(acceptorRuler, acceptorBarChart);
     }
 
@@ -272,6 +270,7 @@ public class VmvtGenerator {
                 "  text { font: 24px " + SVG_FONTS + "; }\n" +
                 "  text.t20 { font: 20px " + SVG_FONTS + "; }\n" +
                 "  text.t14 { font: 14px " + SVG_FONTS + "; }\n" +
+                "  text.t12 { font: 12px " + SVG_FONTS + "; }\n" +
                 "  </style>\n");
         writer.write("<g>\n");
     }
