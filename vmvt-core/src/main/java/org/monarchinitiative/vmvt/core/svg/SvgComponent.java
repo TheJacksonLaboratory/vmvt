@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.*;
-import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.T_COLOR;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Sequence.*;
-import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Sequence.T_BASE;
 
 /**
  *  Each component of the SVG is treated as a vertical stripe

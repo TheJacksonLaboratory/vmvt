@@ -3,11 +3,12 @@ package org.monarchinitiative.vmvt.core.svg.walker;
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
 import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
-import org.monarchinitiative.vmvt.core.svg.SvgColors;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.BLUE;
 
 /**
  * Generate an SVG graphic that shows the canonical splice site as well as the cryptic splice site together with
@@ -67,7 +68,7 @@ public class SvgCanonicalCrypticGenerator extends AbstractSvgGenerator {
                   y-blueBoxFudge,
                   BLUE_BOX_WIDTH,
                 BLUE_BOX_HEIGHT,
-                SvgColors.BLUE);
+                BLUE);
        writer.write(blueRect);
 
         String RiString = String.format("<text x=\"%d\" y=\"%d\" class=\"t20\">R" +

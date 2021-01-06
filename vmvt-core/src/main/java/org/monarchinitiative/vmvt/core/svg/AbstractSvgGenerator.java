@@ -7,6 +7,8 @@ import org.monarchinitiative.vmvt.core.svg.fontprofile.FontProfile;
 import java.io.IOException;
 import java.io.Writer;
 
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.*;
+
 /**
  * This is the base class for writing an SVG string of all types.
  * @author Peter Robinson
@@ -50,13 +52,13 @@ public abstract class AbstractSvgGenerator {
     protected final static int G_BASE = 2;
     protected final static int T_BASE = 3;
     /** A green color for Adenine */
-    protected final static String A_COLOR = SvgColors.GREEN;
+    protected final static String A_COLOR = GREEN;
     /** A blue color for Cytosine */
-    protected final static String C_COLOR = SvgColors.BLUE;
+    protected final static String C_COLOR = BLUE;
     /** An orange color for Guanine */
-    protected final static String G_COLOR = SvgColors.ORANGE;
+    protected final static String G_COLOR = ORANGE;
     /** A red color for Thymine */
-    protected final static String T_COLOR = SvgColors.RED;
+    protected final static String T_COLOR = RED;
 
     /** This is a magic number that places the letters in the correct vertical position. Works with {@link #LOGO_COLUMN_HEIGHT}.*/
     protected final double VERTICAL_SCALING_FACTOR;

@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
-import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.SVG_Y_TOP_MARGIN;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Fonts.SVG_FONTS;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Vmvt.PROGRAM_NAME;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Vmvt.PROGRAM_VERSION;

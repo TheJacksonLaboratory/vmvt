@@ -10,8 +10,7 @@ import java.io.Writer;
 import java.util.Map;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
 /**
- * This class writes a sequence logo as an SVG element (which needs to be included in a complete SVG, which is
- * done in {@link DonorLogoGenerator}, {@link AcceptorLogoGenerator}
+ * This class writes a sequence logo as an SVG element.
  * @author Peter N Robinson
  */
 public class SvgSequenceLogo implements SvgComponent {

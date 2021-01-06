@@ -2,12 +2,12 @@ package org.monarchinitiative.vmvt.core.svg.icbar;
 
 import org.monarchinitiative.vmvt.core.svg.SvgInitializer;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
-import org.monarchinitiative.vmvt.core.svg.SvgColors;
 import org.monarchinitiative.vmvt.core.svg.SvgComponent;
 
 import java.io.IOException;
 import java.io.Writer;
 
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.BLUE;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
 
 public class DeltaRiBox implements SvgInitializer, SvgComponent {
@@ -41,7 +41,7 @@ public class DeltaRiBox implements SvgInitializer, SvgComponent {
                 y-blueBoxFudge,
                 BLUE_BOX_WIDTH,
                 BLUE_BOX_HEIGHT,
-                SvgColors.BLUE);
+                BLUE);
         writer.write(blueRect);
 
         String RefRiString = String.format("<text x=\"%d\" y=\"%d\" class=\"t12\">Ref: %.2f bits</text>\n",

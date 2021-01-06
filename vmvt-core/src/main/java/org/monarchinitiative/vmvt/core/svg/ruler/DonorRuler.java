@@ -1,12 +1,12 @@
 package org.monarchinitiative.vmvt.core.svg.ruler;
 
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
-import org.monarchinitiative.vmvt.core.svg.SvgColors;
 import org.monarchinitiative.vmvt.core.svg.SvgConstants;
 
 import java.io.IOException;
 import java.io.Writer;
 
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.RED;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.LOWER_CASE_BASE_INCREMENT;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.SVG_DONOR_WIDTH;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Sequence.DONOR_NT_LENGTH;
@@ -40,7 +40,7 @@ public class DonorRuler  extends SvgSequenceRuler {
         Xr = this.startX + 3*LOWER_CASE_BASE_INCREMENT;
         int Y1 = starty - 8;
         int Y2 = starty + 4;
-        writer.write(String.format("<line x1=\"%s\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\"/>\n",Xr,Y1,Xr,Y2, SvgColors.RED));
+        writer.write(String.format("<line x1=\"%s\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\"/>\n",Xr,Y1,Xr,Y2, RED));
     }
 
     @Override

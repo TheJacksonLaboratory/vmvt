@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.monarchinitiative.vmvt.core.jaspar.JasparMatrix;
 import org.monarchinitiative.vmvt.core.jaspar.JasparParser;
-import org.monarchinitiative.vmvt.core.svg.logo.JasparLogoGenerator;
-import org.monarchinitiative.vmvt.core.svg.logo.SvgSequenceLogo;
 
 import java.io.*;
 import java.nio.file.Path;

@@ -5,17 +5,15 @@ package org.monarchinitiative.vmvt.core.svg.delta;
 import org.monarchinitiative.vmvt.core.dist.DistributionCalculator;
 import org.monarchinitiative.vmvt.core.except.VmvtRuntimeException;
 import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
-import org.monarchinitiative.vmvt.core.svg.AbstractSvgGenerator;
-import org.monarchinitiative.vmvt.core.svg.SvgColors;
 import org.monarchinitiative.vmvt.core.svg.SvgComponent;
 
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.*;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Sequence.ACCEPTOR_NT_LENGTH;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Sequence.DONOR_NT_LENGTH;
 
@@ -45,8 +43,6 @@ public class DeltaSvg implements SvgComponent {
     private final static int START_Y = SVG_DELTA_HEIGHT - 60;
     /** Where to write the text showing the delta-Ri (x). */
     private final static int X_LOC_DELTA_RI = 230;
-    /** Where to write the text showing the delta-Ri (y). */
-    //private final static int Y_LOC_DELTA_RI = 50;
     /** Representation of the information content matrix of a donor or acceptor splice site. */
     private final DoubleMatrix splicesite;
     /** Individual sequence information content of the reference sequence. */
@@ -135,7 +131,7 @@ public class DeltaSvg implements SvgComponent {
      */
     private void writeTicks(Writer writer, double startX, double endX, int ypos) throws IOException {
         writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
-                startX,ypos,endX,ypos, SvgColors.BLACK));
+                startX,ypos,endX,ypos, BLACK));
         // for both donor and acceptor the biggest change is nearly 10/-10 startX is -10 and startY is 10
         if (Math.round(this.min) != -10) {
             // should never happen
@@ -154,10 +150,10 @@ public class DeltaSvg implements SvgComponent {
         for (int i=0;i<span;i++) {
             if (i%5==0) {
                 writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
-                        X, ypos, X, YmajorTick, SvgColors.BLACK));
+                        X, ypos, X, YmajorTick, BLACK));
             } else {
                 writer.write(String.format("<line x1=\"%f\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
-                        X, ypos, X, Y2, SvgColors.BLACK));
+                        X, ypos, X, Y2, BLACK));
             }
             // Write numbers under the tick marks. We use fudge factors to adjust for
             // different widths of the numbers (-10, -5, 0, 5, 10).
@@ -229,20 +225,20 @@ public class DeltaSvg implements SvgComponent {
             int x_right = X_LOC_DELTA_RI + 150;
 
             writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\" stroke-width=\"3\"/>\n",
-                    x_left,y_bottom,x_right,y_bottom, SvgColors.RED));
+                    x_left,y_bottom,x_right,y_bottom, RED));
             writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\" stroke-width=\"3\"/>\n",
-                    x_left,y_top,x_right, y_top, SvgColors.RED));
+                    x_left,y_top,x_right, y_top, RED));
             writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\" stroke-width=\"3\"/>\n",
-                    x_left+1,y_bottom,x_left+1,y_top, SvgColors.RED));
+                    x_left+1,y_bottom,x_left+1,y_top, RED));
             writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\" stroke-width=\"3\"/>\n",
-                    x_right-1,y_bottom,x_right-1,y_top, SvgColors.RED));
+                    x_right-1,y_bottom,x_right-1,y_top, RED));
         } else {
             // write a line with pinhead to show location of delta-Ri of the variant
             String line2 = String.format("<g fill=\"none\" stroke=\"%s\" stroke-width=\"2\">\n" +
                     "<path stroke-dasharray=\"2,2\" d=\"M%d %d l0 %d\"/>" +
-                    "</g>\n", SvgColors.PURPLE, x, y_offset, lineheight);
+                    "</g>\n", PURPLE, x, y_offset, lineheight);
             String circle = String.format("<circle cx=\"%d\" cy=\"%d\" r=\"8\" stroke=\"black\" \n" +
-                    " stroke-width=\"3\" fill=\"%s\"/>\n", x, y_offset, SvgColors.PURPLE);
+                    " stroke-width=\"3\" fill=\"%s\"/>\n", x, y_offset, PURPLE);
             writer.write(line2);
             writer.write(circle);
         }
@@ -264,7 +260,7 @@ public class DeltaSvg implements SvgComponent {
             double Y = ypos - barHeight;
             String rect = String.format("<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" rx=\"2\" " +
                             "style=\"stroke:#006600; fill:%s\" />\n",
-                    X, Y, barWidth, barHeight, SvgColors.GREEN);
+                    X, Y, barWidth, barHeight, GREEN);
             writer.write(rect);
             X += barWidth;
         }

@@ -8,9 +8,10 @@ import org.monarchinitiative.vmvt.core.hexamer.KmerFeatureCalculator;
 import org.monarchinitiative.vmvt.core.svg.*;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Arrays;
+
+import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.*;
 
 public class EseSvg implements SvgComponent {
     /** Canvas width of the SVG */
@@ -162,12 +163,12 @@ public class EseSvg implements SvgComponent {
             if (barHeight > 1.0) {
                 String rect = String.format("<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" rx=\"2\" " +
                                 "style=\"stroke:%s; fill: %s\" />\n",
-                        xposForBoxes, Y, barWidth, barHeight, SvgColors.DARKGREEN, SvgColors.GREEN);
+                        xposForBoxes, Y, barWidth, barHeight, DARKGREEN, GREEN);
                 writer.write(rect);
             } else if (barHeight < -1.0) {
                 String rect = String.format("<rect x=\"%f\" y=\"%d\" width=\"%f\" height=\"%f\" rx=\"2\" " +
                                 "style=\"stroke:%s; fill: %s\" fill-opacity=\"0.4\"/>\n",
-                        xposForBoxes, y, barWidth, Math.abs(barHeight), SvgColors.DARKGREEN, SvgColors.GREEN);
+                        xposForBoxes, y, barWidth, Math.abs(barHeight), DARKGREEN, GREEN);
                 writer.write(rect);
             }
             writer.write(String.format("<g transform='translate(%f,%d) scale(0.75,0.75)'><text>%d</text></g>\n",
@@ -181,7 +182,7 @@ public class EseSvg implements SvgComponent {
             y = X_AXIS_BASELINE - (int) (meanEseScore * YSCALE);
         }
         writer.write(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\"/>\n",
-                xstart, y, xend, y, SvgColors.RED));
+                xstart, y, xend, y, RED));
     }
 
     /**
@@ -197,11 +198,11 @@ public class EseSvg implements SvgComponent {
         int y2 = X_AXIS_BASELINE - (int) (meanESEalt * YSCALE);
         String line = String.format("<line x1=\"%d\" x2=\"%d\" y1=\"%d\" y2=\"%d\" " +
                         "stroke=\"%s\" stroke-width=\"1\"  stroke-dasharray=\"1, 3\"/>\n",
-                x1, x2, y1, y2, SvgColors.RED);
+                x1, x2, y1, y2, RED);
         writer.write(line);
 
         String blueRect = String.format("<rect x=\"350\" y=\"30\" rx=\"3\" ry=\"3\" width=\"200\" height=\"40\" style=\"stroke: none; fill: %s;fill-opacity: 0.1\"></rect>",
-                SvgColors.BLUE);
+                BLUE);
         String eseText = String.format("<text x='50%%' y='57' text-anchor='middle'>ΔESE: %.2f</text>", deltaESE);
         // Position to place the Delta-Ri value
         int X = KMER_PLOT_WIDTH - 40;

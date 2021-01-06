@@ -1,7 +1,5 @@
 package org.monarchinitiative.vmvt.core.svg.logo;
 
-import org.monarchinitiative.vmvt.core.pssm.DoubleMatrix;
-
 public class JasparLogoGenerator  {
     /** X-dimension for each base of the motif. */
     private final static int WIDTH_PER_BASE = 20;
