@@ -65,8 +65,18 @@ public class VmvtGenerator {
         return getDonorSvg(donorRuler);
     }
 
+    public String getDonorSequenceRulerWithOffset(String ref, String alt, int i) {
+        SvgComponent donorRuler = SvgSequenceRuler.donorWithOffset(ref, alt, i);
+        return getDonorSvg(donorRuler);
+    }
+
     public String getAcceptorSequenceRuler(String reference, String alternate) {
         SvgComponent acceptorRuler = SvgSequenceRuler.acceptor(reference, alternate);
+        return getAcceptorSvg(acceptorRuler);
+    }
+
+    public String getAcceptorSequenceRulerWithOffset(String ref, String alt, int i) {
+        SvgComponent acceptorRuler = SvgSequenceRuler.acceptorWithOffset(ref, alt, i);
         return getAcceptorSvg(acceptorRuler);
     }
 
@@ -293,5 +303,4 @@ public class VmvtGenerator {
     private void writeFooter(Writer writer) throws IOException {
         writer.write("</g>\n</svg>\n");
     }
-
 }

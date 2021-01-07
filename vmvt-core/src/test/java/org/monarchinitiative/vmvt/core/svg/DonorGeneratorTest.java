@@ -153,6 +153,21 @@ public class DonorGeneratorTest {
     }
 
     @Test
+    public void testGetDonorRulerWithOffset(){
+        VmvtGenerator donor = new VmvtGenerator(true);
+        String svg = donor.getDonorSequenceRulerWithOffset(ref,alt, 5);
+        assertNotNull(svg);
+        try {
+            String path = "target/donorRulerOffset.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void testHexamer(){
         String svg = getHexamerSvg();
         assertNotNull(svg);

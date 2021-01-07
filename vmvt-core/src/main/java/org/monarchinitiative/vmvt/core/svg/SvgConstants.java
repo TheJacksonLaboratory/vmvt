@@ -84,7 +84,8 @@ public final class SvgConstants {
         /** Height of a letter before scaling */
         public final static int LETTER_BASE_HEIGHT = 12;
 
-        public final static int SVG_RULER_HEIGHT = 110;
+        public final static int SVG_RULER_POSITION_Y_INCREMENT = 40;
+        public final static int SVG_RULER_HEIGHT = 70;
         public final static int SVG_WALKER_HEIGHT = 130;
 
           /** Width of the 'blue box', which is used as a background for the Ri text. */
@@ -92,7 +93,6 @@ public final class SvgConstants {
         public static final int BLUE_BOX_HEIGHT = 40;
 
         public static final int ESE_SVG_WIDTH = 900;
-
         public static final int SVG_RI_BOX_HEIGHT = 30;
 
     }

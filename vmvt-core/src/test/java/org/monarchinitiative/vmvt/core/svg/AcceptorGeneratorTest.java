@@ -76,35 +76,20 @@ public class AcceptorGeneratorTest {
         }
     }
 
-//    @Test
-//    public void testCanonicalCryptic() {
-//        VmvtGenerator vmvt = new VmvtGenerator();
-//        String canRef = "gtgttttgtcatgtgtaTgctcaagGG";
-//        String crypticRef = "tttgttgtgttttgtcatgtgtaTgct";
-//        String svg = vmvt.getAcceptorCanonicalCryptic(canRef, crypticRef);
-//        assertNotNull(svg);
-//        try {
-//            String path = "target/acceptorCanCryptRef.svg";
-//            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-//            writer.write(svg);
-//            writer.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        String canAlt = "gtgttttgtcatgtgtaAgctcaagGG";
-//        String crypticAlt = "tttgttgtgttttgtcatgtgtaAgct";
-//        svg = vmvt.getAcceptorCanonicalCryptic(canAlt, crypticAlt);
-//        assertNotNull(svg);
-//        try {
-//            String path = "target/acceptorCanCryptAlt.svg";
-//            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-//            writer.write(svg);
-//            writer.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    @Test
+    public void testGetAcceptorRulerOffset(){
+        VmvtGenerator accceptor = new VmvtGenerator(true);
+        String svg = accceptor.getAcceptorSequenceRulerWithOffset(ref,alt, -7);
+        assertNotNull(svg);
+        try {
+            String path = "target/acceptorRulerOffset.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void testAcceptorWithRi() {
