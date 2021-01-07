@@ -62,12 +62,42 @@ public class SvgIcBarchartTest {
     }
 
     @Test
+    public void testLogoRiDonor() {
+        VmvtGenerator vmvt = new VmvtGenerator(true);
+        String svg = vmvt.getDonorIcBarsWithLogoAndRi(refDonor, altDonor);
+
+        try {
+            String path = "target/donorIcBarLogoRi.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void testDeltaRiAcceptor() {
         VmvtGenerator vmvt = new VmvtGenerator(true);
         String svg = vmvt.getAcceptorIcBarsWithRi(refAcceptor, altAcceptor);
 
         try {
             String path = "target/acceptorIcBarRi.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svg);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testLogoRiAcceptor() {
+        VmvtGenerator vmvt = new VmvtGenerator(true);
+        String svg = vmvt.getAcceptorIcBarsWithRi(refAcceptor, altAcceptor);
+
+        try {
+            String path = "target/acceptorIcBarLogoRi.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "delta", aliases = {"D"}, mixinStandardHelpOptions = true, description = "Create Delta svg")
-public class DeltaCommand extends AbstractSequenceComparisonCommand implements Callable<Integer> {
+public class DeltaCommand extends SequenceComparisonCommand implements Callable<Integer> {
 
 
 
