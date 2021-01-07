@@ -9,7 +9,6 @@ import org.monarchinitiative.vmvt.core.svg.icbar.SvgIcBarchart;
 import org.monarchinitiative.vmvt.core.svg.delta.DeltaSvg;
 import org.monarchinitiative.vmvt.core.svg.logo.SvgSequenceLogo;
 import org.monarchinitiative.vmvt.core.svg.ruler.SvgSequenceRuler;
-import org.monarchinitiative.vmvt.core.svg.walker.SvgCanonicalCrypticGenerator;
 import org.monarchinitiative.vmvt.core.svg.walker.SvgSequenceWalker;
 
 import java.io.IOException;
@@ -29,6 +28,7 @@ import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Vmvt.PROGRAM_VERS
  * are two parameters: reference and alternate. In the case of the donor functions, these should be
  * 9 nucleotide sequences (3:intron + 6: exon). In the case of the acceptor functions, these should
  * be 27 nucleotide sequences (25:intron + 2 exon).
+ *
  * @author Peter N Robinson
  */
 public class VmvtGenerator {
@@ -40,9 +40,10 @@ public class VmvtGenerator {
     private final DistributionCalculator donorDistribution;
     private final DistributionCalculator acceptorDistribution;
     private final static int NUM_SAMPLES = 250_000;
-    /** If true, draw a black frame around SVG graphics. */
+    /**
+     * If true, draw a black frame around SVG graphics.
+     */
     private final boolean framed;
-
 
 
     public VmvtGenerator() {
@@ -56,7 +57,7 @@ public class VmvtGenerator {
         donorHeight = DoubleMatrix.donorHeightMatrix();
         acceptorHeight = DoubleMatrix.acceptorHeightMatrix();
         donorDistribution = new DistributionCalculator(donor);
-        acceptorDistribution = new DistributionCalculator(acceptor,NUM_SAMPLES);
+        acceptorDistribution = new DistributionCalculator(acceptor, NUM_SAMPLES);
     }
 
     public String getDonorSequenceRuler(String reference, String alternate) {
@@ -127,16 +128,6 @@ public class VmvtGenerator {
     public String getDelta(String reference, String alternate) {
         SvgComponent delta = new DeltaSvg(reference, alternate);
         return getSvg(SvgConstants.Dimensions.ESE_SVG_WIDTH, delta);
-   }
-
-    public String getDonorCanonicalCryptic(String canonical, String cryptic) {
-        SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.donor(canonical, cryptic, donor, framed);
-        return gen.getSvg();
-    }
-
-    public String getAcceptorCanonicalCryptic(String canonical, String cryptic) {
-        SvgCanonicalCrypticGenerator gen = SvgCanonicalCrypticGenerator.acceptor(canonical, cryptic, acceptor, framed);
-        return gen.getSvg();
     }
 
     public String getAcceptorTrekkerWithRi(String reference, String alternate) {
@@ -146,6 +137,7 @@ public class VmvtGenerator {
         SvgComponent deltaRi = DeltaRiBox.acceptor(reference, alternate, acceptor);
         return getAcceptorSvg(acceptorRuler, acceptorLogo, acceptorWalkerWithRi, deltaRi);
     }
+
     public String getDonorTrekkerWithRi(String reference, String alternate) {
         SvgComponent donorRuler = SvgSequenceRuler.donor(reference, alternate);
         SvgComponent donorLogo = SvgSequenceLogo.donor(donorHeight);
@@ -164,7 +156,7 @@ public class VmvtGenerator {
         SvgComponent donorRuler = SvgSequenceRuler.donor(reference, alternate);
         SvgComponent donorBarChart = SvgIcBarchart.donorBarChart(reference, alternate, donor);
         SvgComponent deltaRi = DeltaRiBox.donor(reference, alternate, donor);
-        return getDonorSvg(donorRuler,donorBarChart, deltaRi);
+        return getDonorSvg(donorRuler, donorBarChart, deltaRi);
     }
 
     public String getAcceptorIcBars(String reference, String alternate) {
@@ -182,40 +174,40 @@ public class VmvtGenerator {
 
     /**
      * Return an SVG for a Splice donor variant
+     *
      * @param components List of {@link SvgComponent} with the vertical parts of the SVG
      * @return the SVG graphic
      */
-    public String getDonorSvg(SvgComponent... components) {
-        List<SvgComponent> comps = new ArrayList<>();
-        comps.addAll(Arrays.asList(components));
+    private String getDonorSvg(SvgComponent... components) {
+        List<SvgComponent> comps = new ArrayList<>(Arrays.asList(components));
         return getSvg(SVG_DONOR_WIDTH, comps);
     }
 
     /**
      * Return an SVG for a Splice acceptor variant
+     *
      * @param components List of {@link SvgComponent} with the vertical parts of the SVG
      * @return the SVG graphic
      */
-    public String getAcceptorSvg(SvgComponent... components) {
-        List<SvgComponent> comps = new ArrayList<>();
-        comps.addAll(Arrays.asList(components));
+    private String getAcceptorSvg(SvgComponent... components) {
+        List<SvgComponent> comps = new ArrayList<>(Arrays.asList(components));
         return getSvg(SVG_ACCEPTOR_WIDTH, comps);
     }
 
     /**
      * Return an SVG for a general SVG graphic of defined width
+     *
      * @param components List of {@link SvgComponent} with the vertical parts of the SVG
      * @return the SVG graphic
      */
-    public String getSvg(int width, SvgComponent... components) {
-        List<SvgComponent> comps = new ArrayList<>();
-        comps.addAll(Arrays.asList(components));
+    private String getSvg(int width, SvgComponent... components) {
+        List<SvgComponent> comps = new ArrayList<>(Arrays.asList(components));
         return getSvg(width, comps);
     }
 
-    public String getSvg(int width, List<SvgComponent> components) {
+    private String getSvg(int width, List<SvgComponent> components) {
         int totalComponentHeight = components.stream().mapToInt(SvgComponent::height).sum();
-        int totalIntercomponentHeight = (components.size() - 1)* INTERCOMPONENT_VERTICAL_OFFSET;
+        int totalIntercomponentHeight = (components.size() - 1) * INTERCOMPONENT_VERTICAL_OFFSET;
         int totalHeight = totalComponentHeight + totalIntercomponentHeight + SVG_Y_TOP_MARGIN + SVG_Y_BOTTOM_MARGIN;
         StringWriter swriter = new StringWriter();
         int ypos = SVG_Y_TOP_MARGIN;
@@ -223,7 +215,7 @@ public class VmvtGenerator {
             writeHeader(swriter, width, totalHeight, this.framed);
             for (var c : components) {
                 c.write(swriter, ypos);
-                ypos += c.height();
+                ypos += c.height() + INTERCOMPONENT_VERTICAL_OFFSET;
             }
             writeFooter(swriter);
             return swriter.toString();
@@ -234,6 +226,7 @@ public class VmvtGenerator {
 
     /**
      * If there is some IO Exception, return an SVG with a text that indicates the error
+     *
      * @param msg The error
      * @return An SVG element that contains the error
      */
@@ -247,22 +240,23 @@ public class VmvtGenerator {
     }
 
     /**
-     *  Write the header of the SVG.
-     *  Here we use the default font (Courier). To use another SVG font, implement this method and use
-     *  a different {@link org.monarchinitiative.vmvt.core.svg.fontprofile.FontProfile} object -- it is
-     *  important that some of the constants match the chosen font to get the letter distortions to look good.
+     * Write the header of the SVG.
+     * Here we use the default font (Courier). To use another SVG font, implement this method and use
+     * a different {@link org.monarchinitiative.vmvt.core.svg.fontprofile.FontProfile} object -- it is
+     * important that some of the constants match the chosen font to get the letter distortions to look good.
+     *
      * @param writer file handle
-     * @param width width of the SVG
+     * @param width  width of the SVG
      * @param height height of the SVG
      * @param framed if true, write a black frame around the SVG
      * @throws IOException if we cannot write
      */
     private void writeHeader(Writer writer, int width, int height, boolean framed) throws IOException {
-        writer.write("<svg width=\"" + width +"\" height=\""+ height +"\" ");
+        writer.write("<svg width=\"" + width + "\" height=\"" + height + "\" ");
         if (framed) {
-            writer.write(    "style=\"border:1px solid black\" ");
+            writer.write("style=\"border:1px solid black\" ");
         }
-        writer.write(  "xmlns=\"http://www.w3.org/2000/svg\" " +
+        writer.write("xmlns=\"http://www.w3.org/2000/svg\" " +
                 "xmlns:svg=\"http://www.w3.org/2000/svg\">\n");
         writer.write("<!-- Created by vmvt -->\n");
         writer.write("<style>\n" +
@@ -276,6 +270,7 @@ public class VmvtGenerator {
 
     /**
      * Write the footer of the SVG
+     *
      * @param writer file handle
      * @throws IOException if we cannot write
      */

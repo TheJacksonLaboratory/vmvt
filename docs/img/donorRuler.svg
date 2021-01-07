@@ -1,9 +1,10 @@
-<svg width="150" height="90" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+<svg width="150" height="120" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
 <!-- Created by vmvt -->
 <style>
   text { font: 24px courier, monospace; }
   text.t20 { font: 20px courier, monospace; }
   text.t14 { font: 14px courier, monospace; }
+  text.t12 { font: 12px courier, monospace; }
   </style>
 <g>
 <g transform='translate(10,15) scale(0.4,0.4) '>

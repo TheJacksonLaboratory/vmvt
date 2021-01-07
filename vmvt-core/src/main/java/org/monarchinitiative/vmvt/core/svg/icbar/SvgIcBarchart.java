@@ -9,55 +9,35 @@ import org.monarchinitiative.vmvt.core.svg.SvgConstants;
 import java.io.IOException;
 import java.io.Writer;
 
-import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Colors.NEARLYBLACK;
 import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
 
 
 public class SvgIcBarchart implements SvgInitializer, SvgComponent {
-
-
-    private final int midbarYpos = 150;
-
-    private final String reference;
-    private final String alternate;
-    private final int width;
     private final int seqlen;
-    /** A coding of the String representing the reference sequence {@link #reference} using A=0,C=1,G=2,T=3. */
+    /** A coding of the String representing the reference sequence using A=0,C=1,G=2,T=3. */
     private final int [] refidx;
-    /** A coding of the String representing the alternate sequence {@link #alternate} using A=0,C=1,G=2,T=3. */
+    /** A coding of the String representing the alternate sequence using A=0,C=1,G=2,T=3. */
     private final int [] altidx;
     private final DoubleMatrix splicesite;
-    private final SvgConstants.MotifType mtype;
 
     private final int ICBOX_WIDTH = LOWER_CASE_BASE_INCREMENT - 2;
     private final int Y_JUMP = 2; // jump across the 'y axis' for IC +/1 zero
 
 
-    private SvgIcBarchart(String ref, String alt, int width, DoubleMatrix splicesite, SvgConstants.MotifType type){
-        this.reference = ref;
-        this.alternate = alt;
-        this.width = width;
+    private SvgIcBarchart(String ref, String alt, DoubleMatrix splicesite, SvgConstants.MotifType type){
         this.splicesite = splicesite;
         this.refidx = sequenceIndex(ref);
         this.altidx = sequenceIndex(alt);
         this.seqlen = sequenceLength(ref, alt);
-        this.mtype = type;
     }
 
 
     public static SvgIcBarchart donorBarChart(String ref, String alt, DoubleMatrix splicesite) {
-        return new SvgIcBarchart(ref, alt, SVG_DONOR_WIDTH, splicesite, SvgConstants.MotifType.DONOR);
+        return new SvgIcBarchart(ref, alt, splicesite, SvgConstants.MotifType.DONOR);
     }
 
     public static SvgIcBarchart acceptorBarChart(String ref, String alt, DoubleMatrix splicesite) {
-        return new SvgIcBarchart(ref, alt, SVG_ACCEPTOR_WIDTH, splicesite, SvgConstants.MotifType.ACCEPTOR);
-    }
-
-    protected void writeRefAltSeparation(Writer writer) throws IOException {
-        double endX = (0.6+this.seqlen) * LOWER_CASE_BASE_INCREMENT;
-        String line = String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%f\" y2=\"%d\" stroke=\"%s\"/>\n",
-                SVG_STARTX,this.midbarYpos, endX, this.midbarYpos, NEARLYBLACK);
-        writer.write(line);
+        return new SvgIcBarchart(ref, alt, splicesite, SvgConstants.MotifType.ACCEPTOR);
     }
 
     /**
@@ -70,7 +50,6 @@ public class SvgIcBarchart implements SvgInitializer, SvgComponent {
     private void writeRefBaseBox(Writer writer, int x, double y, int base, int pos) throws IOException {
         String color = getBaseColor(base);
         double IC = this.splicesite.get(base, pos);
-        int width = LOWER_CASE_BASE_INCREMENT;
         double BOX_HEIGHT_UNIT = 10;
         double boxHeight;
         String rect;
@@ -145,8 +124,7 @@ public class SvgIcBarchart implements SvgInitializer, SvgComponent {
 
     @Override
     public void write(Writer writer, int starty) throws IOException {
-        writeIcBars(writer, this.midbarYpos);
-       // writeIcBars(writer, this.midbarYpos);
+        writeIcBars(writer, starty);
     }
 
     @Override

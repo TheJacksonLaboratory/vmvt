@@ -63,7 +63,7 @@ public final class SvgConstants {
         public final static int SVG_DONOR_WIDTH = 150;
         /** The width of the SVG canvas for all Acceptor figures. */
         public final static int SVG_ACCEPTOR_WIDTH = 420;
-        public final static int SVG_BARCHART_HEIGHT = 170;
+        public final static int SVG_BARCHART_HEIGHT = 100;
 
         /** X Position on the SVG canvas to start drawing. */
         public final static int SVG_STARTX = 10;
@@ -77,24 +77,23 @@ public final class SvgConstants {
         /** Height on the SVG canvas for Sequence logos. */
         public final static int SVG_LOGO_HEIGHT = 40;
 
-        public final static int INTERCOMPONENT_VERTICAL_OFFSET = 30;
+        public final static int INTERCOMPONENT_VERTICAL_OFFSET = 10;
 
         public final static int SVG_Y_TOP_MARGIN = 5;
         public final static int SVG_Y_BOTTOM_MARGIN = 5;
         /** Height of a letter before scaling */
         public final static int LETTER_BASE_HEIGHT = 12;
 
-        public final static int SVG_RULER_HEIGHT = 80;
+        public final static int SVG_RULER_HEIGHT = 110;
         public final static int SVG_WALKER_HEIGHT = 130;
 
-        public final static int SVG_TREKKER_HEIGHT = 220;
           /** Width of the 'blue box', which is used as a background for the Ri text. */
         public static final int BLUE_BOX_WIDTH = 130;
         public static final int BLUE_BOX_HEIGHT = 40;
 
         public static final int ESE_SVG_WIDTH = 900;
 
-        public static final int SVG_RI_BOX_HEIGHT = 5;
+        public static final int SVG_RI_BOX_HEIGHT = 30;
 
     }
 
@@ -112,6 +111,6 @@ public final class SvgConstants {
      * or a general JASPAR motif.
      */
     public enum MotifType {
-        DONOR, ACCEPTOR, JASPAR;
+        DONOR, ACCEPTOR, JASPAR
     }
 }

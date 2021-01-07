@@ -9,7 +9,7 @@ public interface SvgInitializer {
 
     default int sequenceLength(String ref, String alt) {
         if (ref.length() != alt.length()) {
-            throw new VmvtRuntimeException(String.format("Ref (%s) and alt (%d) need to have the same length", ref, alt));
+            throw new VmvtRuntimeException(String.format("Ref (%s) and alt (%s) need to have the same length", ref, alt));
         }
         int seqlen = ref.length();
         if (seqlen != DONOR_NT_LENGTH && seqlen != ACCEPTOR_NT_LENGTH) {

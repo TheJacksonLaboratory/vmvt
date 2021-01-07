@@ -40,7 +40,7 @@ public class DonorGeneratorTest {
 
     @Test
     public void testWriteDonorSvgLogo() {
-        VmvtGenerator donor = new VmvtGenerator(true);
+        VmvtGenerator donor = new VmvtGenerator();
         String svg = donor.getDonorLogoSvg();
         assertNotNull(svg);
         try {
@@ -239,8 +239,8 @@ public class DonorGeneratorTest {
         writeToRTDdirectory("hexamer.svg", svg);
         svg = getHeptamerSvg();
         writeToRTDdirectory("heptamer.svg", svg);
-//        svg = vmvt.getDelta(ref, alt);
-//        writeToRTDdirectory("deltaDonor.svg", svg);
+        svg = vmvt.getDelta(ref, alt);
+        writeToRTDdirectory("deltaDonor.svg", svg);
         final String ref = "CAGGTTGGT";
         final String alt = "TAGGTTGGT";
         vmvt = new VmvtGenerator();
@@ -252,37 +252,6 @@ public class DonorGeneratorTest {
         svg = vmvt.getDonorTrekkerWithRi(ref2, alt2);
         writeToRTDdirectory("donorWithRiCryptic.svg", svg);
     }
-
-    @Test
-    public void testCanonicalCryptic() {
-        VmvtGenerator vmvt = new VmvtGenerator();
-        String canRef = "caggttggt";
-        String crypticRef = "tgggcaggt";
-        String svg = vmvt.getDonorCanonicalCryptic(canRef, crypticRef);
-        assertNotNull(svg);
-        try {
-            String path = "target/donorCanCryptRef.svg";
-            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-            writer.write(svg);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String canAlt = "taggttggt";
-        String crypticAlt = "tgggtaggt";
-        svg = vmvt.getDonorCanonicalCryptic(canAlt, crypticAlt);
-        assertNotNull(svg);
-        try {
-            String path = "target/donorCanCryptAlt.svg";
-            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-            writer.write(svg);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     @Test
     public void testDeltaDonor() {
@@ -327,8 +296,6 @@ public class DonorGeneratorTest {
             e.printStackTrace();
         }
     }
-
-
 
 
 }

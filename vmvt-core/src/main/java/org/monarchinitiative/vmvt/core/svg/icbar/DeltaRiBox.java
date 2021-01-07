@@ -33,9 +33,7 @@ public class DeltaRiBox implements SvgInitializer, SvgComponent {
     private void writeRiChange(Writer writer, int y) throws IOException {
         int blueBoxStart = middle - (int)(0.5*BLUE_BOX_WIDTH);
         int startx = blueBoxStart+10;
-        int texty = y;
         int blueBoxFudge = 16; // move back up by this amount to be in the right place
-
         String blueRect = String.format("<rect x=\"%d\" y=\"%d\" rx=\"3\" ry=\"3\" width=\"%d\" height=\"%d\" style=\"stroke: %s; fill: none;fill-opacity: 0.1\"></rect>",
                 blueBoxStart,
                 y-blueBoxFudge,
@@ -43,11 +41,10 @@ public class DeltaRiBox implements SvgInitializer, SvgComponent {
                 BLUE_BOX_HEIGHT,
                 BLUE);
         writer.write(blueRect);
-
         String RefRiString = String.format("<text x=\"%d\" y=\"%d\" class=\"t12\">Ref: %.2f bits</text>\n",
-                startx,texty, refR_i);
+                startx,y, refR_i);
         String AltRiString = String.format("<text x=\"%d\" y=\"%d\" class=\"t12\">Alt: %.2f bits</text>\n",
-                startx,texty+15, altR_i);
+                startx,y+15, altR_i);
         writer.write(RefRiString);
         writer.write(AltRiString);
     }

@@ -11,19 +11,11 @@ public class JasparMatrix {
 
     private final String jasparId;
     private final String jasparName;
-    private final List<Integer> Acounts;
-    private final List<Integer> Ccounts;
-    private final List<Integer> Gcounts;
-    private final List<Integer> Tcounts;
     private final DoubleMatrix frequencyMatrix;
 
     JasparMatrix(String matrixID, String name, List<Integer> aCounts, List<Integer> cCounts, List<Integer> gCounts, List<Integer> tCounts){
         this.jasparId = matrixID;
         this.jasparName = name;
-        this.Acounts = aCounts;
-        this.Ccounts = cCounts;
-        this.Gcounts = gCounts;
-        this.Tcounts = tCounts;
         int N = aCounts.size();
         if (N != cCounts.size()) {
             throw new VmvtRuntimeException("Malformed JASPAR C array (Counts do not match A): ");

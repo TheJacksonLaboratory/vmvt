@@ -22,8 +22,6 @@ public abstract class SvgSequenceRuler implements SvgComponent, SvgInitializer {
     /** A coding of the String representing the alternate sequence using A=0,C=1,G=2,T=3. */
     private final int [] altidx;
 
-    private final int width;
-
 
     private final static int SVG_RULER_POSITION_Y_INCREMENT = 50;
 
@@ -31,7 +29,6 @@ public abstract class SvgSequenceRuler implements SvgComponent, SvgInitializer {
         this.seqlen = sequenceLength(ref, alt);
         this.refidx = sequenceIndex(ref);
         this.altidx = sequenceIndex(alt);
-        this.width = w;
     }
 
     abstract void writePositionRuler(Writer writer, int starty) throws IOException;

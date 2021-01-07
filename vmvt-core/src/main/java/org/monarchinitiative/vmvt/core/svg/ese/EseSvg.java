@@ -26,25 +26,13 @@ public class EseSvg implements SvgComponent {
     private final int INTERPLOT_GAP = 100;
     /** x start position of the second plot. */
     private final int XSTART_ALT_PLOT = XEND_REF_PLOT + INTERPLOT_GAP;
-    private final int XEND_ALT_PLOT = XSTART_ALT_PLOT + KMER_PLOT_WIDTH;
 
-    /**
-     * Reference to a hexa (6) or hepta (7) feature calculator.
-     */
-    private final KmerFeatureCalculator calculator;
 
     private final String reference;
     private final String alternate;
 
     private final int kmerLen;
     private final int padding;
-    /**
-     * This is the length we expect to get to calculate the kmer view.
-     * For hexamers, this is 6+5, for heptamers it is 7+6.
-     */
-    private final int expectedSequenceLength;
-
-
 
 
     private final int YTOP = 100;
@@ -58,10 +46,7 @@ public class EseSvg implements SvgComponent {
 
     private final double[] ESEscoresRef;
     private final double[] ESEscoresAlt;
-    /** Sum of the 6/7-mer scores for each position (reference). */
-    private final double sumESEref;
-    /** Sum of the 6/7-mer scores for each position (reference). */
-    private final double sumESEalt;
+
     /** Mean of the 6/7-mer scores for each position (reference). */
     private final double meanESEref;
     /** Mean of the 6/7-mer scores for each position (reference). */
@@ -71,22 +56,25 @@ public class EseSvg implements SvgComponent {
 
 
     public EseSvg(KmerFeatureCalculator calc, String ref, String alt) {
-        this.calculator = calc;
         this.reference = ref.toUpperCase();
         this.alternate = alt.toUpperCase();
         this.kmerLen = calc.getKmerLength();
         this.padding = calc.getPadding();
-        this.expectedSequenceLength = this.kmerLen + this.padding;
+        // This is the length we expect to get to calculate the kmer view.
+        // For hexamers, this is 6+5, for heptamers it is 7+6.
+        int expectedSequenceLength = this.kmerLen + this.padding;
         if (reference.length() != expectedSequenceLength) {
             throw new VmvtRuntimeException("Unexpected reference sequence length for kmer analysis: " + reference);
         }
         if (alternate.length() != expectedSequenceLength) {
             throw new VmvtRuntimeException("Unexpected alternate sequence length for kmer analysis: " + alternate);
         }
-        ESEscoresRef = calc.kmerScoreArray(this.reference);
-        ESEscoresAlt = calc.kmerScoreArray(this.alternate);
-        sumESEref = Arrays.stream(ESEscoresRef).sum();
-        sumESEalt = Arrays.stream(ESEscoresAlt).sum();
+        ESEscoresRef = calc.kmerScoreArray(reference);
+        ESEscoresAlt = calc.kmerScoreArray(alternate);
+        // Sum of the 6/7-mer scores for each position (reference).
+        final double sumESEref = Arrays.stream(ESEscoresRef).sum();
+        // Sum of the 6/7-mer scores for each position (alt).
+        final double sumESEalt = Arrays.stream(ESEscoresAlt).sum();
         deltaESE = sumESEalt - sumESEref;
         meanESEref = Arrays.stream(ESEscoresRef).average().orElse(0);
         meanESEalt = Arrays.stream(ESEscoresAlt).average().orElse(0);
@@ -185,33 +173,6 @@ public class EseSvg implements SvgComponent {
                 xstart, y, xend, y, RED));
     }
 
-    /**
-     * Plot a red dotted line between the average score of the reference and the average score of the
-     * alternate sequence.
-     * @param writer a file handle
-     * @throws IOException if we cannot write the SVG
-     */
-    private void plotInterplotLine(Writer writer) throws IOException {
-        int x1 = XEND_REF_PLOT - 20;
-        int x2 = XSTART_ALT_PLOT; // TODO -- fragile, make this more robust
-        int y1 = X_AXIS_BASELINE - (int) (meanESEref * YSCALE);
-        int y2 = X_AXIS_BASELINE - (int) (meanESEalt * YSCALE);
-        String line = String.format("<line x1=\"%d\" x2=\"%d\" y1=\"%d\" y2=\"%d\" " +
-                        "stroke=\"%s\" stroke-width=\"1\"  stroke-dasharray=\"1, 3\"/>\n",
-                x1, x2, y1, y2, RED);
-        writer.write(line);
-
-        String blueRect = String.format("<rect x=\"350\" y=\"30\" rx=\"3\" ry=\"3\" width=\"200\" height=\"40\" style=\"stroke: none; fill: %s;fill-opacity: 0.1\"></rect>",
-                BLUE);
-        String eseText = String.format("<text x='50%%' y='57' text-anchor='middle'>ΔESE: %.2f</text>", deltaESE);
-        // Position to place the Delta-Ri value
-        int X = KMER_PLOT_WIDTH - 40;
-        int Y =  45;//Math.max(20, maxY - 100);
-
-        writer.write(String.format("%s%s", blueRect, eseText));
-    }
-
-
     private void plotReference(Writer writer) throws IOException {
         writeYaxis(writer, XSTART_REF_PLOT);
         writeEsePlot(writer, this.ESEscoresRef, this.meanESEref, XSTART_REF_PLOT, XEND_REF_PLOT);
@@ -219,6 +180,7 @@ public class EseSvg implements SvgComponent {
 
     private void plotAlternate(Writer writer) throws IOException {
         writeYaxis(writer, XSTART_ALT_PLOT);
+        int XEND_ALT_PLOT = XSTART_ALT_PLOT + KMER_PLOT_WIDTH;
         writeEsePlot(writer, this.ESEscoresAlt, this.meanESEalt, XSTART_ALT_PLOT, XEND_ALT_PLOT);
     }
 
