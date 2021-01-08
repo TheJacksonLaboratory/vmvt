@@ -155,7 +155,7 @@ public class DonorGeneratorTest {
     @Test
     public void testGetDonorRulerWithOffset(){
         VmvtGenerator donor = new VmvtGenerator(true);
-        String svg = donor.getDonorSequenceRulerWithOffset(ref,alt, 5);
+        String svg = donor.getDonorSequenceRulerAndBarChartWithOffset(ref,alt, 5);
         assertNotNull(svg);
         try {
             String path = "target/donorRulerOffset.svg";
