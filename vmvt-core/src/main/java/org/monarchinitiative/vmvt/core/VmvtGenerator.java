@@ -65,9 +65,18 @@ public class VmvtGenerator {
         return getDonorSvg(donorRuler);
     }
 
-    public String getDonorSequenceRulerWithOffset(String ref, String alt, int i) {
+    public String getDonorSequenceLogoRulerAndBarChart(String ref, String alt) {
+        SvgSequenceLogo logo = SvgSequenceLogo.donor(donorHeight);
+        SvgSequenceRuler ruler = SvgSequenceRuler.donor(ref, alt);
+        SvgIcBarchart barChart = SvgIcBarchart.donorBarChart(ref, alt, donor);
+        return getDonorSvg(logo, ruler, barChart);
+    }
+
+    public String getDonorSequenceRulerAndBarChartWithOffset(String ref, String alt, int i) {
+        SvgSequenceLogo donorLogo = SvgSequenceLogo.donor(donorHeight);
         SvgComponent donorRuler = SvgSequenceRuler.donorWithOffset(ref, alt, i);
-        return getDonorSvg(donorRuler);
+        SvgIcBarchart svgIcBarchart = SvgIcBarchart.donorBarChart(ref, alt, donor);
+        return getDonorSvg(donorLogo, donorRuler, svgIcBarchart);
     }
 
     public String getAcceptorSequenceRuler(String reference, String alternate) {
@@ -75,9 +84,18 @@ public class VmvtGenerator {
         return getAcceptorSvg(acceptorRuler);
     }
 
-    public String getAcceptorSequenceRulerWithOffset(String ref, String alt, int i) {
+    public String getAcceptorSequenceRulerAndBarChartWithOffset(String ref, String alt, int i) {
+        SvgSequenceLogo acceptorLogo = SvgSequenceLogo.acceptor(acceptorHeight);
         SvgComponent acceptorRuler = SvgSequenceRuler.acceptorWithOffset(ref, alt, i);
-        return getAcceptorSvg(acceptorRuler);
+        SvgIcBarchart svgIcBarchart = SvgIcBarchart.acceptorBarChart(ref, alt, this.acceptor);
+        return getAcceptorSvg(acceptorLogo, acceptorRuler, svgIcBarchart);
+    }
+
+    public String getAcceptorSequenceLogoRulerAndBarChart(String ref, String alt) {
+        SvgSequenceLogo logo = SvgSequenceLogo.acceptor(acceptorHeight);
+        SvgSequenceRuler ruler = SvgSequenceRuler.acceptor(ref, alt);
+        SvgIcBarchart barChart = SvgIcBarchart.acceptorBarChart(ref, alt, acceptor);
+        return getAcceptorSvg(logo, ruler, barChart);
     }
 
 

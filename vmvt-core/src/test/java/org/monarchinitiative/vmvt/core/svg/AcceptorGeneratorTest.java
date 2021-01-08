@@ -79,7 +79,7 @@ public class AcceptorGeneratorTest {
     @Test
     public void testGetAcceptorRulerOffset(){
         VmvtGenerator accceptor = new VmvtGenerator(true);
-        String svg = accceptor.getAcceptorSequenceRulerWithOffset(ref,alt, -7);
+        String svg = accceptor.getAcceptorSequenceRulerAndBarChartWithOffset(ref,alt, -7);
         assertNotNull(svg);
         try {
             String path = "target/acceptorRulerOffset.svg";
