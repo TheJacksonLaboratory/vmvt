@@ -92,7 +92,7 @@ public final class SvgConstants {
         public static final int BLUE_BOX_WIDTH = 130;
         public static final int BLUE_BOX_HEIGHT = 40;
 
-        public static final int ESE_SVG_WIDTH = 900;
+        public static final int ESE_SVG_WIDTH = 420;
         public static final int SVG_RI_BOX_HEIGHT = 30;
 
     }
