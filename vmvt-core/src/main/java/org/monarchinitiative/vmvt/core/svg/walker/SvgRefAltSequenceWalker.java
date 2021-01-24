@@ -12,10 +12,14 @@ import static org.monarchinitiative.vmvt.core.svg.SvgConstants.Dimensions.*;
 
 
 /**
- * Base class for writing SVG sequence walkers for Splice Acceptor or Donor sequences
+ * Base class for writing SVG sequence walkers for Splice Acceptor or Donor sequences.
+ * In contrast to the original implementation of sequence walkers, this implementation
+ * overlaps the refernece and alternate sequences, showing divergent bases in a grey box.
+ * See also {@link SvgSingleSequenceWalker} for an implementation that is similar to the
+ * original walkers.
  * @author Peter N Robinson
  */
-public class SvgSequenceWalker implements SvgComponent, SvgInitializer {
+public class SvgRefAltSequenceWalker implements SvgComponent, SvgInitializer {
 
     /** Position where we will start to write things from the left side of the SVG. */
     protected final int XSTART = SVG_STARTX;
@@ -43,7 +47,7 @@ public class SvgSequenceWalker implements SvgComponent, SvgInitializer {
      * @param site Representation of the splice site (weight matrix)
      * @param w width of the SVG canvas
      */
-    public SvgSequenceWalker(String ref, String alt, DoubleMatrix site, int w) {
+    public SvgRefAltSequenceWalker(String ref, String alt, DoubleMatrix site, int w) {
         this.width = w;
         this.splicesite = site;
         this.refidx = sequenceIndex(ref);
@@ -193,34 +197,34 @@ public class SvgSequenceWalker implements SvgComponent, SvgInitializer {
 
 
 
-    public static SvgSequenceWalker singleDonorWalker(String sequence) {
-        return SvgSequenceWalker.singleDonorWalker(sequence, DoubleMatrix.donor());
+    public static SvgRefAltSequenceWalker singleDonorWalker(String sequence) {
+        return SvgRefAltSequenceWalker.singleDonorWalker(sequence, DoubleMatrix.donor());
     }
 
-    public static SvgSequenceWalker singleDonorWalker(String sequence, DoubleMatrix donor) {
-        return new SvgSequenceWalker(sequence, sequence, donor, SVG_DONOR_WIDTH);
+    public static SvgRefAltSequenceWalker singleDonorWalker(String sequence, DoubleMatrix donor) {
+        return new SvgRefAltSequenceWalker(sequence, sequence, donor, SVG_DONOR_WIDTH);
     }
 
-    public static SvgSequenceWalker donorWalker(String reference, String alternate, DoubleMatrix donor) {
-        return new SvgSequenceWalker(reference, alternate, donor, SVG_DONOR_WIDTH);
-    }
-
-
-    public static SvgSequenceWalker acceptorWalker(String reference, String alternate) {
-        return new SvgSequenceWalker(reference, alternate, DoubleMatrix.acceptor(), SVG_ACCEPTOR_WIDTH);
-    }
-
-    public static SvgSequenceWalker acceptorWalker(String reference, String alternate, DoubleMatrix acceptor) {
-        return new SvgSequenceWalker(reference, alternate, acceptor, SVG_ACCEPTOR_WIDTH);
+    public static SvgRefAltSequenceWalker donorWalker(String reference, String alternate, DoubleMatrix donor) {
+        return new SvgRefAltSequenceWalker(reference, alternate, donor, SVG_DONOR_WIDTH);
     }
 
 
-    public static SvgSequenceWalker singleAcceptorWalker(String sequence) {
+    public static SvgRefAltSequenceWalker acceptorWalker(String reference, String alternate) {
+        return new SvgRefAltSequenceWalker(reference, alternate, DoubleMatrix.acceptor(), SVG_ACCEPTOR_WIDTH);
+    }
+
+    public static SvgRefAltSequenceWalker acceptorWalker(String reference, String alternate, DoubleMatrix acceptor) {
+        return new SvgRefAltSequenceWalker(reference, alternate, acceptor, SVG_ACCEPTOR_WIDTH);
+    }
+
+
+    public static SvgRefAltSequenceWalker singleAcceptorWalker(String sequence) {
        return singleAcceptorWalker(sequence, DoubleMatrix.acceptor());
     }
 
-    public static SvgSequenceWalker singleAcceptorWalker(String sequence, DoubleMatrix acceptor) {
-        return new SvgSequenceWalker(sequence, sequence, acceptor, SVG_ACCEPTOR_WIDTH);
+    public static SvgRefAltSequenceWalker singleAcceptorWalker(String sequence, DoubleMatrix acceptor) {
+        return new SvgRefAltSequenceWalker(sequence, sequence, acceptor, SVG_ACCEPTOR_WIDTH);
     }
 
 

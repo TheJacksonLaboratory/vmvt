@@ -26,7 +26,7 @@ public class DonorGeneratorTest {
     @Test
     public void testWriteDonorSvgWalker() {
         VmvtGenerator donor = new VmvtGenerator(true);
-        String svg = donor.getDonorWalkerSvg(ref,alt);
+        String svg = donor.getRefAltDonorWalkerSvg(ref,alt);
         assertNotNull(svg);
         try {
             String path = "target/donorWalker.svg";
@@ -37,6 +37,37 @@ public class DonorGeneratorTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testWriteCHRNESvgWalker() {
+        VmvtGenerator donor = new VmvtGenerator(true);
+        String col1a2Ref = "CAGGTGAAG";
+        String cik1a2Alt = "CATGTGAAG";
+        String svgRef = donor.getDonorWalkerSvg(col1a2Ref);
+        String svgAlt = donor.getDonorWalkerSvg(cik1a2Alt);
+        String svgBars = donor.getDonorIcBarsWithRi(col1a2Ref, cik1a2Alt);
+        assertNotNull(svgRef);
+        assertNotNull(svgAlt);
+        assertNotNull(svgBars);
+        try {
+            String path = "target/donorCHRNERefWalker.svg";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svgRef);
+            writer.close();
+            path = "target/donorCHRNEAltWalker.svg";
+            writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svgAlt);
+            writer.close();
+            path = "target/donorCHRNEbars.svg";
+            writer = new BufferedWriter(new FileWriter(path));
+            writer.write(svgBars);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     @Test
     public void testWriteDonorSvgLogo() {
@@ -246,9 +277,9 @@ public class DonorGeneratorTest {
         writeToRTDdirectory("donorTrekker.svg" , svg);
         svg = vmvt.getDonorLogoSvg();
         writeToRTDdirectory("donorLogo.svg" , svg);
-        svg = vmvt.getDonorWalkerSvg(ref,alt);
+        svg = vmvt.getRefAltDonorWalkerSvg(ref,alt);
         writeToRTDdirectory("donorWalker.svg" , svg);
-        svg = vmvt.getAcceptorWalkerSvg(acceptorRef, acceptorAlt);
+        svg = vmvt.getRefAltAcceptorWalkerSvg(acceptorRef, acceptorAlt);
         writeToRTDdirectory("acceptorWalker.svg" , svg);
         svg = getHexamerSvg();
         writeToRTDdirectory("hexamer.svg", svg);
