@@ -9,7 +9,8 @@ import org.monarchinitiative.vmvt.core.svg.icbar.SvgIcBarchart;
 import org.monarchinitiative.vmvt.core.svg.delta.DeltaSvg;
 import org.monarchinitiative.vmvt.core.svg.logo.SvgSequenceLogo;
 import org.monarchinitiative.vmvt.core.svg.ruler.SvgSequenceRuler;
-import org.monarchinitiative.vmvt.core.svg.walker.SvgSequenceWalker;
+import org.monarchinitiative.vmvt.core.svg.walker.SvgRefAltSequenceWalker;
+import org.monarchinitiative.vmvt.core.svg.walker.SvgSingleSequenceWalker;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -99,14 +100,21 @@ public class VmvtGenerator {
     }
 
 
-    public String getDonorWalkerSvg(String reference, String alternate) {
-        SvgComponent donorWalker = SvgSequenceWalker.donorWalker(reference, alternate, donor);
+    public String getDonorWalkerSvg(String reference) {
+        SvgComponent donorWalker = SvgSingleSequenceWalker.donorWalker(reference,  donor);
+        return getDonorPlusTextSvg(donorWalker);
+    }
+
+
+
+    public String getRefAltDonorWalkerSvg(String reference, String alternate) {
+        SvgComponent donorWalker = SvgRefAltSequenceWalker.donorWalker(reference, alternate, donor);
         return getDonorSvg(donorWalker);
     }
 
 
-    public String getAcceptorWalkerSvg(String reference, String alternate) {
-        SvgComponent acceptorWalker = SvgSequenceWalker.acceptorWalker(reference, alternate, acceptor);
+    public String getRefAltAcceptorWalkerSvg(String reference, String alternate) {
+        SvgComponent acceptorWalker = SvgRefAltSequenceWalker.acceptorWalker(reference, alternate, acceptor);
         return getAcceptorSvg(acceptorWalker);
     }
 
@@ -123,13 +131,13 @@ public class VmvtGenerator {
 
     public String getDonorTrekkerSvg(String reference, String alternate) {
         SvgComponent donorLogo = SvgSequenceLogo.donor(donorHeight);
-        SvgComponent donorWalker = SvgSequenceWalker.donorWalker(reference, alternate, donor);
+        SvgComponent donorWalker = SvgRefAltSequenceWalker.donorWalker(reference, alternate, donor);
         return getDonorSvg(donorLogo, donorWalker);
     }
 
     public String getAcceptorTrekkerSvg(String reference, String alternate) {
         SvgComponent acceptorLogo = SvgSequenceLogo.acceptor(acceptorHeight);
-        SvgComponent acceptorWalker = SvgSequenceWalker.acceptorWalker(reference, alternate, acceptor);
+        SvgComponent acceptorWalker = SvgRefAltSequenceWalker.acceptorWalker(reference, alternate, acceptor);
         return getAcceptorSvg(acceptorLogo, acceptorWalker);
     }
 
@@ -161,7 +169,7 @@ public class VmvtGenerator {
     public String getAcceptorTrekkerWithRi(String reference, String alternate) {
         SvgComponent acceptorRuler = SvgSequenceRuler.acceptor(reference, alternate);
         SvgComponent acceptorLogo = SvgSequenceLogo.acceptor(acceptorHeight);
-        SvgComponent acceptorWalkerWithRi = SvgSequenceWalker.acceptorWalker(reference, alternate, acceptor);
+        SvgComponent acceptorWalkerWithRi = SvgRefAltSequenceWalker.acceptorWalker(reference, alternate, acceptor);
         SvgComponent deltaRi = DeltaRiBox.acceptor(reference, alternate, acceptor);
         return getAcceptorSvg(acceptorRuler, acceptorLogo, acceptorWalkerWithRi, deltaRi);
     }
@@ -169,7 +177,7 @@ public class VmvtGenerator {
     public String getDonorTrekkerWithRi(String reference, String alternate) {
         SvgComponent donorRuler = SvgSequenceRuler.donor(reference, alternate);
         SvgComponent donorLogo = SvgSequenceLogo.donor(donorHeight);
-        SvgComponent donorWalkerWithRi = SvgSequenceWalker.donorWalker(reference, alternate, donor);
+        SvgComponent donorWalkerWithRi = SvgRefAltSequenceWalker.donorWalker(reference, alternate, donor);
         SvgComponent deltaRi = DeltaRiBox.donor(reference, alternate, donor);
         return getDonorSvg(donorRuler, donorLogo, donorWalkerWithRi, deltaRi);
     }
@@ -236,6 +244,18 @@ public class VmvtGenerator {
     private String getAcceptorSvg(SvgComponent... components) {
         List<SvgComponent> comps = new ArrayList<>(Arrays.asList(components));
         return getSvg(SVG_ACCEPTOR_WIDTH, comps);
+    }
+
+
+    /**
+     * Return an SVG for a Splice donor variant
+     *
+     * @param components List of {@link SvgComponent} with the vertical parts of the SVG
+     * @return the SVG graphic
+     */
+    private String getDonorPlusTextSvg(SvgComponent... components) {
+        List<SvgComponent> comps = new ArrayList<>(Arrays.asList(components));
+        return getSvg(SVG_DONOR_SINGLE_WALKER_WIDTH+EXTRA_TEXT_WIDTH, comps);
     }
 
     /**

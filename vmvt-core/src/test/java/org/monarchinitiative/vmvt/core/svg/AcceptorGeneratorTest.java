@@ -18,7 +18,7 @@ public class AcceptorGeneratorTest {
     @Test
     public void testWriteSvgAcceptorWalker() {
         VmvtGenerator donor = new VmvtGenerator();
-        String svg = donor.getAcceptorWalkerSvg(ref,alt);
+        String svg = donor.getRefAltAcceptorWalkerSvg(ref,alt);
         assertNotNull(svg);
         try {
             String path = "target/acceptorWalker.svg";

@@ -1,6 +1,7 @@
 package org.monarchinitiative.vmvt.core.svg;
 
 import org.monarchinitiative.vmvt.core.svg.fontprofile.CourierProfile;
+import org.monarchinitiative.vmvt.core.svg.fontprofile.CousineProfile;
 import org.monarchinitiative.vmvt.core.svg.fontprofile.FontProfile;
 
 /**
@@ -63,7 +64,12 @@ public final class SvgConstants {
         public final static int SVG_DONOR_WIDTH = 150;
         /** The width of the SVG canvas for all Acceptor figures. */
         public final static int SVG_ACCEPTOR_WIDTH = 420;
-        public final static int SVG_BARCHART_HEIGHT = 100;
+        /** An extra amount of width to write the bits for single walkers. */
+        public final static int EXTRA_TEXT_WIDTH = 70;
+        public final static int SVG_DONOR_SINGLE_WALKER_WIDTH = 130;
+        public final static int SVG_DONOR_SINGLE_ACCEPTOR_WIDTH = 350;
+        public final static int SVG_SINGLE_WALKER_HEIGHT = 70;
+        public final static int SVG_BARCHART_HEIGHT = 40;
 
         /** X Position on the SVG canvas to start drawing. */
         public final static int SVG_STARTX = 10;
@@ -85,7 +91,7 @@ public final class SvgConstants {
         public final static int LETTER_BASE_HEIGHT = 12;
 
         public final static int SVG_RULER_POSITION_Y_INCREMENT = 40;
-        public final static int SVG_RULER_HEIGHT = 70;
+        public final static int SVG_RULER_HEIGHT = 90;
         public final static int SVG_WALKER_HEIGHT = 130;
 
           /** Width of the 'blue box', which is used as a background for the Ri text. */

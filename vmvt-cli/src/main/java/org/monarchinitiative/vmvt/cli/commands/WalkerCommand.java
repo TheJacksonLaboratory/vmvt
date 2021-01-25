@@ -18,9 +18,9 @@ public class WalkerCommand extends SequenceComparisonCommand implements Callable
         initSequences();
         if (seqlen == 9) {
             // donor
-            svg= vmvt.getDonorWalkerSvg(this.reference, this.alternate);
+            svg= vmvt.getRefAltDonorWalkerSvg(this.reference, this.alternate);
         } else {
-            svg = vmvt.getAcceptorWalkerSvg(this.reference, this.alternate);
+            svg = vmvt.getRefAltAcceptorWalkerSvg(this.reference, this.alternate);
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outname))) {
             writer.write(svg);
