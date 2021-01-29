@@ -1,4 +1,4 @@
-<svg width="150" height="310" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+<svg width="150" height="330" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
 <!-- Created by vmvt -->
 <style>
   text { font: 24px courier, monospace; }
@@ -45,105 +45,105 @@
 <text x="115" y="45" fill="#ff9900">g</text>
 <text x="130" y="45" fill="#e64b35">t</text>
 <text x="70" y="65" fill="#e64b35">t</text>
-<rect x="70.000000" y="25" width="15" height="49" rx="2" fill-opacity="0.1" style="stroke-width:1; stroke:rgb(4, 12, 4);"/><g transform='translate(10,115.000000) scale(1,0.042389)'>
+<rect x="70.000000" y="25" width="15" height="49" rx="2" fill-opacity="0.1" style="stroke-width:1; stroke:rgb(4, 12, 4);"/><g transform='translate(10,135.000000) scale(1,0.042389)'>
 <text x="0" y="0" fill="#4dbbd5">C</text>
-</g><g transform='translate(10,114.415319) scale(1,0.039201)'>
+</g><g transform='translate(10,134.415319) scale(1,0.039201)'>
 <text x="0" y="0" fill="#00A087">A</text>
-</g><g transform='translate(10,113.874612) scale(1,0.021962)'>
+</g><g transform='translate(10,133.874612) scale(1,0.021962)'>
 <text x="0" y="0" fill="#ff9900">G</text>
-</g><g transform='translate(10,113.571685) scale(1,0.014523)'>
+</g><g transform='translate(10,133.571685) scale(1,0.014523)'>
 <text x="0" y="0" fill="#e64b35">T</text>
-</g><g transform='translate(25,115.000000) scale(1,0.308449)'>
+</g><g transform='translate(25,135.000000) scale(1,0.308449)'>
 <text x="0" y="0" fill="#00A087">A</text>
-</g><g transform='translate(25,110.745538) scale(1,0.067201)'>
+</g><g transform='translate(25,130.745538) scale(1,0.067201)'>
 <text x="0" y="0" fill="#e64b35">T</text>
-</g><g transform='translate(25,109.818625) scale(1,0.056565)'>
+</g><g transform='translate(25,129.818625) scale(1,0.056565)'>
 <text x="0" y="0" fill="#ff9900">G</text>
-</g><g transform='translate(25,109.038418) scale(1,0.051730)'>
+</g><g transform='translate(25,129.038418) scale(1,0.051730)'>
 <text x="0" y="0" fill="#4dbbd5">C</text>
-</g><g transform='translate(40,115.000000) scale(1,0.815783)'>
+</g><g transform='translate(40,135.000000) scale(1,0.815783)'>
 <text x="0" y="0" fill="#ff9900">G</text>
-</g><g transform='translate(40,103.747817) scale(1,0.098177)'>
+</g><g transform='translate(40,123.747817) scale(1,0.098177)'>
 <text x="0" y="0" fill="#00A087">A</text>
-</g><g transform='translate(40,102.393646) scale(1,0.069838)'>
+</g><g transform='translate(40,122.393646) scale(1,0.069838)'>
 <text x="0" y="0" fill="#e64b35">T</text>
-</g><g transform='translate(40,101.430370) scale(1,0.028340)'>
+</g><g transform='translate(40,121.430370) scale(1,0.028340)'>
 <text x="0" y="0" fill="#4dbbd5">C</text>
-</g><g transform='translate(55,115.000000) scale(1,1.948552)'>
+</g><g transform='translate(55,135.000000) scale(1,1.948552)'>
 <text x="0" y="0" fill="#ff9900">G</text>
-</g><g transform='translate(55,88.123419) scale(1,0.003913)'>
+</g><g transform='translate(55,108.123419) scale(1,0.003913)'>
 <text x="0" y="0" fill="#00A087">A</text>
-</g><g transform='translate(55,88.069450) scale(1,0.001956)'>
+</g><g transform='translate(55,108.069450) scale(1,0.001956)'>
 <text x="0" y="0" fill="#4dbbd5">C</text>
-</g><g transform='translate(55,88.042465) scale(1,0.001956)'>
+</g><g transform='translate(55,108.042465) scale(1,0.001956)'>
 <text x="0" y="0" fill="#e64b35">T</text>
-</g><g transform='translate(70,115.000000) scale(1,1.857075)'>
+</g><g transform='translate(70,135.000000) scale(1,1.857075)'>
 <text x="0" y="0" fill="#e64b35">T</text>
-</g><g transform='translate(70,89.385177) scale(1,0.022601)'>
+</g><g transform='translate(70,109.385177) scale(1,0.022601)'>
 <text x="0" y="0" fill="#4dbbd5">C</text>
-</g><g transform='translate(70,89.073434) scale(1,0.001883)'>
+</g><g transform='translate(70,109.073434) scale(1,0.001883)'>
 <text x="0" y="0" fill="#00A087">A</text>
-</g><g transform='translate(70,89.047456) scale(1,0.001883)'>
+</g><g transform='translate(70,109.047456) scale(1,0.001883)'>
 <text x="0" y="0" fill="#ff9900">G</text>
-</g><g transform='translate(85,115.000000) scale(1,0.425298)'>
+</g><g transform='translate(85,135.000000) scale(1,0.425298)'>
 <text x="0" y="0" fill="#00A087">A</text>
-</g><g transform='translate(85,109.133820) scale(1,0.241501)'>
+</g><g transform='translate(85,129.133820) scale(1,0.241501)'>
 <text x="0" y="0" fill="#ff9900">G</text>
-</g><g transform='translate(85,105.802773) scale(1,0.022797)'>
+</g><g transform='translate(85,125.802773) scale(1,0.022797)'>
 <text x="0" y="0" fill="#e64b35">T</text>
-</g><g transform='translate(85,105.488338) scale(1,0.022084)'>
+</g><g transform='translate(85,125.488338) scale(1,0.022084)'>
 <text x="0" y="0" fill="#4dbbd5">C</text>
-</g><g transform='translate(100,115.000000) scale(1,0.412697)'>
+</g><g transform='translate(100,135.000000) scale(1,0.412697)'>
 <text x="0" y="0" fill="#00A087">A</text>
-</g><g transform='translate(100,109.307626) scale(1,0.073717)'>
+</g><g transform='translate(100,129.307626) scale(1,0.073717)'>
 <text x="0" y="0" fill="#ff9900">G</text>
-</g><g transform='translate(100,108.290833) scale(1,0.070092)'>
+</g><g transform='translate(100,128.290833) scale(1,0.070092)'>
 <text x="0" y="0" fill="#e64b35">T</text>
-</g><g transform='translate(100,107.324046) scale(1,0.047735)'>
+</g><g transform='translate(100,127.324046) scale(1,0.047735)'>
 <text x="0" y="0" fill="#4dbbd5">C</text>
-</g><g transform='translate(115,115.000000) scale(1,0.665538)'>
+</g><g transform='translate(115,135.000000) scale(1,0.665538)'>
 <text x="0" y="0" fill="#ff9900">G</text>
-</g><g transform='translate(115,105.820166) scale(1,0.078552)'>
+</g><g transform='translate(115,125.820166) scale(1,0.078552)'>
 <text x="0" y="0" fill="#00A087">A</text>
-</g><g transform='translate(115,104.736684) scale(1,0.068194)'>
+</g><g transform='translate(115,124.736684) scale(1,0.068194)'>
 <text x="0" y="0" fill="#e64b35">T</text>
-</g><g transform='translate(115,103.796078) scale(1,0.051793)'>
+</g><g transform='translate(115,123.796078) scale(1,0.051793)'>
 <text x="0" y="0" fill="#4dbbd5">C</text>
-</g><g transform='translate(130,115.000000) scale(1,0.084801)'>
+</g><g transform='translate(130,135.000000) scale(1,0.084801)'>
 <text x="0" y="0" fill="#e64b35">T</text>
-</g><g transform='translate(130,113.830338) scale(1,0.033885)'>
+</g><g transform='translate(130,133.830338) scale(1,0.033885)'>
 <text x="0" y="0" fill="#ff9900">G</text>
-</g><g transform='translate(130,113.362962) scale(1,0.031756)'>
+</g><g transform='translate(130,133.362962) scale(1,0.031756)'>
 <text x="0" y="0" fill="#00A087">A</text>
-</g><g transform='translate(130,112.924950) scale(1,0.026966)'>
+</g><g transform='translate(130,132.924950) scale(1,0.026966)'>
 <text x="0" y="0" fill="#4dbbd5">C</text>
-</g><g transform='translate(70,170) scale(1,1.979660)'>
+</g><g transform='translate(70,190) scale(1,1.979660)'>
 <text x="0" y="0" fill="#e64b35">t</text>
-</g><g transform='translate(10,170) scale(1,0.522056)'>
+</g><g transform='translate(10,190) scale(1,0.522056)'>
 <text x="0" y="0" fill="#4dbbd5">c</text>
-</g><g transform='translate(40.000000,171)  scale(1,0.846843)  rotate(180)'>
+</g><g transform='translate(40.000000,191)  scale(1,0.846843)  rotate(180)'>
 <text x="0" y="0" fill="#e64b35">t</text>
 </g>
-<g transform='translate(40,170) scale(1,1.688852)'>
+<g transform='translate(40,190) scale(1,1.688852)'>
 <text x="0" y="0" fill="#ff9900">g</text>
-</g><g transform='translate(55,170) scale(1,1.994218)'>
+</g><g transform='translate(55,190) scale(1,1.994218)'>
 <text x="0" y="0" fill="#ff9900">g</text>
-</g><g transform='translate(85.000000,171)  scale(1,4.380822)  rotate(180)'>
+</g><g transform='translate(85.000000,191)  scale(1,4.380822)  rotate(180)'>
 <text x="0" y="0" fill="#4dbbd5">c</text>
 </g>
-<g transform='translate(85,170) scale(1,1.255803)'>
+<g transform='translate(85,190) scale(1,1.255803)'>
 <text x="0" y="0" fill="#00A087">a</text>
-</g><g transform='translate(115.000000,171)  scale(1,1.035047)  rotate(180)'>
+</g><g transform='translate(115.000000,191)  scale(1,1.035047)  rotate(180)'>
 <text x="0" y="0" fill="#ff9900">g</text>
 </g>
-<g transform='translate(115,170) scale(1,1.624803)'>
+<g transform='translate(115,190) scale(1,1.624803)'>
 <text x="0" y="0" fill="#ff9900">g</text>
-</g><g transform='translate(130,170) scale(1,0.935083)'>
+</g><g transform='translate(130,190) scale(1,0.935083)'>
 <text x="0" y="0" fill="#e64b35">t</text>
 </g><g fill="none" stroke="black" stroke-width="1">
-<path stroke-dasharray="2,2" d="M10 170 L150 170"/>
+<path stroke-dasharray="2,2" d="M10 190 L150 190"/>
 </g>
-<rect x="70.000000" y="146" width="15" height="76" rx="2" fill-opacity="0.1" style="stroke-width:1; stroke:rgb(4, 12, 4);"/><rect x="10" y="259" rx="3" ry="3" width="130" height="40" style="stroke: #4dbbd5; fill: none;fill-opacity: 0.1"></rect><text x="20" y="275" class="t12">Ref: 1.76 bits</text>
-<text x="20" y="290" class="t12">Alt: 8.12 bits</text>
+<rect x="70.000000" y="166" width="15" height="76" rx="2" fill-opacity="0.1" style="stroke-width:1; stroke:rgb(4, 12, 4);"/><rect x="10" y="279" rx="3" ry="3" width="130" height="40" style="stroke: #4dbbd5; fill: none;fill-opacity: 0.1"></rect><text x="20" y="295" class="t12">Ref: 1.76 bits</text>
+<text x="20" y="310" class="t12">Alt: 8.12 bits</text>
 </g>
 </svg>
