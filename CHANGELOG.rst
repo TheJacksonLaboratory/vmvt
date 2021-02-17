@@ -2,6 +2,13 @@
 Changelog
 =========
 ------
+v0.9.3
+------
+- Add IC bar charts
+- Sequence rulers with custom offsets
+- Add Maven wrapper, fix javadoc plugin configuration
+
+------
 v0.9.1
 ------
 - Fixed bug in Delta SVG when R_i is larger than the maximum SNV change
