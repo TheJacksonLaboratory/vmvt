@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "ruler", aliases = {"W"}, mixinStandardHelpOptions = true, description = "Create sequence ruler")
-public class WalkerCommand extends AbstractSequenceComparisonCommand implements Callable<Integer> {
+public class WalkerCommand extends SequenceComparisonCommand implements Callable<Integer> {
     @Override
     public Integer call() {
         VmvtGenerator vmvt = new VmvtGenerator();
@@ -18,9 +18,9 @@ public class WalkerCommand extends AbstractSequenceComparisonCommand implements 
         initSequences();
         if (seqlen == 9) {
             // donor
-            svg= vmvt.getDonorWalkerSvg(this.reference, this.alternate);
+            svg= vmvt.getRefAltDonorWalkerSvg(this.reference, this.alternate);
         } else {
-            svg = vmvt.getAcceptorWalkerSvg(this.reference, this.alternate);
+            svg = vmvt.getRefAltAcceptorWalkerSvg(this.reference, this.alternate);
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outname))) {
             writer.write(svg);

@@ -90,6 +90,10 @@ public class DistributionCalculator  {
         return splicesite;
     }
 
+    public double getMean() {
+        return mean;
+    }
+
     private double getR_i(long seq) {
         for (int i=0;i<seqlen;i++) {
             int remainder = (int)(seq % 4);

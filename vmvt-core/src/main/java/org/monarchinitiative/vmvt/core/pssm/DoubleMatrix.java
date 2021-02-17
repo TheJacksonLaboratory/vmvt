@@ -16,6 +16,7 @@ public class DoubleMatrix {
     private final int nRows;
     private final int nCols;
 
+
     private final static double LOG_TWO = Math.log(2);
 
     public DoubleMatrix(int nRows, int nCols) {
@@ -116,8 +117,7 @@ public class DoubleMatrix {
      */
     static double calculateIC(double freq) {
         if (freq==0.0) return 0.0;
-        double ic = 2d - (-Math.log(freq) / LOG_TWO);
-        return ic;
+        return 2d - (-Math.log(freq) / LOG_TWO);
     }
 
     /**

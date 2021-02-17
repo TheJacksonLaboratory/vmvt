@@ -11,7 +11,7 @@ import java.util.concurrent.Callable;
  * @author Peter N Robinson
  */
 @CommandLine.Command(name = "ruler", aliases = {"R"}, mixinStandardHelpOptions = true, description = "Create sequence ruler")
-public class RulerCommand extends AbstractSequenceComparisonCommand implements Callable<Integer> {
+public class RulerCommand extends SequenceComparisonCommand implements Callable<Integer> {
 
 
     @Override

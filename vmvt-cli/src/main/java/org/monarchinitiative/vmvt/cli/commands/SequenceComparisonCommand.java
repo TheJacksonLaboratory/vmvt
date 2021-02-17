@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class AbstractSequenceComparisonCommand {
+public class SequenceComparisonCommand {
 
     @CommandLine.Option(names = {"-o","--out"})
     protected String outname = "ruler.svg";

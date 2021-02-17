@@ -18,7 +18,7 @@ public class AcceptorGeneratorTest {
     @Test
     public void testWriteSvgAcceptorWalker() {
         VmvtGenerator donor = new VmvtGenerator();
-        String svg = donor.getAcceptorWalkerSvg(ref,alt);
+        String svg = donor.getRefAltAcceptorWalkerSvg(ref,alt);
         assertNotNull(svg);
         try {
             String path = "target/acceptorWalker.svg";
@@ -33,7 +33,7 @@ public class AcceptorGeneratorTest {
 
     @Test
     public void testWriteSvgAcceptorLogo() {
-        VmvtGenerator donor = new VmvtGenerator();
+        VmvtGenerator donor = new VmvtGenerator(true);
         String svg = donor.getAcceptorLogoSvg();
         assertNotNull(svg);
         try {
@@ -48,7 +48,7 @@ public class AcceptorGeneratorTest {
 
     @Test
     public void testWriteSvgAcceptorTrekker() {
-        VmvtGenerator donor = new VmvtGenerator();
+        VmvtGenerator donor = new VmvtGenerator(true);
         String svg = donor.getAcceptorTrekkerSvg(ref,alt);
         assertNotNull(svg);
         try {
@@ -77,27 +77,12 @@ public class AcceptorGeneratorTest {
     }
 
     @Test
-    public void testCanonicalCryptic() {
-        VmvtGenerator vmvt = new VmvtGenerator();
-        String canRef = "gtgttttgtcatgtgtaTgctcaagGG";
-        String crypticRef = "tttgttgtgttttgtcatgtgtaTgct";
-        String svg = vmvt.getAcceptorCanonicalCryptic(canRef, crypticRef);
+    public void testGetAcceptorRulerOffset(){
+        VmvtGenerator accceptor = new VmvtGenerator(true);
+        String svg = accceptor.getAcceptorSequenceRulerAndBarChartWithOffset(ref,alt, -7);
         assertNotNull(svg);
         try {
-            String path = "target/acceptorCanCryptRef.svg";
-            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-            writer.write(svg);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String canAlt = "gtgttttgtcatgtgtaAgctcaagGG";
-        String crypticAlt = "tttgttgtgttttgtcatgtgtaAgct";
-        svg = vmvt.getAcceptorCanonicalCryptic(canAlt, crypticAlt);
-        assertNotNull(svg);
-        try {
-            String path = "target/acceptorCanCryptAlt.svg";
+            String path = "target/acceptorRulerOffset.svg";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(svg);
             writer.close();
@@ -111,7 +96,7 @@ public class AcceptorGeneratorTest {
         VmvtGenerator vmvt = new VmvtGenerator();
         String canRef =     "gtgttttgtcatgtgtaTgctcaagGG";
         String crypticRef = "gtgttttgtcatgtgtaAgctcaagGG";
-        String svg = vmvt.getAcceptorWithRi(canRef, crypticRef);
+        String svg = vmvt.getAcceptorTrekkerWithRi(canRef, crypticRef);
         assertNotNull(svg);
         try {
             String path = "target/acceptorWithRi.svg";
