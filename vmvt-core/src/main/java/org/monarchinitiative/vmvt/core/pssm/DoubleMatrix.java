@@ -211,7 +211,7 @@ public class DoubleMatrix {
         LinkedHashMap<String, Double> sortedMap = new LinkedHashMap<>();
         unSortedMap.entrySet()
                 .stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .sorted(Map.Entry.comparingByValue())
                 .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
         return sortedMap;
     }
