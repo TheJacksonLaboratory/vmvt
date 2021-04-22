@@ -10,7 +10,7 @@
     <parent>
         <groupId>org.monarchinitiative.vmvt</groupId>
         <artifactId>vmvt</artifactId>
-        <version>0.9.4</version>
+        <version>0.9.5-SNAPSHOT</version>
     </parent>
 
     <properties>
