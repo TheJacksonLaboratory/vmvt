@@ -2,6 +2,11 @@
 Changelog
 =========
 ------
+v0.9.4
+------
+- Draw the most common bases on the top of the character stack in the sequence logo
+
+------
 v0.9.3
 ------
 - Add IC bar charts
